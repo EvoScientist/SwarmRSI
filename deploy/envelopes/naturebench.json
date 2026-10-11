@@ -1,0 +1,67 @@
+{
+ "schema_version": "evolvcoder-benchmark-envelope-v1",
+ "benchmark": "naturebench",
+ "note": "One file per dataset. Every number states where it came from, so adding a dataset means writing its reference down rather than editing code, and every difference from that reference is listed rather than inherited by accident.",
+ "reference": {
+  "name": "Claude Code + DeepSeek-V4-Pro",
+  "sources": [
+   "Per-task scores: metadata/index.parquet of huggingface.co/datasets/FrontisAI/NatureBench-traces, rows where harness=claude-code and model=deepseek-v4-pro, column effective_improvement; each value cross-checked against that case's own submissions.jsonl and all 90 agree",
+   "Protocol: the leaderboard entry deepseek-v4-pro-claude-code states 'solvingBudget: 4 h / task', 'externalAccess: Web search and web fetch tools disabled', and one GPU per GPU task",
+   "Copy of the index committed at config/evolvcoder/naturebench_traces_index_20260919.parquet"
+  ],
+  "backbone": "deepseek-v4-pro",
+  "seeds": 1,
+  "hardware": {
+   "gpu_low": "NVIDIA RTX 3090/4090, 24 GB",
+   "gpu_high": "NVIDIA A800, 80 GB",
+   "cpu": "no GPU"
+  },
+  "budget": {
+   "wall_seconds": 14400
+  },
+  "declared_unlimited": [
+   "model_calls",
+   "tool_calls",
+   "evaluations",
+   "input_tokens",
+   "output_tokens"
+  ],
+  "observed_behaviour": {
+   "median_run_minutes": 241,
+   "runs_whose_best_came_after_the_first_submission": "75 of 89",
+   "match_sota_rate": "21 of 90",
+   "surpass_sota_rate": "4 of 90",
+   "median_effective_improvement": -0.2245,
+   "note": "It never stops early: the median run is a minute over its own budget, and it keeps improving until the clock ends. Any early stop of ours makes the two runs incomparable."
+  }
+ },
+ "ours": {
+  "wall_seconds": 14400,
+  "candidate_execution_timeout_seconds": 1800,
+  "per_action_wall_seconds": 3600,
+  "counts": {
+   "model_calls": null,
+   "tool_calls": null,
+   "evaluations": null,
+   "input_tokens": null,
+   "output_tokens": null
+  },
+  "per_action_counts": {
+   "model_calls": 16,
+   "tool_calls": 32
+  },
+  "stop_target": 0.1,
+  "deviations": [
+   "Backbone is deepseek-flash through DeepSeek's own API, not deepseek-v4-pro through OpenRouter. A cell of ours is therefore not a same-backbone comparison.",
+   "Hardware is one NVIDIA H200 (141 GB) per cell against the reference's 24 GB or 80 GB. We have more, and say so.",
+   "The stop target is the leaderboard's Surpass-SOTA bar rather than the reference score. The reference does not stop early at all, so stopping when we merely clear it would report where we crossed a line against where they ran out of time.",
+   "Campaign counts are unlimited because the published protocol is a wall clock and nothing else; declaring counts the reference was not held to is a constraint we would be inventing."
+  ]
+ },
+ "per_action_counts_are_not_null_here_because": "Measured on this benchmark's own cells, not borrowed. Across 138 completed NatureBench cells, those spending 12 or fewer calls per action carry a median best of -0.021 against -0.093 for those spending 13 to 18, and land 90% of their actions against 67%. Within a task, calls per action correlates -0.23 with the result and action count -0.18, while scored actions (+0.13) and evaluations (+0.12) are what track it: landing scored programs helps, spending longer on each attempt does not. One task run six times across a day of widening peaked at 16 and fell at every step; at 48 it spent 82 minutes on two actions and both failed. The other five counts stay null because the published protocol is a wall clock and nothing else; these two are set because this benchmark's own cells say where the useful range is.",
+ "inherited_and_wrong": [
+  "Thresholds scraped from the leaderboard page's bundled JavaScript. The regex anchored on the first \"id\" in a window before the entry, which was gpt-5-4-codex, so all 88 values were Codex + GPT-5.4. An eighteen-task panel was run and reported as 0/18 against them; against the intended reference the same cells stand at 6/18. Use the index, never the page.",
+  "parallel_tool_calls: false. No provider serving this model on OpenRouter accepts the parameter, so sending it with provider.require_parameters routes to zero providers and returns HTTP 404. It is also inert where it does route.",
+  "The 150-call campaign budget. Fourteen of eighteen cells reached it in fifty to sixty minutes with three of their four hours unspent, against a reference that had the full four."
+ ]
+}

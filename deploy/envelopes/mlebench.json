@@ -1,0 +1,140 @@
+{
+ "schema_version": "evolvcoder-benchmark-envelope-v1",
+ "benchmark": "mlebench",
+ "note": "One file per dataset. Every number states where it came from, so adding a dataset means writing its reference down rather than editing code, and every difference from that reference is listed rather than inherited by accident.",
+ "reference": {
+  "name": "MLEvolve",
+  "sources": [
+   "MLE-Bench leaderboard runs/README.md: 'Gemini-3-Pro-preview, 12 hours, 21 vCPUs, 234GB of RAM, and 1 H200 GPU'",
+   "MLEvolve config/config.yaml: agent.time_limit 43200, agent.steps 500, exec.timeout 32400, agent.search.parallel_search_num 3, cpu_number 21",
+   "Per-task scores: data/mlebench/reference_reports/mlevolve_group{1,2,3}/grading_report_group_*.json, which reproduce the published 80.3 +/- 1.5 Lite medal rate exactly"
+  ],
+  "backbone": "Gemini-3-Pro-preview",
+  "seeds": 3,
+  "hardware": {
+   "cpus": 21,
+   "memory_mb": 239616,
+   "gpus": 1,
+   "gpu_model": "H200"
+  },
+  "budget": {
+   "wall_seconds": 43200,
+   "candidate_execution_timeout_seconds": 32400,
+   "max_steps": 500,
+   "parallel_candidates": 3
+  },
+  "declared_unlimited": [
+   "model_calls",
+   "tool_calls",
+   "evaluations",
+   "input_tokens",
+   "output_tokens"
+  ]
+ },
+ "ours": {
+  "wall_seconds": 43200,
+  "terminal_reserve_seconds": 2700,
+  "candidate_execution_timeout_seconds": 32400,
+  "per_action_wall_seconds": 7200,
+  "counts": {
+   "model_calls": null,
+   "tool_calls": null,
+   "evaluations": null,
+   "input_tokens": null,
+   "output_tokens": null,
+   "note": "Campaign counts stay unlimited, which is the opposite lever from the per-action ones above and points the same way: the leaderboard publishes a wall clock and no counts, and capping model calls at 150 stopped a NatureBench panel at a quarter of its wall. Unlimited campaign counts buy more actions; tight per-action counts keep each action economical. Both raise the number of scored programs, which is what correlates with the result."
+  },
+  "per_action_floor": {
+   "note": "Required whenever a campaign count is unlimited, and sized not to bind. Before any action has run there is no measured cost to size the first one from; afterwards the allocator shares the remaining wall against what actions have actually cost.",
+   "max_output_tokens_per_action": 4000000,
+   "max_input_tokens_per_action_safety": 40000000
+  },
+  "hardware": {
+   "cpus": 21,
+   "memory_mb": 239616,
+   "gpus": 1
+  },
+  "target_source": "none",
+  "target_source_note": "Public-search scores come from a carved validation split, while MLEvolve and medal thresholds are official private-test scores. They are not calibrated quantities, so neither may stop search early. Official scores remain terminal diagnostics only.",
+  "deviations": [
+   "backbone: deepseek-flash against the reference's Gemini-3-Pro-preview. A cost choice, and the one difference that remains once hardware and budget are matched.",
+   "seeds: 1 against 3. A cost choice; it makes every per-task number a single draw.",
+   "panel: 12 of the 22 Lite competitions. Four have no training table, two use composite submission ids, four exceed the local disk budget or were excluded."
+  ],
+  "per_action_counts": {
+   "note": "Sized against this dataset's own trajectories and against what the reference actually limits, which is not calls at all. MLEvolve caps steps, wall clock, candidate execution and debug depth; it has no per-action LLM call budget. Our 16 came from the NatureBench profile, whose reference is a Claude Code trace and whose whole point is to hard-match the counts that trace spent -- the opposite situation. Across 180 cells here, success rate falls off a cliff exactly at the cap: 103 cells at 14 calls succeeded 91% of the time, while of the 38 that reached 16, thirty were killed by the cap and only 8 finished. Across tasks, the share of cells hitting the cap correlates with success rate at r = -0.97, and the two worst tasks are the two that hit it most (dog-breed 60%, nyc-taxi 58%). These are set high enough not to be reached rather than removed, because an unlimited per-action count is what the allocator treats as infinity.",
+   "model_calls_per_action": 64,
+   "tool_calls_per_action": 128,
+   "max_repairs_per_action": 20
+  },
+  "candidate_execution_timeout_seconds_note": "32400 is the reference's own exec.timeout. This is the one loosening the measurements above do not argue against: it governs whether a candidate that needs to train can finish, not how long the coder deliberates. At 1800, dog-breed's CNN was cut off mid-training every time, so no amount of extra attempts would have helped.",
+  "per_action_wall_note": "Raised with the call ceiling, not after it. dog-breed was given 40 calls at a 3600 per-action wall and did worse, not better: with one 1800s evaluation reserved out of 3600 the coder had about 1770s of clock, so the extra calls ran out of time instead of out of calls, and two consecutive actions ended with no scored program. Raising either alone only moves which limit bites.",
+  "architectural_differences": [
+   {
+    "name": "parallel candidates",
+    "reference": 3,
+    "ours": 1,
+    "why_not_matched": "Not a budget. MLEvolve's MCGS expands several branches at once and pins CPUs per slot; BRS expands one action at a time by construction. Matching it would change our method rather than its allowance, and would confound the ablations this campaign exists to support. Declared as an architectural difference and left alone."
+   }
+  ],
+  "per_task_classes": {
+   "note": "Measured, not guessed. A task's success rate tracks how often its cells exhaust the per-action call budget at r = -0.97 across the twelve tasks with trajectories. Tasks that never reach the cap gain nothing from raising it and lose the guard against a runaway cell: the 25-39 call cohort here spent a median of 293,894 output tokens, four times the normal band, and succeeded 0 of 2 times. So the loosening applies only where the cap is actually biting. Data size and task type do not predict the class -- aerial-cactus is 19 MB of images and fast, tabular-dec-2021 is 551 MB and fast, spooky is small text and slow -- so a task is classified only once it has trajectories. Reclassified 2026-09-20 on the right criterion. The first pass used a task's longest cell, which is a single observation; the quantity that tracks success rate at r = -0.97 is the share of cells exhausting the per-action call budget. By that measure only dog-breed at 60% and nyc-taxi at 58% are genuinely cap-bound. spooky at 9%, plant-pathology at 14%, tabular-may at 19% and jigsaw at 33% are not, and what they lack is actions rather than room inside one: their best scores arrive at step 8, 9, 1 and 5 respectively, and the tight class buys more attempts within the same wall.",
+   "fast": {
+    "members": [
+     "aerial-cactus-identification",
+     "detecting-insults-in-social-commentary",
+     "jigsaw-toxic-comment-classification-challenge",
+     "leaf-classification",
+     "nomad2018-predict-transparent-conductors",
+     "plant-pathology-2020-fgvc7",
+     "random-acts-of-pizza",
+     "spooky-author-identification",
+     "tabular-playground-series-dec-2021",
+     "tabular-playground-series-may-2022"
+    ],
+    "evidence": "cap hit 0-33% of cells; what these lack is attempts, not room inside one attempt",
+    "model_calls_per_action": 16,
+    "tool_calls_per_action": 32,
+    "max_repairs_per_action": 6,
+    "wall_time_seconds_per_action": 3600,
+    "candidate_execution_timeout_seconds": 1800
+   },
+   "slow": {
+    "members": [
+     "dog-breed-identification",
+     "new-york-city-taxi-fare-prediction"
+    ],
+    "evidence": "cap hit 58-60% of cells, success 20-25%: the two tasks the per-action budget genuinely stops. The 32400s execution timeout this class used to carry was the reference's, and it did not fit: the session reserves min(timeout+30, wall*0.55) of each action for the scored evaluation, so against a 5400s wall the 0.55 term bound permanently and nyc-taxi's coder never saw more than 2430s of any action. Its one successful cell ran 1574s end to end, so 3600s of execution inside a 7200s action is ample and leaves the coder 3570s instead of 2430s.",
+    "model_calls_per_action": 24,
+    "tool_calls_per_action": 48,
+    "max_repairs_per_action": 10,
+    "wall_time_seconds_per_action": 7200,
+    "candidate_execution_timeout_seconds": 3600
+   },
+   "unclassified": {
+    "members": [
+     "aptos2019-blindness-detection",
+     "denoising-dirty-documents",
+     "dogs-vs-cats-redux-kernels-edition",
+     "histopathologic-cancer-detection",
+     "mlsp-2013-birds",
+     "ranzcr-clip-catheter-line-classification",
+     "siim-isic-melanoma-classification",
+     "text-normalization-challenge-english-language",
+     "text-normalization-challenge-russian-language",
+     "the-icml-2013-whale-challenge-right-whale-redux"
+    ],
+    "policy": "Start on the fast class, which is the cheaper of the two, and reclassify from its own cells."
+   }
+  },
+  "model_cache": "data/mlebench/model_cache",
+  "model_cache_note": "The sandbox has torch, transformers, timm and sentence-transformers installed and runs with no network, so without a cache a candidate cannot obtain a single pretrained weight. On jigsaw every hypothesis the planner raised stayed inside the TF-IDF family and the score stopped at 0.9856 against a reference of 0.98805, whose own config carries torch_hub_dir and pretrain_model_dir. Holds resnet18, resnet50, efficientnet_b0, distilbert-base-uncased and deberta-v3-small, 695 MB."
+ },
+ "inherited_and_wrong": {
+  "note": "These came from the NatureBench Biology-5 profile, whose claim scope is 'hard-match messages, tools, score evaluations, output tokens and wall time' against a Claude Code trace. That is the right way to budget a run whose reference IS that trace, and the wrong way to budget one whose reference publishes a wall clock and nothing else. They are recorded here so the same numbers are not inherited again.",
+  "wall_time_seconds_per_action": 3600,
+  "full_evaluation_timeout_seconds": 1800,
+  "model_calls_per_action": 16,
+  "tool_calls_per_action": 32
+ }
+}

@@ -1,0 +1,2352 @@
+{
+  "schema_version": "hpcoevolve-naturebench-stable-f-template-v1",
+  "model": "deepseek-flash",
+  "route": "https://api.deepseek.com",
+  "provider": {
+    "sort": "throughput",
+    "allow_fallbacks": true,
+    "require_parameters": true
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "native_coder_tools": true,
+  "native_planner_tools": true,
+  "parallel_tool_calls": null,
+  "seed": 0,
+  "proposal_batch_size": 1,
+  "target_stop_scope": "evolved",
+  "minimum_completed_actions_before_target_stop": 3,
+  "screening_execution_limits": {
+    "runtime_artifact_directories": [
+      "catboost_info"
+    ],
+    "request_total_timeout_seconds": 600,
+    "model_calls_per_action": 32,
+    "tool_calls_per_action": 64,
+    "minimum_model_calls_to_start_action": 4,
+    "minimum_tool_calls_to_start_action": 4,
+    "minimum_output_tokens_to_start_action": 8000,
+    "minimum_wall_seconds_to_start_action": 2160,
+    "max_repairs_per_action": 6,
+    "validation_harness_retries": 2,
+    "evaluator_harness_retries": 2,
+    "enforce_context_read_token_limit": false,
+    "max_input_tokens_per_action_safety": 4000000,
+    "require_candidate_sandbox": true,
+    "execution_validation_timeout_seconds": 1500,
+    "full_evaluation_timeout_seconds": 300,
+    "wall_time_seconds_per_action": 3600,
+    "planner_output_tokens_per_batch": 24000,
+    "coder_output_tokens_per_turn": 32000,
+    "max_output_tokens_per_action": 768000,
+    "internal_validation_policy": "controller_only",
+    "write_first_enabled": true,
+    "coder_task_context_chars": 40000,
+    "coder_reasoning_off_after_truncations": 1,
+    "planner_reasoning_off_on_truncation": true,
+    "shift_aware_validation": true,
+    "coder_diff_mode": true,
+    "initial_root_drafts": 3,
+    "coder_no_silent_fallback": true,
+    "coder_fresh_program_for_new_method": true
+  },
+  "tasks": {
+    "s41467-025-63412-3": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41467-025-63418-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.06934050724637686,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41467-025-64512-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41467-025-65557-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41551-024-01257-9": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41551-024-01312-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41551-025-01528-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41587-024-02414-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": -0.014858994477731573,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41587-024-02428-4": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR",
+        "predictions\\.csv"
+      ],
+      "own_trace_claude_code_score": -0.18423979591836737,
+      "root_kind": "baseline",
+      "scraped_leaderboard_score_WRONG": 0.04289923469387758,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41587-025-02585-0": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41587-025-02654-4": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41587-025-02688-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-022-01709-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR",
+        "matching\\.csv"
+      ],
+      "transcript_sha256": "3d2145f8c510053b8552edcd9457d4447bd3b992e41aedbea3137423f0e8084b",
+      "own_trace_claude_code_score": -0.10160184227872748,
+      "root_kind": "baseline",
+      "scraped_leaderboard_score_WRONG": -0.0450700492010639,
+      "reference_compute_tier": "cpu",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-01878-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-01940-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-01955-3": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-02032-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-02035-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-02124-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR",
+        "predictions\\.csv"
+      ],
+      "transcript_sha256": "993378969245e0aeaa3c44104f83bd9e566063d2cb3a10e60e4a1525133e4171",
+      "own_trace_claude_code_score": 0.06799657020610213,
+      "root_kind": "baseline",
+      "scraped_leaderboard_score_WRONG": 0.23195687147893942,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-023-02148-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-024-02191-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-024-02257-y": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-024-02316-4": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.03092783505154642,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-024-02372-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-024-02523-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-024-02580-4": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02662-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.02401373114721761,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02665-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.034194899737069864,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02776-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.14002562531217702,
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02820-1": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02826-9": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02854-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02870-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "cpu",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02886-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02893-y": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02924-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": -0.0014421743807335673,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02926-6": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s41592-025-02983-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.027209193608526167,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00447-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.12950754263329284,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00459-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00464-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00468-6": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00501-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00518-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00526-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00534-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00541-0": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": -1.0,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-022-00556-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00611-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00619-3": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00627-3": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.33888221843291083,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00628-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": -0.03605939636738538,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00630-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.13701177461084574,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00636-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00639-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.14878554977570826,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00640-6": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00654-0": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": -0.05463338340219049,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-023-00712-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00790-1": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.038349570764731215,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00795-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00815-9": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00833-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00836-4": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00838-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00892-w": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.09401569506726457,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00916-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-024-00956-x": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01002-0": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01003-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01010-0": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01016-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01019-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01026-6": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s42256-025-01042-6": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": -0.1940722900222141,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00689-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "cpu",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00698-1": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.009442115262847396,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00703-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00716-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00730-4": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00732-2": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00733-1": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.026699988122858898,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00757-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-024-00765-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00798-6": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00842-5": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00872-z": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00878-7": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00903-9": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.02180117477586544,
+      "reference_compute_tier": "gpu_high",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00917-3": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "scraped_leaderboard_score_WRONG": 0.5649606873152433,
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    },
+    "s43588-025-00920-8": {
+      "limits": {
+        "backbone_message_ids": null,
+        "tool_calls": null,
+        "score_bearing_evaluations": null,
+        "wall_time_seconds": 14400,
+        "tokens": {
+          "input": null,
+          "context_read": null,
+          "output": null
+        }
+      },
+      "starter": "../starters/naturebench_cold_start_v1",
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "cold_start",
+      "reference_compute_tier": "gpu_low",
+      "claude_code_score": 0.1,
+      "stop_target_policy": "surpass_threshold_strict_greater_than_0.1_not_historical_maximum"
+    }
+  },
+  "planner_reasoning": {
+    "effort": "medium",
+    "exclude": true
+  },
+  "search": {
+    "distribution": null,
+    "name": "bidirectional_research",
+    "parameters": {
+      "local_burst_counts_recombination": true,
+      "realization_diagnosis": true
+    }
+  }
+}

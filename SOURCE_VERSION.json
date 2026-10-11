@@ -1,0 +1,28 @@
+{
+  "schema_version": "hpcoevolve-code-release-v1",
+  "core": {
+    "repository": "https://github.com/Changanyuexia/BFC",
+    "frozen_f_commit": "fd98216ae41c62ef853020428e8180bec0316dde",
+    "integration_commit": "8e3d80f4ba0d9d402b08152df95865f5651a7d6e"
+  },
+  "adapters": {
+    "openproblems": "six-task external adapter from the fd98216 campaign, with bundled task runners",
+    "naturebench": "stable f profile and shared official-evaluator bridge",
+    "mlebench": "integration-commit public-validation and terminal-grade adapters"
+  },
+  "baselines": {
+    "aide": "final NatureBench deployment source, with DeepSeek routing, request timeout, evaluator source and non-UTF8 preview fixes",
+    "arbor": "final NatureBench deployment kit at pinned upstream 7cdaf1f",
+    "tusoai": "research-release runner v3 and transport guard v3",
+    "mlevolve": "pinned upstream config/layout plus isolated execution and usage-accounting wrappers"
+  },
+  "packaging_changes": [
+    "checkout-relative default paths",
+    "standalone source/config/test allowlist without old Git history",
+    "pinned upstream fetch helper",
+    "portable benchmark setup documentation",
+    "python -m evolvcoder entrypoint",
+    "MLE generator uses the stable f profile donor"
+  ],
+  "scope": "code release; no claim of a fresh full-dataset reproduction"
+}

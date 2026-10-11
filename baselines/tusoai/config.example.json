@@ -1,0 +1,51 @@
+{
+  "model": "deepseek-flash",
+  "base_url": "http://127.0.0.1:GUARD_PORT/api.deepseek.com",
+  "upstream_root": "/absolute/hpcoevolve/external/tusoai",
+  "template": "/absolute/hpcoevolve/baselines/tusoai/templates/starter_denoise.py",
+  "work": "/absolute/new-tusoai-run",
+  "task_root": "/absolute/openproblems/optimization/denoise",
+  "metric_direction": "maximize",
+  "task_description": "single cell RNA-seq imputation",
+  "data_available": "The sealed task package problem/README.md is the authoritative public contract.",
+  "seed": 0,
+  "limits": {
+    "wall_seconds": 10800,
+    "model_calls": 600,
+    "input_tokens": 10000000,
+    "output_tokens": 2000000,
+    "evaluations": 1000,
+    "max_output_tokens_per_call": 32000
+  },
+  "transport": {
+    "reasoning_effort": "medium",
+    "thinking": {
+      "type": "enabled"
+    },
+    "request_timeout_seconds": 600
+  },
+  "candidate_timeout": 1500,
+  "grader_timeout": 300,
+  "literature": {
+    "mode": "upstream_live",
+    "top_n": 10
+  },
+  "bridge_command": [
+    "/absolute/science/bin/python",
+    "/absolute/hpcoevolve/baselines/tusoai/isolated_bridge.py",
+    "--candidate",
+    "{candidate}",
+    "--task-root",
+    "{task_root}",
+    "--output-dir",
+    "{output_dir}",
+    "--driver",
+    "/absolute/hpcoevolve/benchmarks/openproblems/candidate_run.py",
+    "--runtime-python",
+    "/absolute/science/bin/python",
+    "--execution-timeout-seconds",
+    "1500",
+    "--grader-timeout-seconds",
+    "300"
+  ]
+}

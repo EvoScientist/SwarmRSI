@@ -1,0 +1,10 @@
+{
+  "search": {
+    "distribution": null,
+    "name": "bidirectional_research",
+    "parameters": {
+      "local_burst_counts_recombination": true,
+      "realization_diagnosis": true
+    }
+  }
+}

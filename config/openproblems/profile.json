@@ -1,0 +1,246 @@
+{
+  "model": "deepseek-flash",
+  "route": "https://api.deepseek.com",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "planner_reasoning": {
+    "effort": "medium",
+    "exclude": true
+  },
+  "native_coder_tools": true,
+  "native_planner_tools": true,
+  "parallel_tool_calls": null,
+  "seed": 0,
+  "proposal_batch_size": 1,
+  "screening_execution_limits": {
+    "runtime_artifact_directories": [
+      "catboost_info"
+    ],
+    "request_total_timeout_seconds": 600,
+    "model_calls_per_action": 32,
+    "tool_calls_per_action": 64,
+    "minimum_model_calls_to_start_action": 4,
+    "minimum_tool_calls_to_start_action": 4,
+    "minimum_output_tokens_to_start_action": 8000,
+    "minimum_wall_seconds_to_start_action": 2160,
+    "max_repairs_per_action": 6,
+    "validation_harness_retries": 2,
+    "evaluator_harness_retries": 2,
+    "enforce_context_read_token_limit": false,
+    "max_input_tokens_per_action_safety": 4000000,
+    "require_candidate_sandbox": true,
+    "execution_validation_timeout_seconds": 1500,
+    "full_evaluation_timeout_seconds": 300,
+    "wall_time_seconds_per_action": 3600,
+    "planner_output_tokens_per_batch": 24000,
+    "coder_output_tokens_per_turn": 32000,
+    "max_output_tokens_per_action": 768000,
+    "internal_validation_policy": "controller_only",
+    "write_first_enabled": true,
+    "coder_task_context_chars": 40000,
+    "coder_reasoning_off_after_truncations": 1,
+    "planner_reasoning_off_on_truncation": true,
+    "shift_aware_validation": true,
+    "coder_diff_mode": true,
+    "initial_root_drafts": 3,
+    "coder_no_silent_fallback": true,
+    "coder_fresh_program_for_new_method": true
+  },
+  "schema_version": "op-fd98216-seed0-profile-v1",
+  "benchmark": "OpenProblems",
+  "target_stop_scope": "evolved",
+  "minimum_completed_actions_before_target_stop": 3,
+  "search": {
+    "distribution": null,
+    "name": "bidirectional_research",
+    "parameters": {
+      "local_burst_counts_recombination": true,
+      "realization_diagnosis": true
+    }
+  },
+  "tasks": {
+    "denoise": {
+      "limits": {
+        "backbone_message_ids": 600,
+        "tool_calls": 1200,
+        "score_bearing_evaluations": 1000,
+        "wall_time_seconds": 10800,
+        "tokens": {
+          "input": 10000000,
+          "context_read": 10000000,
+          "output": 2000000
+        }
+      },
+      "starter": "../../data/openproblems/optimization/denoise/starter",
+      "search_metric": {
+        "name": "score",
+        "direction": "maximize",
+        "role": "public_validation"
+      },
+      "search_target": null,
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "baseline"
+    },
+    "label": {
+      "limits": {
+        "backbone_message_ids": 600,
+        "tool_calls": 1200,
+        "score_bearing_evaluations": 1000,
+        "wall_time_seconds": 10800,
+        "tokens": {
+          "input": 10000000,
+          "context_read": 10000000,
+          "output": 2000000
+        }
+      },
+      "starter": "../../data/openproblems/optimization/label/starter",
+      "search_metric": {
+        "name": "score",
+        "direction": "maximize",
+        "role": "public_validation"
+      },
+      "search_target": null,
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "baseline"
+    },
+    "batch": {
+      "limits": {
+        "backbone_message_ids": 600,
+        "tool_calls": 1200,
+        "score_bearing_evaluations": 1000,
+        "wall_time_seconds": 10800,
+        "tokens": {
+          "input": 10000000,
+          "context_read": 10000000,
+          "output": 2000000
+        }
+      },
+      "starter": "../../data/openproblems/optimization/batch/starter",
+      "search_metric": {
+        "name": "score",
+        "direction": "maximize",
+        "role": "public_validation"
+      },
+      "search_target": null,
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "baseline"
+    },
+    "svg": {
+      "limits": {
+        "backbone_message_ids": 600,
+        "tool_calls": 1200,
+        "score_bearing_evaluations": 1000,
+        "wall_time_seconds": 10800,
+        "tokens": {
+          "input": 10000000,
+          "context_read": 10000000,
+          "output": 2000000
+        }
+      },
+      "starter": "../../data/openproblems/optimization/svg/starter",
+      "search_metric": {
+        "name": "score",
+        "direction": "maximize",
+        "role": "public_validation"
+      },
+      "search_target": null,
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "baseline"
+    },
+    "decomp": {
+      "limits": {
+        "backbone_message_ids": 600,
+        "tool_calls": 1200,
+        "score_bearing_evaluations": 1000,
+        "wall_time_seconds": 10800,
+        "tokens": {
+          "input": 10000000,
+          "context_read": 10000000,
+          "output": 2000000
+        }
+      },
+      "starter": "../../data/openproblems/optimization/decomp/starter",
+      "search_metric": {
+        "name": "score",
+        "direction": "maximize",
+        "role": "public_validation"
+      },
+      "search_target": null,
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "baseline"
+    },
+    "visual": {
+      "limits": {
+        "backbone_message_ids": 600,
+        "tool_calls": 1200,
+        "score_bearing_evaluations": 1000,
+        "wall_time_seconds": 10800,
+        "tokens": {
+          "input": 10000000,
+          "context_read": 10000000,
+          "output": 2000000
+        }
+      },
+      "starter": "../../data/openproblems/optimization/visual/starter",
+      "search_metric": {
+        "name": "score",
+        "direction": "maximize",
+        "role": "public_validation"
+      },
+      "search_target": null,
+      "required_symbols": [
+        "main"
+      ],
+      "preserved_source_patterns": [
+        "DATA_DIR",
+        "OUTPUT_DIR"
+      ],
+      "root_kind": "baseline"
+    }
+  },
+  "reference_note": "Paper deployment targets are reporting references only; no deployment feedback or public threshold stopping.",
+  "resources": {
+    "cpus": 4,
+    "memory_gib": 50
+  },
+  "core_commit": "fd98216ae41c62ef853020428e8180bec0316dde",
+  "input_budget_enforcement": "Transport guard independently enforces 10M input tokens; preserve verified NB context counting behavior.",
+  "session_runtime_controls": {
+    "declared_inner_wall_seconds": 10800,
+    "trial_watchdog_seconds": 10800,
+    "session_finalize_reserve_seconds": 30.0,
+    "session_execution_wall_seconds": 10770.0
+  }
+}

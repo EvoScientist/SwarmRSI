@@ -1,0 +1,6 @@
+{
+  "aide": {"url": "https://github.com/WecoAI/aideml.git", "commit": "40dcf28fc3a39e93c7192acec0c9e2e9bffa973d"},
+  "arbor": {"url": "https://github.com/RUC-NLPIR/Arbor.git", "commit": "7cdaf1fa6d779b3d5e340052357bf3fe55dfed93"},
+  "mlevolve": {"url": "https://github.com/InternScience/MLEvolve.git", "commit": "9c5c8a3b23f0361708b59a401452dddc00f97189"},
+  "tusoai": {"url": "https://github.com/Alistair-Turcan/TusoAI.git", "commit": "097ac9a9430d5045d7b4e391b03f095084f9c3a3"}
+}

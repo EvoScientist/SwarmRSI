@@ -1,0 +1,9 @@
+{
+  "aide": {
+    "source_attestation": {
+      "aide/agent.py": "250607d8ab39d8cda1260dfbe7ed350f85e8cab7069f1fd297ed9cfbb3343be2",
+      "aide/journal.py": "960c485a69df48abe984aad798f99fb2d19942f2a77785ca81c906228a0315d2",
+      "aide/utils/config.yaml": "c5f0757448970ac791fa57127e25c169fc6024c50dd5ea8cb37d5d25f3097bf6"
+    }
+  }
+}

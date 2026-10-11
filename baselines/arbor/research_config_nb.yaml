@@ -1,0 +1,18 @@
+# Arbor (RUC-NLPIR/Arbor @7cdaf1f) on NatureBench, Snellius: DeepSeek v4.1 flash via the official
+# DeepSeek API, 4 h wall, one GPU, no web or literature search, as the H200 r2 protocol otherwise.
+llm:
+  provider: litellm
+  model: openai/deepseek-flash
+  base_url: https://api.deepseek.com
+  # DeepSeek official API: at 16384 (Arbor default) a high-effort turn can spend the whole output
+  # on reasoning, return no tool call, and Arbor then ends the run (02148, 2026-09-28).
+  max_tokens: 32768
+time_budget: 14400
+executor_timeout: 3600
+max_cycles: 20
+search:
+  backends: []
+  grounded_ideation: false
+  auto_search_on_add: false
+ui:
+  interaction_mode: auto
