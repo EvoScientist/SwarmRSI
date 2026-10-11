@@ -1,39 +1,151 @@
 # HPCoEvolve
 
-Hypothesis–program coevolution for scientific coding. This repository contains the stable **BFC f** search implementation, benchmark adapters, and baseline integrations used in the research project.
+**Hypothesis–Program Coevolution for Scientific Coding**
 
-## Contents
+HPCoEvolve is an agentic framework that jointly evolves scientific hypotheses and executable programs. It maintains a research graph connecting ideas, implementations, and experimental evidence, and uses execution feedback to decide what to explore next.
 
-- `src/evolvcoder/`: hypothesis/program frontiers, coupled selection, adaptation, planner/coder, isolated execution, and evaluation. The original Python package name is retained for compatibility.
-- `benchmarks/openproblems/`: all six tasks—denoising, label prediction, batch integration, spatially variable genes, spatial decomposition, and dimensionality reduction.
-- `benchmarks/naturebench/`, `config/naturebench/`: NatureBench's 90-task inventory and the stable f run profile.
-- `benchmarks/mlebench/`, `deploy/mle/`: MLE-Bench Lite task preparation, public validation, and separate official terminal grading.
-- `baselines/` and `src/evolvcoder/baselines/`: AIDE, Arbor, MLEvolve, and TusoAI integrations with pinned upstream sources.
-- `tests/`: implementation regression tests. Tests inside benchmark/baseline directories cover those integrations.
+The framework combines three mechanisms:
 
-No datasets, generated solutions, trajectories, credentials, experiment logs, paper files, or historical working directories are included.
+- **Coupled evolution selection:** allocate search effort between exploring hypotheses and refining programs using recent improvement, computational cost, and unresolved research requests.
+- **Cross-trajectory adaptation:** rebase a retained hypothesis onto another program, or combine complementary components from previously evaluated programs through crossover.
+- **Execution-grounded feedback:** evaluate candidate programs, retain useful implementations and failure evidence, and use the results to guide subsequent experiments.
 
-## Install
+HPCoEvolve supports **OpenProblems**, **NatureBench**, and **MLE-Bench Lite**, with integrations for AIDE, Arbor, MLEvolve, and TusoAI.
+
+## 1. Install
+
+Use Python 3.11 or 3.12. Candidate execution requires Linux and `bubblewrap`.
 
 ```bash
+git clone https://github.com/Changanyuexia/hpcoevolve.git
+cd hpcoevolve
+
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev,openproblems,mlebench-insults]' pillow pyarrow
+
+# Ubuntu / Debian
+sudo apt-get install bubblewrap
+
 python -m evolvcoder --help
-python -m pytest tests -q
 ```
 
-Candidate execution requires Linux with working `bubblewrap` and a separate scientific Python environment containing each task's dependencies. Controller installation alone does not prepare datasets or qualify a GPU runtime. See the README in each benchmark directory for entrypoints and preflight commands.
+The Python package and command-line interface use the name `evolvcoder`.
 
-## Source version
+## 2. Prepare the runtime and credentials
 
-The frozen f core is BFC commit `fd98216ae41c62ef853020428e8180bec0316dde`. This export uses its tested integration descendant `8e3d80f4ba0d9d402b08152df95865f5651a7d6e`, which includes PID namespace isolation, configurable model request settings, optional additional actions after a target, and grader compatibility fixes. It is **not a byte-identical export of every historical experiment**.
+Create a separate scientific Python environment with the packages required by your benchmark tasks. For OpenProblems, install the provided requirements into that environment:
 
-The active f search configuration is `config/search/stable_f.json`: `bidirectional_research` with `local_burst_counts_recombination` and `realization_diagnosis` enabled. Other optional research policies remain internal compatibility code; their presence does not mean they were enabled in the paper experiments. Benchmark profiles specify the actual enabled settings.
+```bash
+/absolute/science/bin/python -m pip install -r benchmarks/openproblems/requirements.txt
+```
 
-The six-task OpenProblems adapter and final AIDE/Arbor deployment integrations were maintained outside the frozen core and are included separately. `SOURCE_VERSION.json` records their source identities. Public profiles replace machine-specific paths; verify your local assets with preflight before a run.
+Set the path to that interpreter and your model credential:
 
-## Baselines
+```bash
+export SCIENCE_PYTHON=/absolute/science/bin/python
+export DEEPSEEK_API_KEY="your-api-key"
+```
+
+The examples below use the DeepSeek endpoint and the model configured in the supplied profiles. To use another backbone, update the profile's `model` and request settings, and pass its corresponding `--base-url`.
+
+## 3. Run a benchmark
+
+### NatureBench
+
+Prepare the official NatureBench task packages, including public inputs, task descriptions, metadata, and evaluators. The profile contains all 90 task IDs and uses the included cold-start program. See [NatureBench setup](benchmarks/naturebench/README.md) for the expected layout.
+
+```bash
+export NB_TASKS_ROOT=/absolute/naturebench/tasks
+
+# Check the task package and execution environment.
+python -m evolvcoder run-naturebench \
+  --profile config/naturebench/profile.json \
+  --tasks-root "$NB_TASKS_ROOT" \
+  --task-id s41467-025-63412-3 \
+  --runtime-python "$SCIENCE_PYTHON" \
+  --credential-env DEEPSEEK_API_KEY \
+  --base-url https://api.deepseek.com/v1 \
+  --seed 0 --run-dir "$PWD/runs/naturebench/example" --preflight
+
+# Start the search.
+python -m evolvcoder run-naturebench \
+  --profile config/naturebench/profile.json \
+  --tasks-root "$NB_TASKS_ROOT" \
+  --task-id s41467-025-63412-3 \
+  --runtime-python "$SCIENCE_PYTHON" \
+  --credential-env DEEPSEEK_API_KEY \
+  --base-url https://api.deepseek.com/v1 \
+  --seed 0 --run-dir "$PWD/runs/naturebench/example"
+```
+
+Change `--task-id` and `--run-dir` for each experiment. Task budgets and execution settings are configured in `config/naturebench/profile.json`.
+
+### OpenProblems
+
+The adapter supports six tasks: `denoise`, `label`, `batch`, `svg`, `decomp`, and `visual`.
+
+Prepare a dataset manifest following [OpenProblems setup](benchmarks/openproblems/README.md), then build the task package:
+
+```bash
+python benchmarks/openproblems/build_package.py \
+  --manifest /absolute/denoise-optimization.json \
+  --destination data/openproblems/optimization/denoise
+
+python -m evolvcoder run-naturebench \
+  --profile config/openproblems/profile.json \
+  --tasks-root data/openproblems/optimization \
+  --task-id denoise \
+  --runtime-python "$SCIENCE_PYTHON" \
+  --credential-env DEEPSEEK_API_KEY \
+  --base-url https://api.deepseek.com/v1 \
+  --seed 0 --run-dir "$PWD/runs/openproblems/denoise" --preflight
+```
+
+After preflight succeeds, repeat the run command without `--preflight`. OpenProblems uses the shared `run-naturebench` execution interface. Build optimization and deployment packages separately; use deployment data only to evaluate the selected final program.
+
+### MLE-Bench Lite
+
+Prepare the official MLE-Bench data and grader, then assemble a competition run. The 22 competition IDs are listed in [`lite22.txt`](benchmarks/mlebench/lite22.txt).
+
+```bash
+python deploy/mle/run_matched.py detecting-insults-in-social-commentary \
+  --root "$PWD/runs/mlebench" \
+  --prepared-root /absolute/prepared/data \
+  --mlebench-data-dir /absolute/mlebench/registry \
+  --official-source /absolute/mle-bench \
+  --python "$SCIENCE_PYTHON" \
+  --model deepseek-flash \
+  --base-url https://api.deepseek.com/v1 \
+  --seed 0 --internal-validation-policy controller_only
+```
+
+This generates a task package, profile, and run configuration. Set the generated configuration's credential source to your environment variable:
+
+```bash
+python - <<'PY'
+import json
+from pathlib import Path
+
+path = Path("runs/mlebench/configs/detecting-insults-in-social-commentary.json")
+config = json.loads(path.read_text())
+config["model"]["api_key_file"] = None
+config["model"]["api_key_env"] = "DEEPSEEK_API_KEY"
+path.write_text(json.dumps(config, indent=2) + "\n")
+PY
+
+python -m evolvcoder preflight \
+  --config runs/mlebench/configs/detecting-insults-in-social-commentary.json
+
+python -m evolvcoder run \
+  --config runs/mlebench/configs/detecting-insults-in-social-commentary.json
+```
+
+Configure resource limits and any offline model-cache paths for your machine before running. See [MLE-Bench setup](benchmarks/mlebench/README.md) for data preparation and official terminal grading.
+
+## 4. Run baselines
+
+Fetch the upstream implementations:
 
 ```bash
 python scripts/fetch_baseline.py aide
@@ -42,8 +154,43 @@ python scripts/fetch_baseline.py mlevolve
 python scripts/fetch_baseline.py tusoai
 ```
 
-These commands fetch pinned upstream source into ignored `external/` directories; they do not install packages or call a model. See [baseline setup](baselines/README.md). Upstream search algorithms are not reimplemented here. Published reference-only systems are not presented as runnable implementations.
+Install each baseline's dependencies in a separate environment, then follow the corresponding commands in [Baseline setup](baselines/README.md).
+
+| Baseline | Benchmark | Integration |
+|---|---|---|
+| AIDE | NatureBench | `scripts/run_aide_naturebench_cell.py` |
+| Arbor | NatureBench | `baselines/arbor/` |
+| MLEvolve | MLE-Bench | `baselines/mlevolve/` |
+| TusoAI | OpenProblems | `baselines/tusoai/` |
+
+## 5. Inspect results
+
+Search runs save candidate programs, evaluation records, and final reports under the chosen run directory.
+
+```bash
+python -m evolvcoder report --run /absolute/completed-run
+```
+
+NatureBench reports aggregate improvement over the reference method. OpenProblems reports task-specific scores. MLE-Bench uses public validation during search and official private-test grading for the final submission.
+
+## Development
+
+```bash
+python -m pytest tests -q
+
+# Six-task OpenProblems interface check
+PYTHONPATH=src "$SCIENCE_PYTHON" benchmarks/openproblems/synthetic_smoke.py
+```
+
+| Directory | Contents |
+|---|---|
+| `src/evolvcoder/` | Search, planning, coding, execution, and evaluation |
+| `config/` | Search settings, benchmark profiles, and starters |
+| `benchmarks/` | Benchmark setup and OpenProblems task adapters |
+| `deploy/mle/` | MLE-Bench task and run preparation |
+| `baselines/` | Baseline integrations and setup |
+| `tests/` | Regression tests |
 
 ## License
 
-Project code is Apache-2.0. See `LICENSE` and `THIRD_PARTY_NOTICES.md` for upstream and adapted-component attribution.
+HPCoEvolve is released under the [Apache-2.0 License](LICENSE). See [Third-party notices](THIRD_PARTY_NOTICES.md) for dependency and upstream attribution.
