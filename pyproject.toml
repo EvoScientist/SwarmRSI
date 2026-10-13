@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "evolvcoder"
 version = "0.3.0.dev1"
-description = "HPCoEvolve: hypothesis-program coevolution for scientific coding"
+description = "SwarmRSI: recursive self-improvement through evolving scientific agent swarms"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]

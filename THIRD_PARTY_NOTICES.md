@@ -1,6 +1,6 @@
 # Third-party notices
 
-HPCoEvolve retains the Apache-2.0 license and original attribution of its BFC source. The package name `evolvcoder` is preserved.
+SwarmRSI retains the Apache-2.0 license and original attribution of its BFC source. The package name `evolvcoder` is preserved.
 
 The baseline fetcher retrieves independently licensed upstream projects; their sources and datasets are not redistributed in this repository. Preserve each upstream checkout's LICENSE: AIDE (WecoAI/aideml), Arbor (RUC-NLPIR/Arbor), MLEvolve (InternScience/MLEvolve), and TusoAI (Alistair-Turcan/TusoAI). Exact revisions are in `baselines/upstreams.json`.
 

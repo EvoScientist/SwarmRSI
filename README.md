@@ -1,24 +1,24 @@
-# HPCoEvolve
+# SwarmRSI
 
-**Hypothesis–Program Coevolution for Scientific Coding**
+**Recursive Self-Improvement through Evolving Scientific Agent Swarms**
 
-HPCoEvolve is an agentic framework that jointly evolves scientific hypotheses and executable programs. It maintains a research graph connecting ideas, implementations, and experimental evidence, and uses execution feedback to decide what to explore next.
+SwarmRSI is a framework in which a swarm of scientific agents improves its research by evolving the research states its agents inherit: hypotheses, programs, experimental evidence and unresolved needs. A shared graph records every attempt, including failed attempts and attempts without gain, so each experiment updates the states that later agents start from.
 
 The framework combines three mechanisms:
 
-- **Coupled evolution selection:** allocate search effort between exploring hypotheses and refining programs using recent improvement, computational cost, and unresolved research requests.
-- **Cross-trajectory adaptation:** rebase a retained hypothesis onto another program, or combine complementary components from previously evaluated programs through crossover.
-- **Execution-grounded feedback:** evaluate candidate programs, retain useful implementations and failure evidence, and use the results to guide subsequent experiments.
+- **Feedback-Guided Swarm Mutation:** uses other agents' experimental feedback to decide whether to revise a hypothesis (H-mutation) or repair its program (P-mutation).
+- **Complementary Swarm Recombination:** tests a retained hypothesis on another agent's program (rebase) and combines components from programs with complementary strengths across instances (crossover).
+- **Recursive Swarm Evolution:** evaluates every candidate, returns its outcome to the shared graph, and uses a discounted-UCB index (H/P selection) to decide whether the next step revises a hypothesis or a program.
 
-HPCoEvolve supports **OpenProblems**, **NatureBench**, and **MLE-Bench Lite**, with integrations for AIDE, Arbor, MLEvolve, and TusoAI.
+SwarmRSI supports **OpenProblems**, **NatureBench**, and **MLE-Bench Lite**, with integrations for AIDE, Arbor, MLEvolve, and TusoAI.
 
 ## 1. Install
 
 Use Python 3.11 or 3.12. Candidate execution requires Linux and `bubblewrap`.
 
 ```bash
-git clone https://github.com/Changanyuexia/hpcoevolve.git
-cd hpcoevolve
+git clone https://github.com/Changanyuexia/SwarmRSI.git
+cd SwarmRSI
 
 python3.11 -m venv .venv
 source .venv/bin/activate
@@ -193,4 +193,4 @@ PYTHONPATH=src "$SCIENCE_PYTHON" benchmarks/openproblems/synthetic_smoke.py
 
 ## License
 
-HPCoEvolve is released under the [Apache-2.0 License](LICENSE). See [Third-party notices](THIRD_PARTY_NOTICES.md) for dependency and upstream attribution.
+SwarmRSI is released under the [Apache-2.0 License](LICENSE). See [Third-party notices](THIRD_PARTY_NOTICES.md) for dependency and upstream attribution.

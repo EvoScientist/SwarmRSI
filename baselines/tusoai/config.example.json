@@ -1,8 +1,8 @@
 {
   "model": "deepseek-flash",
   "base_url": "http://127.0.0.1:GUARD_PORT/api.deepseek.com",
-  "upstream_root": "/absolute/hpcoevolve/external/tusoai",
-  "template": "/absolute/hpcoevolve/baselines/tusoai/templates/starter_denoise.py",
+  "upstream_root": "/absolute/SwarmRSI/external/tusoai",
+  "template": "/absolute/SwarmRSI/baselines/tusoai/templates/starter_denoise.py",
   "work": "/absolute/new-tusoai-run",
   "task_root": "/absolute/openproblems/optimization/denoise",
   "metric_direction": "maximize",
@@ -32,7 +32,7 @@
   },
   "bridge_command": [
     "/absolute/science/bin/python",
-    "/absolute/hpcoevolve/baselines/tusoai/isolated_bridge.py",
+    "/absolute/SwarmRSI/baselines/tusoai/isolated_bridge.py",
     "--candidate",
     "{candidate}",
     "--task-root",
@@ -40,7 +40,7 @@
     "--output-dir",
     "{output_dir}",
     "--driver",
-    "/absolute/hpcoevolve/benchmarks/openproblems/candidate_run.py",
+    "/absolute/SwarmRSI/benchmarks/openproblems/candidate_run.py",
     "--runtime-python",
     "/absolute/science/bin/python",
     "--execution-timeout-seconds",

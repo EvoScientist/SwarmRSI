@@ -5,7 +5,7 @@
 set -u
 K=$(cd "$(dirname "$0")" && pwd)
 : "${CELL_DIR:?Set CELL_DIR to the prepared cell directory}"
-: "${SOURCE_ROOT:?Set SOURCE_ROOT to the hpcoevolve checkout}"
+: "${SOURCE_ROOT:?Set SOURCE_ROOT to the SwarmRSI checkout}"
 : "${RUNTIME_ROOT:?Set RUNTIME_ROOT to the scientific environment}"
 : "${TASKS_ROOT:?Set TASKS_ROOT to prepared NatureBench tasks}"
 : "${ARBOR_ENV:?Set ARBOR_ENV to the installed Arbor environment}"
