@@ -1,7 +1,7 @@
 """The coder is told which pretrained weights the offline sandbox can load."""
 from pathlib import Path
 
-from evolvcoder import naturebench_session as session
+from swarmrsi import naturebench_session as session
 
 
 def cache(tmp_path):

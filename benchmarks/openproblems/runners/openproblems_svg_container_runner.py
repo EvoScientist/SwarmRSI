@@ -13,7 +13,7 @@ import numpy as np
 
 
 def _load_solution(path: Path):
-    spec = importlib.util.spec_from_file_location("evocoder_svg_solution", path)
+    spec = importlib.util.spec_from_file_location("swarmrsi_svg_solution", path)
     if spec is None or spec.loader is None:
         raise RuntimeError("cannot import solution.py")
     module = importlib.util.module_from_spec(spec)

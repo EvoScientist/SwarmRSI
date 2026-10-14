@@ -5,11 +5,11 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 
-from evolvcoder.task_metrics import target, public_metric
-from evolvcoder.mlebench_tasks import validate_submission, METRIC
-from evolvcoder import mlebench_run as bridge
-from evolvcoder.configuration import Limits
-from evolvcoder.unified_run import compiled_profile
+from swarmrsi.task_metrics import target, public_metric
+from swarmrsi.mlebench_tasks import validate_submission, METRIC
+from swarmrsi import mlebench_run as bridge
+from swarmrsi.configuration import Limits
+from swarmrsi.unified_run import compiled_profile
 
 
 @pytest.mark.parametrize('value', [None, .8, 1.])
@@ -67,7 +67,7 @@ def test_identity_and_range_are_left_to_the_official_grader(fault):
 def test_terminal_budget_reserved_inside_total(tmp_path):
     profile = tmp_path / 'profile.json'
     profile.write_text(json.dumps({'model': 'synthetic', 'tasks': {'x': {'starter': str(tmp_path / 'starter'), 'search_metric': METRIC}}}))
-    from evolvcoder.configuration import ModelConfig, LearningConfig
+    from swarmrsi.configuration import ModelConfig, LearningConfig
     config = SimpleNamespace(task='x', benchmark='mlebench', model=ModelConfig('synthetic'),
         limits=Limits(model_calls=40, input_tokens=1000000, output_tokens=100000, tool_calls=80, evaluations=4, wall_seconds=3600),
         search=None, learning=LearningConfig())
@@ -90,7 +90,7 @@ def test_unknown_manifest_fields_rejected(tmp_path):
 
 
 def test_generic_cli_target_accepted_without_legacy_threshold(inputs):
-    from evolvcoder import naturebench_cli as cli
+    from swarmrsi import naturebench_cli as cli
     profile = json.loads(inputs.profile.read_text())
     entry = profile['tasks']['fixture']; entry.pop('claude_code_score'); entry['search_metric'] = METRIC
     inputs.profile.write_text(json.dumps(profile))

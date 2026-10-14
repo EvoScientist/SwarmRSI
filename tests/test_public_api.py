@@ -3,9 +3,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.api import Application, RunContext, RunResult, TaskSpec
-from evolvcoder.configuration import config_from_dict
-from evolvcoder.validation import EvaluatorObservationAdapter, FrozenEvoCoderValidator
+from swarmrsi.api import Application, RunContext, RunResult, TaskSpec
+from swarmrsi.configuration import config_from_dict
+from swarmrsi.validation import EvaluatorObservationAdapter, FrozenSwarmRSIValidator
 from test_naturebench_entrypoint import inputs  # noqa: F401
 from test_unified_run import setup  # noqa: F401
 
@@ -88,7 +88,7 @@ def test_completed_is_not_used_for_missing_delivery():
 
 def test_validator_has_no_default_or_legacy_import():
     with pytest.raises(TypeError):
-        FrozenEvoCoderValidator()
+        FrozenSwarmRSIValidator()
     with pytest.raises(ValueError):
         EvaluatorObservationAdapter("", lambda value: value)
     with pytest.raises(TypeError):
@@ -124,9 +124,9 @@ def test_classifier_failure_propagates_without_scientific_verdict():
 def test_uniform_report_is_evidence_bound_and_keeps_a_fixed_denominator(tmp_path, monkeypatch, capsys):
     """One row shape for every method; unfinished runs are never scored as losses."""
     import json as _json
-    from evolvcoder import cli
-    from evolvcoder.run_report import campaign_report, run_summary
-    from evolvcoder.retained_results import read_json
+    from swarmrsi import cli
+    from swarmrsi.run_report import campaign_report, run_summary
+    from swarmrsi.retained_results import read_json
 
     absent = tmp_path / "never_started"
     row = run_summary(absent)
@@ -151,16 +151,16 @@ def test_uniform_report_is_evidence_bound_and_keeps_a_fixed_denominator(tmp_path
 
 
 def test_report_summarizes_a_real_delivery_and_its_reference(setup, tmp_path):
-    from evolvcoder import unified_run
-    from evolvcoder.api import Application
-    from evolvcoder.run_report import campaign_report, run_summary
+    from swarmrsi import unified_run
+    from swarmrsi.api import Application
+    from swarmrsi.run_report import campaign_report, run_summary
     fixture, _, config, _, _ = setup
     ctx = unified_run.context_for(config, "reported")
     result = Application().run(ctx)
     assert result.status == "completed"
     row = run_summary(ctx.output_dir)
     assert row["evidence"] == "sealed_delivery" and row["status"] == "completed"
-    assert row["benchmark"] == "naturebench" and row["method"] == "evolvcoder" and row["task_id"] == "fixture"
+    assert row["benchmark"] == "naturebench" and row["method"] == "swarmrsi" and row["task_id"] == "fixture"
     assert row["score"] == result.score and row["best_native_metric"] == result.score
     assert row["accounting"]["model_calls"] >= 0 and row["terminal_status"]
     # The fixture profile records a -1.0 reference, and the synthetic root is the

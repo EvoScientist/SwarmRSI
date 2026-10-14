@@ -1,5 +1,5 @@
 """extra_actions_after_target: keep searching N actions after the target is first reached."""
-from evolvcoder.naturebench_session import target_stop_due
+from swarmrsi.naturebench_session import target_stop_due
 
 
 def run(metrics, minimum=3, threshold=0.1, extra=0):

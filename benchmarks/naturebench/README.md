@@ -1,11 +1,11 @@
 # NatureBench
 
-The installed adapter is `src/evolvcoder/naturebench_session.py`, with isolated execution and official scoring in `naturebench_evaluator.py`. `config/naturebench/profile.json` provides all 90 task IDs, declared task budgets, and the final f search/coder settings. It is a portable run template, not a manifest of every historical task-specific runtime override.
+The installed adapter is `src/swarmrsi/naturebench_session.py`, with isolated execution and official scoring in `naturebench_evaluator.py`. `config/naturebench/profile.json` provides all 90 task IDs, declared task budgets, and the final f search/coder settings. It is a portable run template, not a manifest of every historical task-specific runtime override.
 
 Obtain official NatureBench task assets separately (FrontisAI/NatureBench on Hugging Face). Preserve the task README, public data, hidden evaluation assets, metadata, and custody records expected by the bridge. The included `config/starters/naturebench_cold_start_v1/run.py` is the actual generic cold-start root. It creates placeholders, not a scientific solution; the three initial drafts implement task-specific programs. The template retains the strict Surpass target of 0.1 (stored under the legacy `claude_code_score` key). Point `starter` to a different prepared starter only when that is your declared protocol. Resolve profile paths relative to the profile file.
 
 ```bash
-python -m evolvcoder run-naturebench \
+python -m swarmrsi run-naturebench \
   --profile config/naturebench/profile.json \
   --tasks-root /absolute/prepared/naturebench/tasks \
   --task-id s41467-025-63412-3 \

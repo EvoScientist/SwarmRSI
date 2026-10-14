@@ -16,13 +16,13 @@ import threading
 
 import pytest
 
-from evolvcoder.api import Application
-from evolvcoder.configuration import config_from_dict
-from evolvcoder import cli, unified_run as unified, naturebench_cli as inner, naturebench_session as session
-from evolvcoder.installed_learning import InstalledValidationRunner
-from evolvcoder.retained_results import read_json
-from evolvcoder.tree_policy import TreePolicy
-from evolvcoder.rsi import ValidationPending
+from swarmrsi.api import Application
+from swarmrsi.configuration import config_from_dict
+from swarmrsi import cli, unified_run as unified, naturebench_cli as inner, naturebench_session as session
+from swarmrsi.installed_learning import InstalledValidationRunner
+from swarmrsi.retained_results import read_json
+from swarmrsi.tree_policy import TreePolicy
+from swarmrsi.rsi import ValidationPending
 from test_naturebench_entrypoint import inputs, synthetic_root
 
 
@@ -33,7 +33,7 @@ def setup(inputs, monkeypatch):
         "max_output_tokens_per_action": 30000, "wall_time_seconds_per_action": 6000}
     inputs.profile.write_text(json.dumps(profile))
     manifest = inputs.profile.parent / "assets.json"
-    manifest.write_text(json.dumps({"schema_version": "evolvcoder-naturebench-assets-v1", "profile": "profile.json",
+    manifest.write_text(json.dumps({"schema_version": "swarmrsi-naturebench-assets-v1", "profile": "profile.json",
                                     "tasks_root": "tasks", "trial_timeout_seconds": 100}))
     raw = {"benchmark": "naturebench", "task": "fixture", "model": {"model": "synthetic/model", "api_key_env": None,
         "api_key_file": str(inputs.credential_file), "base_url": "https://example.invalid"},
@@ -171,7 +171,7 @@ def test_settled_failed_trial_preserved_no_next_proposal(setup, monkeypatch):
 
 
 def test_rsi_complete_pair_and_fixed_wisdom_accumulate(setup, monkeypatch):
-    from evolvcoder.wisdom import WisdomLibrary
+    from swarmrsi.wisdom import WisdomLibrary
     inputs, _, config, models, executions = setup
     w0 = inputs.profile.parent / "W0.json"
     WisdomLibrary(inputs.profile.parent / "seed-wisdom").freeze(w0)
@@ -279,11 +279,11 @@ def test_two_rsi_rounds_compare_current_incumbent_and_reuse(setup, monkeypatch):
 
 @pytest.mark.parametrize("registry_type", ["historical", "learning", "collection"])
 def test_retained_winners_skip_before_key_or_runner(setup, monkeypatch, registry_type):
-    from test_evolvcoder_retained_results import run as archive, put
-    from test_evolvcoder_learning import make_run
-    from evolvcoder.retained_results import build_registry
-    from evolvcoder.learning_evidence import retain_learning_winners, source_ref
-    from evolvcoder.contracts import canonical_sha256
+    from test_swarmrsi_retained_results import run as archive, put
+    from test_swarmrsi_learning import make_run
+    from swarmrsi.retained_results import build_registry
+    from swarmrsi.learning_evidence import retain_learning_winners, source_ref
+    from swarmrsi.contracts import canonical_sha256
     inputs, _, config, _, executions = setup
     historical = inputs.profile.parent / "history"
     registry_path = inputs.profile.parent / "registry.json"
@@ -297,7 +297,7 @@ def test_retained_winners_skip_before_key_or_runner(setup, monkeypatch, registry
         registry = winners[0]
         if registry_type == "collection":
             path = inputs.profile.parent / "retained" / (evidence["run_id"] + ".json")
-            body = {"schema_version": "evolvcoder-retained-learning-collection-v1", "winner_refs": [source_ref(path)]}
+            body = {"schema_version": "swarmrsi-retained-learning-collection-v1", "winner_refs": [source_ref(path)]}
             registry = {**body, "collection_sha256": canonical_sha256(body)}
     put(registry_path, registry)
     profile = read_json(inputs.profile)
@@ -342,8 +342,8 @@ def test_env_secret_private_through_sdk_and_exception_restoration(setup, monkeyp
 
 
 def test_next_wisdom_preserves_previous_source_entries(setup):
-    from test_evolvcoder_learning import make_run
-    from evolvcoder.wisdom import WisdomLibrary
+    from test_swarmrsi_learning import make_run
+    from swarmrsi.wisdom import WisdomLibrary
     inputs, _, config, _, _ = setup
     prior = make_run(inputs.profile.parent / "history", role="development")
     library = WisdomLibrary(inputs.profile.parent / "seed-library"); library.ingest(prior)
@@ -359,7 +359,7 @@ def test_next_wisdom_preserves_previous_source_entries(setup):
 
 def container_runtime_config(inputs):
     import os
-    from evolvcoder.configuration import ContainerOptions, RuntimeConfig
+    from swarmrsi.configuration import ContainerOptions, RuntimeConfig
     from test_candidate_execution import IMAGE, PYTHON
     return RuntimeConfig(kind="container", python=inputs.runtime_python, image=IMAGE, cpus=1, memory_mb=1024,
                          container=ContainerOptions(python=PYTHON, uid=max(1, os.getuid()), gid=max(1, os.getgid()), tmp_mb=128))
@@ -367,7 +367,7 @@ def container_runtime_config(inputs):
 
 def test_container_runtime_binding_reaches_inner_session_and_is_restored(setup, monkeypatch):
     import subprocess
-    from evolvcoder.candidate_execution import for_context
+    from swarmrsi.candidate_execution import for_context
     from test_candidate_execution import PYTHON
     inputs, raw, config, models, executions = setup
     config = replace(config, runtime=container_runtime_config(inputs))

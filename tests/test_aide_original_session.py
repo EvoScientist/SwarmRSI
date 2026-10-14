@@ -15,11 +15,11 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.baselines.aide_execution import AideExecutionUnresolved
-from evolvcoder.baselines.aide_openrouter import assert_upstream_hashes, make_openrouter_query
-from evolvcoder.baselines.aide_session import AidePhaseCalls, AideSession
-from evolvcoder.baselines.aide_state import AideJournalStore, atomic_json, seal, unseal
-from evolvcoder.baselines.aide_transport import AideCallLedger, AideTransportUnresolved
+from swarmrsi.baselines.aide_execution import AideExecutionUnresolved
+from swarmrsi.baselines.aide_openrouter import assert_upstream_hashes, make_openrouter_query
+from swarmrsi.baselines.aide_session import AidePhaseCalls, AideSession
+from swarmrsi.baselines.aide_state import AideJournalStore, atomic_json, seal, unseal
+from swarmrsi.baselines.aide_transport import AideCallLedger, AideTransportUnresolved
 
 MODEL = "deepseek/deepseek-v4-pro"
 

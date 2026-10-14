@@ -8,9 +8,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import naturebench_cli as cli, naturebench_session as session
-from evolvcoder.campaign import VSearchCoordinator
-from evolvcoder.contracts import ProposalRejected, ScientificFamily
+from swarmrsi import naturebench_cli as cli, naturebench_session as session
+from swarmrsi.campaign import VSearchCoordinator
+from swarmrsi.contracts import ProposalRejected, ScientificFamily
 from test_brs_strategy import ResearchProposer, brs_campaign, brs, episode_of, run_steps, _eclc_params
 from test_naturebench_entrypoint import inputs  # noqa: F401
 

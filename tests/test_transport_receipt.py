@@ -3,15 +3,15 @@ import json
 
 import pytest
 
-from evolvcoder.contracts import canonical_sha256
-from evolvcoder.naturebench_session import atomic_json
-from evolvcoder.session_runtime import safe_transport_usage, transport_snapshot, verify_transport_snapshot
+from swarmrsi.contracts import canonical_sha256
+from swarmrsi.naturebench_session import atomic_json
+from swarmrsi.session_runtime import safe_transport_usage, transport_snapshot, verify_transport_snapshot
 
 
 def attempt(root, outcome=None):
     request = {"synthetic": True}
     atomic_json(root / "batch_000000.request.json", request)
-    base = {"schema_version": "evolvcoder-planner-transport-attempt-v1",
+    base = {"schema_version": "swarmrsi-planner-transport-attempt-v1",
             "batch": 0, "attempt": 0, "request_sha256": canonical_sha256(request), "timestamp_unix": 1000}
     atomic_json(root / "transport_attempts/batch_000000.attempt_000.started.json",
                 {**base, "provider_cost_status": "unknown"})

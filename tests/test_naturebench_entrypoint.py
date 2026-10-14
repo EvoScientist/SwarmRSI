@@ -7,8 +7,8 @@ import sys
 
 import pytest
 
-from evolvcoder import naturebench_cli as cli
-from evolvcoder import naturebench_session as session
+from swarmrsi import naturebench_cli as cli
+from swarmrsi import naturebench_session as session
 
 
 @pytest.fixture
@@ -64,9 +64,9 @@ def test_configure_rejects_invalid_selected_plugin(inputs, spec):
 def test_profile_paths_and_installed_source_authority_are_bound(inputs):
     protocol, context = cli.configure(inputs)
     refs = context["source_hashes"]
-    assert "evolvcoder/file_observation.py" in refs
-    assert "evolvcoder/naturebench_cli.py" in refs
-    assert "evolvcoder/naturebench_evaluator.py" in refs
+    assert "swarmrsi/file_observation.py" in refs
+    assert "swarmrsi/naturebench_cli.py" in refs
+    assert "swarmrsi/naturebench_evaluator.py" in refs
     assert str(inputs.tasks_root / "fixture/evaluation/evaluator.py") in refs
     assert str(inputs.tasks_root / "fixture/metadata.json") in refs
     assert not any(k.startswith(("src/", "scripts/")) for k in refs)
@@ -219,12 +219,12 @@ def test_changed_inputs_rejected_before_provider(inputs, monkeypatch):
 
 def test_real_installed_command_and_preflight_dispatch(inputs):
     environment = dict(os.environ); environment.pop("PYTHONPATH", None)
-    result = subprocess.run([sys.executable, "-m", "evolvcoder.cli", "run-naturebench", "--help"],
+    result = subprocess.run([sys.executable, "-m", "swarmrsi.cli", "run-naturebench", "--help"],
                             cwd=inputs.profile.parent, env=environment, capture_output=True, text=True)
     assert result.returncode == 0 and "--runtime-python" in result.stdout
     assert "--credential-file" in result.stdout and "--preflight" in result.stdout
-    assert "old evocoder" not in result.stderr
-    command = [sys.executable, "-m", "evolvcoder.cli", "run-naturebench",
+    assert "old swarmrsi" not in result.stderr
+    command = [sys.executable, "-m", "swarmrsi.cli", "run-naturebench",
                "--profile", str(inputs.profile), "--tasks-root", str(inputs.tasks_root),
                "--task-id", inputs.task_id, "--runtime-python", str(inputs.runtime_python),
                "--credential-file", str(inputs.credential_file), "--run-dir", str(inputs.run_dir),

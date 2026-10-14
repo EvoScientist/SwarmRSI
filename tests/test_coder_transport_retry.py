@@ -8,8 +8,8 @@ def test_coder_waits_between_transport_resends(monkeypatch):
     spent its two re-sends in under a second. The planner already waited; this pins
     that the coder does too, and that the wait never exceeds the action's wall.
     """
-    import evolvcoder.coder_engine as ce
-    from evolvcoder.naturebench_session import transport_backoff_seconds
+    import swarmrsi.coder_engine as ce
+    from swarmrsi.naturebench_session import transport_backoff_seconds
 
     slept = []
     monkeypatch.setattr(ce.time, "sleep", lambda s: slept.append(s))

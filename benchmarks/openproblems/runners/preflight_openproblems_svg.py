@@ -211,7 +211,7 @@ def evaluate_current_openproblems_correlation(
 
 def load_trusted_candidate(path: Path) -> Callable[[Any], Any]:
     spec = importlib.util.spec_from_file_location(
-        f"evocoder_svg_candidate_{file_sha256(path)[:12]}", path
+        f"swarmrsi_svg_candidate_{file_sha256(path)[:12]}", path
     )
     if spec is None or spec.loader is None:
         raise SVGContractError(f"cannot import candidate: {path}")
@@ -302,7 +302,7 @@ def preflight(
     warnings: list[str] = [
         "TusoAI-released SVG scoring is not the current OpenProblems "
         "Kendall-correlation metric.",
-        "The released input exposes true_spatial_var_score; formal EvoCoder "
+        "The released input exposes true_spatial_var_score; formal SwarmRSI "
         "runs must use protocol=sealed.",
         "The released evaluator integer-casts continuous alpha ground truth; "
         "report its score only as a matched TusoAI replay.",
@@ -350,7 +350,7 @@ def preflight(
         if not ok:
             blockers.append(f"frozen source mismatch: {name}")
 
-    adapter = manifest.get("evocoder_development_adapter", {})
+    adapter = manifest.get("swarmrsi_development_adapter", {})
     adapter_asset_status: dict[str, Any] = {}
     for name in (
         "starter",
@@ -371,9 +371,9 @@ def preflight(
             "ok": ok,
         }
         if not ok:
-            blockers.append(f"EvoCoder adapter asset mismatch: {name}")
+            blockers.append(f"SwarmRSI adapter asset mismatch: {name}")
 
-    terminal = manifest.get("evocoder_terminal_deployment_adapter", {})
+    terminal = manifest.get("swarmrsi_terminal_deployment_adapter", {})
     terminal_asset_status: dict[str, Any] = {}
     for name, path_key, digest_key in (
         ("contract", "path", "contract_sha256"),
@@ -390,7 +390,7 @@ def preflight(
             "ok": ok,
         }
         if not ok:
-            blockers.append(f"EvoCoder terminal adapter asset mismatch: {name}")
+            blockers.append(f"SwarmRSI terminal adapter asset mismatch: {name}")
     expected_dependency = str(terminal.get("search_evaluator_sha256", ""))
     search_adapter_path = ROOT / str(
         adapter.get("domain_evaluator", {}).get("path", "")
@@ -416,7 +416,7 @@ def preflight(
     }
     if not dependency_ok:
         blockers.append(
-            "EvoCoder terminal adapter transitive search-evaluator mismatch"
+            "SwarmRSI terminal adapter transitive search-evaluator mismatch"
         )
 
     dataset_roles = {
@@ -433,7 +433,7 @@ def preflight(
         and feedback_ids | deployment_ids == set(dataset_roles)
     )
     if not isolation_ok:
-        blockers.append("EvoCoder SVG search/deployment dataset isolation is invalid")
+        blockers.append("SwarmRSI SVG search/deployment dataset isolation is invalid")
 
     runtime_status: dict[str, Any] = {"required": require_runtime, "ok": None}
     if require_runtime and adapter_asset_status.get("domain_evaluator", {}).get("ok"):
@@ -527,14 +527,14 @@ def preflight(
             blockers.append(f"dataset not ready: {asset['dataset_id']}")
 
     return {
-        "schema_version": "evocoder-openproblems-svg-preflight-v1",
+        "schema_version": "swarmrsi-openproblems-svg-preflight-v1",
         "manifest": str(manifest_path.resolve()),
         "manifest_sha256": file_sha256(manifest_path),
         "python_dependencies": dependency_status,
         "repositories": repository_status,
         "frozen_sources": source_status,
-        "evocoder_adapter_assets": adapter_asset_status,
-        "evocoder_terminal_adapter_assets": terminal_asset_status,
+        "swarmrsi_adapter_assets": adapter_asset_status,
+        "swarmrsi_terminal_adapter_assets": terminal_asset_status,
         "search_deployment_isolation_ok": isolation_ok,
         "runtime": runtime_status,
         "datasets": dataset_status,

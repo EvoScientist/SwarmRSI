@@ -2,7 +2,7 @@
 and the controller refuses what cannot fit the public scale or the timeout."""
 import pytest
 
-from evolvcoder.planner_protocol import (COMPLEXITY_CLASSES, compile_proposal_slots, constrained_proposal_items,
+from swarmrsi.planner_protocol import (COMPLEXITY_CLASSES, compile_proposal_slots, constrained_proposal_items,
                                          cost_bound_structure_error, cost_gate_error, proposal_legality_error,
                                          proposal_structure_error)
 

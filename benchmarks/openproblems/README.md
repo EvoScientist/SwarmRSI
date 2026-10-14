@@ -10,7 +10,7 @@ Install `requirements.txt` into the scientific runtime. Supply a JSON manifest w
 python benchmarks/openproblems/build_package.py \
   --manifest /absolute/denoise-optimization.json \
   --destination data/openproblems/optimization/denoise
-python -m evolvcoder run-naturebench \
+python -m swarmrsi run-naturebench \
   --profile config/openproblems/profile.json \
   --tasks-root data/openproblems/optimization --task-id denoise \
   --runtime-python /absolute/science/bin/python \

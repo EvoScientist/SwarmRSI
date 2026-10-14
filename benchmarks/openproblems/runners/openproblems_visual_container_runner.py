@@ -25,7 +25,7 @@ class VisualContractError(ValueError):
 
 
 def _load_solution(path: Path):
-    spec = importlib.util.spec_from_file_location("evocoder_visual_solution", path)
+    spec = importlib.util.spec_from_file_location("swarmrsi_visual_solution", path)
     if spec is None or spec.loader is None:
         raise VisualContractError("cannot import solution.py")
     module = importlib.util.module_from_spec(spec)

@@ -6,7 +6,7 @@ evaluator loads it with a compat unpickler, so readiness must not call it unread
 import sys
 from pathlib import Path
 
-from evolvcoder.naturebench_evaluator import grader_readiness
+from swarmrsi.naturebench_evaluator import grader_readiness
 
 
 def write_task(tmp_path: Path, pickled: bytes) -> Path:

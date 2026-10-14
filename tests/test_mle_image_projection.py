@@ -156,7 +156,7 @@ def test_identical_starter_public_terminal_and_missing_test_rejected(tmp_path):
     for index, data in enumerate((out / 'problem/data', source / 'public')):
         target = tmp_path / f'predictions{index}'
         env = {**os.environ, 'DATA_DIR': str(data), 'OUTPUT_DIR': str(target),
-               'EVOLVCODER_SUBMISSION_FIT': 'full' if index else 'validation'}
+               'SWARMRSI_SUBMISSION_FIT': 'full' if index else 'validation'}
         subprocess.run([sys.executable, '-c', images.STARTER], check=True, env=env)
         sample = pd.read_csv(data / 'sample_submission.csv')
         submission = pd.read_csv(target / 'submission.csv')

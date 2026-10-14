@@ -4,12 +4,12 @@ import json
 
 import pytest
 
-from evolvcoder.campaign import VSearchCoordinator
-from evolvcoder.contracts import canonical_sha256
-from evolvcoder import naturebench_session as session
-from evolvcoder.search_plugins import SearchRegistry, SearchSpec, default_search_registry
-from evolvcoder.strategies import ContinuationTreeStrategy, MultiParentGraphStrategy
-from test_evolvcoder_incremental_feedback import campaign, next_step, RecordingProposer, ScriptedExecutor
+from swarmrsi.campaign import VSearchCoordinator
+from swarmrsi.contracts import canonical_sha256
+from swarmrsi import naturebench_session as session
+from swarmrsi.search_plugins import SearchRegistry, SearchSpec, default_search_registry
+from swarmrsi.strategies import ContinuationTreeStrategy, MultiParentGraphStrategy
+from test_swarmrsi_incremental_feedback import campaign, next_step, RecordingProposer, ScriptedExecutor
 
 
 def custom_factory(*, seed, parameters):

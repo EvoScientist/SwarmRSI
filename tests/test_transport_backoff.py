@@ -1,5 +1,5 @@
 """Re-sends after a transport failure wait long enough for a proxy outage to pass."""
-from evolvcoder.naturebench_session import transport_backoff_seconds
+from swarmrsi.naturebench_session import transport_backoff_seconds
 
 
 def test_backoff_grows_and_caps_at_two_minutes():

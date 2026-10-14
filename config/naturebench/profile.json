@@ -1,5 +1,5 @@
 {
-  "schema_version": "hpcoevolve-naturebench-stable-f-template-v1",
+  "schema_version": "swarmrsi-naturebench-stable-f-template-v1",
   "model": "deepseek-flash",
   "route": "https://api.deepseek.com",
   "provider": {

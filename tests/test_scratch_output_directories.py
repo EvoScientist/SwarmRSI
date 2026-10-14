@@ -1,10 +1,10 @@
 """Scratch output directories are ignored only when a run opts in, and never hide code by default."""
 from types import SimpleNamespace
 
-from evolvcoder import coder_engine
+from swarmrsi import coder_engine
 
 ENGINE = next(v for v in vars(coder_engine).values() if isinstance(v, type) and hasattr(v, '_ignored'))
-BASE = (".git/**", ".evolvcoder/**", "output/**", "**/__pycache__/**", ".pytest_cache/**", "*.pyc")
+BASE = (".git/**", ".swarmrsi/**", "output/**", "**/__pycache__/**", ".pytest_cache/**", "*.pyc")
 
 
 def ignored(patterns, relative):

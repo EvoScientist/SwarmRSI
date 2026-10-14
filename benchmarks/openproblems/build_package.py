@@ -127,7 +127,7 @@ def build(spec, destination, legacy_scripts, core_src):
     from task_readmes import readme
     (destination / 'problem/README.md').write_text(readme(task, names))
     sys.path.insert(0, str(core_src))
-    from evolvcoder.panel_tasks import seal, verify_assets
+    from swarmrsi.panel_tasks import seal, verify_assets
     visible = [str(p.relative_to(destination)) for sub in ('starter', 'problem') for p in (destination / sub).rglob('*') if p.is_file()]
     hidden = [str(p.relative_to(destination)) for p in evaluation.rglob('*') if p.is_file()]
     seal(destination, task_id=destination.name, metric=metric, candidate_visible=visible, controller_only=hidden)

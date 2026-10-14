@@ -27,10 +27,10 @@ python -m pip install -e '.[dev,openproblems,mlebench-insults]' pillow pyarrow
 # Ubuntu / Debian
 sudo apt-get install bubblewrap
 
-python -m evolvcoder --help
+python -m swarmrsi --help
 ```
 
-The Python package and command-line interface use the name `evolvcoder`.
+The Python package and command-line interface use the name `swarmrsi`.
 
 ## 2. Prepare the runtime and credentials
 
@@ -59,7 +59,7 @@ Prepare the official NatureBench task packages, including public inputs, task de
 export NB_TASKS_ROOT=/absolute/naturebench/tasks
 
 # Check the task package and execution environment.
-python -m evolvcoder run-naturebench \
+python -m swarmrsi run-naturebench \
   --profile config/naturebench/profile.json \
   --tasks-root "$NB_TASKS_ROOT" \
   --task-id s41467-025-63412-3 \
@@ -69,7 +69,7 @@ python -m evolvcoder run-naturebench \
   --seed 0 --run-dir "$PWD/runs/naturebench/example" --preflight
 
 # Start the search.
-python -m evolvcoder run-naturebench \
+python -m swarmrsi run-naturebench \
   --profile config/naturebench/profile.json \
   --tasks-root "$NB_TASKS_ROOT" \
   --task-id s41467-025-63412-3 \
@@ -92,7 +92,7 @@ python benchmarks/openproblems/build_package.py \
   --manifest /absolute/denoise-optimization.json \
   --destination data/openproblems/optimization/denoise
 
-python -m evolvcoder run-naturebench \
+python -m swarmrsi run-naturebench \
   --profile config/openproblems/profile.json \
   --tasks-root data/openproblems/optimization \
   --task-id denoise \
@@ -134,10 +134,10 @@ config["model"]["api_key_env"] = "DEEPSEEK_API_KEY"
 path.write_text(json.dumps(config, indent=2) + "\n")
 PY
 
-python -m evolvcoder preflight \
+python -m swarmrsi preflight \
   --config runs/mlebench/configs/detecting-insults-in-social-commentary.json
 
-python -m evolvcoder run \
+python -m swarmrsi run \
   --config runs/mlebench/configs/detecting-insults-in-social-commentary.json
 ```
 
@@ -168,7 +168,7 @@ Install each baseline's dependencies in a separate environment, then follow the 
 Search runs save candidate programs, evaluation records, and final reports under the chosen run directory.
 
 ```bash
-python -m evolvcoder report --run /absolute/completed-run
+python -m swarmrsi report --run /absolute/completed-run
 ```
 
 NatureBench reports aggregate improvement over the reference method. OpenProblems reports task-specific scores. MLE-Bench uses public validation during search and official private-test grading for the final submission.
@@ -184,7 +184,7 @@ PYTHONPATH=src "$SCIENCE_PYTHON" benchmarks/openproblems/synthetic_smoke.py
 
 | Directory | Contents |
 |---|---|
-| `src/evolvcoder/` | Search, planning, coding, execution, and evaluation |
+| `src/swarmrsi/` | Search, planning, coding, execution, and evaluation |
 | `config/` | Search settings, benchmark profiles, and starters |
 | `benchmarks/` | Benchmark setup and OpenProblems task adapters |
 | `deploy/mle/` | MLE-Bench task and run preparation |

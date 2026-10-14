@@ -7,12 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from evolvcoder import learning_analysis as analysis
-from evolvcoder.retained_results import read_json
-from evolvcoder.tree_policy import TreePolicy
-from evolvcoder.validation_failure import unavailable_record, ValidationUnavailable
-from test_evolvcoder_learning import setup_chain, Proposer
-from test_evolvcoder_retained_results import put
+from swarmrsi import learning_analysis as analysis
+from swarmrsi.retained_results import read_json
+from swarmrsi.tree_policy import TreePolicy
+from swarmrsi.validation_failure import unavailable_record, ValidationUnavailable
+from test_swarmrsi_learning import setup_chain, Proposer
+from test_swarmrsi_retained_results import put
 from test_installed_learning_analysis import prepare
 from test_naturebench_entrypoint import inputs  # noqa: F401
 

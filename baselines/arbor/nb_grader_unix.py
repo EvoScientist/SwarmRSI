@@ -54,7 +54,7 @@ def score(body: bytes, split: str) -> str:
         return f"score: {res['metrics']['aggregate_improvement']:.6f}  (official NatureBench, evaluation {n} of {MAX}; {MAX - n} left)"
     reason = json.dumps({k: res.get(k) for k in ("category", "reason", "detail", "error") if res.get(k)})[:1500]
     tail = ""
-    ev = code / ".evolvcoder/execution_validation.json"
+    ev = code / ".swarmrsi/execution_validation.json"
     if ev.is_file():
         tail = json.dumps(json.load(open(ev)))[-1500:]
     return f"error: invalid candidate (evaluation {n} of {MAX}; {MAX - n} left) {reason} {tail}"

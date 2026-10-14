@@ -4,12 +4,12 @@ import json
 
 import pytest
 
-from evolvcoder.api import Application
-from evolvcoder.configuration import config_from_dict, ConfigurationError
-from evolvcoder import unified_run
-from evolvcoder.retained_results import read_json
-from evolvcoder.search_plugins import SearchSpec
-from evolvcoder.search_policy import SearchPolicy, policy_from_record
+from swarmrsi.api import Application
+from swarmrsi.configuration import config_from_dict, ConfigurationError
+from swarmrsi import unified_run
+from swarmrsi.retained_results import read_json
+from swarmrsi.search_plugins import SearchSpec
+from swarmrsi.search_policy import SearchPolicy, policy_from_record
 from test_unified_run import setup  # noqa: F401
 from test_naturebench_entrypoint import inputs  # noqa: F401
 
@@ -63,9 +63,9 @@ def test_outer_learning_over_an_undeclaring_algorithm_is_refused_by_name(setup, 
 
 
 def test_declared_parameters_are_the_only_learnable_surface():
-    from evolvcoder.learning_policies import codec_for, learnable_policy
-    from evolvcoder.search_parameters import ParameterSpec, SearchParameterPolicy
-    from evolvcoder.search_plugins import default_search_registry
+    from swarmrsi.learning_policies import codec_for, learnable_policy
+    from swarmrsi.search_parameters import ParameterSpec, SearchParameterPolicy
+    from swarmrsi.search_plugins import default_search_registry
     spec = SearchSpec('bidirectional_research', {'allocator': {'discount_factor': 0.9, 'frontier_pressure_weight': 0.25}})
     algorithm = default_search_registry().create(spec)
     theta0 = learnable_policy(spec, algorithm)
@@ -104,7 +104,7 @@ def test_declared_parameters_are_the_only_learnable_surface():
 
 
 def test_policy_parser_checks_complete_descriptor_without_plugin_load(monkeypatch):
-    from evolvcoder import search_plugins
+    from swarmrsi import search_plugins
     monkeypatch.setattr(search_plugins.metadata, 'entry_points', lambda **kwargs: pytest.fail('read-only parser loaded plugin'))
     value = SearchPolicy(SearchSpec('external', distribution='not-installed')).to_dict()
     assert policy_from_record(value).to_dict() == value
@@ -130,8 +130,8 @@ def test_plugin_pending_and_failed_trials_never_relaunch(setup, settled):
 
 
 def test_plugin_run_analysis_does_not_load_plugin(setup, monkeypatch):
-    from evolvcoder import search_plugins
-    from evolvcoder.learning_analysis import analyze_learning
+    from swarmrsi import search_plugins
+    from swarmrsi.learning_analysis import analyze_learning
     _, _, config, _, _ = setup
     config = replace(config, search=SearchSpec('multi_parent_graph'))
     ctx = unified_run.context_for(config)
@@ -140,7 +140,7 @@ def test_plugin_run_analysis_does_not_load_plugin(setup, monkeypatch):
     report = analyze_learning(runner_roots=[ctx.output_dir / 'validation'])
     assert report['manifest']['chain_state'] is None
     assert len(report['validation_runs']) == 1 and report['policy_trials'] == []
-    from evolvcoder.learning_analysis import export_learning_analysis
+    from swarmrsi.learning_analysis import export_learning_analysis
     exported = export_learning_analysis(ctx.output_dir.parent / 'analysis', runner_roots=[ctx.output_dir / 'validation'])
     assert exported['chain_state'] is None and exported['verified_physical_terminal_runs'] == 1
 
@@ -149,12 +149,12 @@ def test_nonroot_public_graph_search_with_real_planner_journal(setup, monkeypatc
     from dataclasses import asdict
     from types import SimpleNamespace
     from unittest.mock import patch
-    from evolvcoder import naturebench_session as session
-    from evolvcoder.campaign import ActionExecution, artifact_workspace_sha256
-    from evolvcoder.coder_models import CoderOutcome, CoderExitStatus, CoderVersion
-    from evolvcoder.coder_openrouter import OpenRouterCoderModel
-    from evolvcoder.contracts import canonical_sha256
-    from evolvcoder.retained_results import output_attestation
+    from swarmrsi import naturebench_session as session
+    from swarmrsi.campaign import ActionExecution, artifact_workspace_sha256
+    from swarmrsi.coder_models import CoderOutcome, CoderExitStatus, CoderVersion
+    from swarmrsi.coder_openrouter import OpenRouterCoderModel
+    from swarmrsi.contracts import canonical_sha256
+    from swarmrsi.retained_results import output_attestation
     from learning_test_helpers import raw
     fixture, _, config, _, executions = setup
     profile = read_json(fixture.profile)
@@ -214,8 +214,8 @@ def test_nonroot_public_graph_search_with_real_planner_journal(setup, monkeypatc
 
 
 def learned_policy_record(spec, **values):
-    from evolvcoder.learning_policies import learnable_policy
-    from evolvcoder.search_plugins import default_search_registry
+    from swarmrsi.learning_policies import learnable_policy
+    from swarmrsi.search_plugins import default_search_registry
     algorithm = default_search_registry().create(spec)
     return learnable_policy(spec, algorithm, values).to_dict()
 

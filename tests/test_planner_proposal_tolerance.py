@@ -1,6 +1,6 @@
 """s41592-023-02035-2 stopped with four hours left because two proposals were refused
 for form, not substance: one omitted slot_index, one added a note key to family."""
-from evolvcoder.planner_protocol import proposal_legality_error
+from swarmrsi.planner_protocol import proposal_legality_error
 
 SLOT = {"slot_index": 0, "allowed_operators": ["combine_programs"], "repair_diagnostic_ids": [],
         "evidence_diagnostic_ids": ["a0004_6e26811c05"]}
@@ -35,7 +35,7 @@ def test_real_errors_are_still_refused():
     assert proposal_legality_error(proposal(slot_index="0"), SLOT) == "proposal_slot_index_mismatch"
 
 
-from evolvcoder.planner_protocol import normalize_proposal  # noqa: E402
+from swarmrsi.planner_protocol import normalize_proposal  # noqa: E402
 
 
 def test_predictions_nested_in_family_are_lifted_on_a_copy():

@@ -18,7 +18,7 @@ class BatchContractError(ValueError):
 
 
 def _load_solution(path: Path):
-    spec = importlib.util.spec_from_file_location("evocoder_batch_solution", path)
+    spec = importlib.util.spec_from_file_location("swarmrsi_batch_solution", path)
     if spec is None or spec.loader is None:
         raise BatchContractError("cannot import solution.py")
     module = importlib.util.module_from_spec(spec)
@@ -45,7 +45,7 @@ def sanitize_result(source: ad.AnnData, result: ad.AnnData) -> ad.AnnData:
     output.uns["normalization_id"] = str(
         source.uns.get("normalization_id", "unknown")
     )
-    output.uns["method_id"] = "evocoder_candidate"
+    output.uns["method_id"] = "swarmrsi_candidate"
     found = False
     if "corrected_counts" in result.layers:
         matrix = result.layers["corrected_counts"]
@@ -89,7 +89,7 @@ def sanitize_result(source: ad.AnnData, result: ad.AnnData) -> ad.AnnData:
     output.uns["normalization_id"] = str(
         source.uns.get("normalization_id", "unknown")
     )
-    output.uns["method_id"] = "evocoder_candidate"
+    output.uns["method_id"] = "swarmrsi_candidate"
     return output
 
 

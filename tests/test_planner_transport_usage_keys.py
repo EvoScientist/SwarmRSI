@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from evolvcoder import learning_evidence
-from evolvcoder.coder_openrouter import OpenRouterCoderModel, TRANSPORT_USAGE_KEYS
+from swarmrsi import learning_evidence
+from swarmrsi.coder_openrouter import OpenRouterCoderModel, TRANSPORT_USAGE_KEYS
 
 REQUEST = {"planner_payload": {"task": "synthetic"}}
 DECODED = {"proposals": [{"id": "p0", "operator": "improve_program"}], "_provider_finish_reason": "tool_calls"}

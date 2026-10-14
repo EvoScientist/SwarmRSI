@@ -1,6 +1,6 @@
 """Synthetic fixtures migrated from the original planner/tool tests."""
-from evolvcoder.naturebench_session import Planner
-from evolvcoder.coder_openrouter import OpenRouterCoderModel
+from swarmrsi.naturebench_session import Planner
+from swarmrsi.coder_openrouter import OpenRouterCoderModel
 
 class EmptyModel:
     def __init__(self):

@@ -13,18 +13,18 @@ from pathlib import Path
 
 import pytest
 
-from evolvcoder import naturebench_session as session
-from evolvcoder.brs_frontiers import HypothesisFrontier, ProgramFrontier, family_sha256, propose_pairs
-from evolvcoder.brs_models import HypothesisRecord, ProgramRepresentative, Requirement
-from evolvcoder.brs_strategy import BidirectionalResearchStrategy, ResearchDirective
-from evolvcoder.campaign import ActionExecution, ProgramNode, ProposedAction, VSearchCoordinator, artifact_workspace_sha256
-from evolvcoder.coder_models import CoderExitStatus, CoderOutcome, CoderVersion, ScientificActionContract
-from evolvcoder.configuration import ConfigurationError, config_from_dict
-from evolvcoder.contracts import ActionCandidate, ActionOperator, ResearchDependency, ScientificFamily, SearchObservation
-from evolvcoder.frontier_allocator import FrontierPressureAllocator
-from evolvcoder.search_plugins import default_search_registry
+from swarmrsi import naturebench_session as session
+from swarmrsi.brs_frontiers import HypothesisFrontier, ProgramFrontier, family_sha256, propose_pairs
+from swarmrsi.brs_models import HypothesisRecord, ProgramRepresentative, Requirement
+from swarmrsi.brs_strategy import BidirectionalResearchStrategy, ResearchDirective
+from swarmrsi.campaign import ActionExecution, ProgramNode, ProposedAction, VSearchCoordinator, artifact_workspace_sha256
+from swarmrsi.coder_models import CoderExitStatus, CoderOutcome, CoderVersion, ScientificActionContract
+from swarmrsi.configuration import ConfigurationError, config_from_dict
+from swarmrsi.contracts import ActionCandidate, ActionOperator, ResearchDependency, ScientificFamily, SearchObservation
+from swarmrsi.frontier_allocator import FrontierPressureAllocator
+from swarmrsi.search_plugins import default_search_registry
 from test_configuration import payload
-from test_evolvcoder_incremental_feedback import next_step
+from test_swarmrsi_incremental_feedback import next_step
 
 SHA = hashlib.sha256(b"brs-fixture").hexdigest()
 ROOT_SCORES = {"cl3": .5, "cl5": .5}
@@ -558,8 +558,8 @@ def test_incompatible_or_foreign_checkpoints_are_rejected(tmp_path):
 
 
 def test_wisdom_source_is_frozen():
-    path = Path(__file__).resolve().parents[1] / "src/evolvcoder/wisdom.py"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == "c444222e763a66dd5e8e8fef8d21ad78b206b0a17bc83fb079b820dfe8ba3339"
+    path = Path(__file__).resolve().parents[1] / "src/swarmrsi/wisdom.py"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == "6fefb14dad8d2eef2d7d276e003558542bb7dc03759465954d4efa09de9a6368"
 
 
 def test_session_and_run_config_accept_bidirectional_research_without_rsi(tmp_path):
@@ -727,7 +727,7 @@ def test_timed_out_realization_asks_for_a_bounded_cost_method_not_another_base(t
 # --- revision E: signed, per-task-scaled reward ----------------------------------------------
 
 def test_default_reward_shape_is_the_method_document_and_identity_is_unchanged():
-    from evolvcoder.frontier_allocator import FrontierPressureAllocator
+    from swarmrsi.frontier_allocator import FrontierPressureAllocator
     default = FrontierPressureAllocator(reward_scale=0.1)
     assert default.config["reward_shape"] == "clipped_improvement" and default.config["reward_scale_mode"] == "fixed"
     assert default.reward(0.05, 0.0) == pytest.approx(0.5) and default.reward(-0.69, 0.0) == 0.0
@@ -739,7 +739,7 @@ def test_default_reward_shape_is_the_method_document_and_identity_is_unchanged()
 
 
 def test_signed_gap_reward_keeps_the_sign_and_scales_by_the_root_to_reference_gap():
-    from evolvcoder.frontier_allocator import FrontierPressureAllocator
+    from swarmrsi.frontier_allocator import FrontierPressureAllocator
     allocator = FrontierPressureAllocator(reward_scale=0.1, reward_shape="signed_gap", reward_scale_mode="reference_gap")
     assert allocator.scale() == pytest.approx(0.1)                      # unbound: falls back to reward_scale
     assert allocator.set_reference_gap(0.068, -0.093) == pytest.approx(0.161)
@@ -1219,8 +1219,8 @@ def test_root_drafts_change_identity_only_when_on():
 
 
 def test_session_passes_profile_drafts_into_bidirectional_research():
-    from evolvcoder.search_policy import SearchPolicy, validate_execution_identity
-    from evolvcoder.search_plugins import SearchSpec
+    from swarmrsi.search_policy import SearchPolicy, validate_execution_identity
+    from swarmrsi.search_plugins import SearchSpec
     spec = {"name": "bidirectional_research", "parameters": {}}
     built = session.strategy("v1", 0, {"search": spec, "screening_execution_limits": {"initial_root_drafts": 2}})
     assert built._algorithm.tree.initial_root_drafts == 2

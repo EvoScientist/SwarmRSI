@@ -4,7 +4,7 @@ Fetch exact upstream revisions with `scripts/fetch_baseline.py`; install each up
 
 | Baseline | Adapter | Benchmark |
 |---|---|---|
-| AIDE | `scripts/run_aide_naturebench_cell.py`, `src/evolvcoder/baselines/` | NatureBench |
+| AIDE | `scripts/run_aide_naturebench_cell.py`, `src/swarmrsi/baselines/` | NatureBench |
 | Arbor | `baselines/arbor/` | NatureBench |
 | MLEvolve | `baselines/mlevolve/` | MLE-Bench |
 | TusoAI | `baselines/tusoai/` | OpenProblems six tasks |
@@ -48,7 +48,7 @@ The deployed runtime expects `/upstream`, `/public`, `/models`, `/output`, `/slo
 
 Start from `tusoai/config.example.json` and replace its explicit placeholders. A config must provide the upstream directory, template, work directory, task package, model (`deepseek-flash` for this preserved integration), metric direction, limits, task description, public contract, literature mode, and `bridge_command`. Use `upstream_live` literature or a hash-bound locally extracted paper cache; article contents are not redistributed. The bridge command invokes `isolated_bridge.py` with `{candidate}`, `{task_root}`, `{output_dir}`, the bundled candidate driver and your scientific Python. The guard publishes a local `/api.deepseek.com` endpoint and private client credential; the upstream API key stays in the guard.
 
-Set `EVOLVCODER_TRIAL_STARTED_AT_UNIX` and `OP_TRIAL_DEADLINE_UNIX` to the shared trial interval before execution. The 30-second finalization reserve and total wall include initialization. Deployment scoring remains separate from the search session.
+Set `SWARMRSI_TRIAL_STARTED_AT_UNIX` and `OP_TRIAL_DEADLINE_UNIX` to the shared trial interval before execution. The 30-second finalization reserve and total wall include initialization. Deployment scoring remains separate from the search session.
 
 Offline integration checks:
 

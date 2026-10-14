@@ -6,13 +6,13 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 import pytest
-from evolvcoder import mlebench_run as bridge, unified_run
-from evolvcoder import container_runtime
-from evolvcoder.configuration import ContainerOptions, RuntimeConfig
+from swarmrsi import mlebench_run as bridge, unified_run
+from swarmrsi import container_runtime
+from swarmrsi.configuration import ContainerOptions, RuntimeConfig
 from test_candidate_execution import IMAGE, PYTHON, completed_action
-from evolvcoder.api import RunResult
-from evolvcoder.contracts import canonical_sha256
-from evolvcoder.learning_evidence import source_ref
+from swarmrsi.api import RunResult
+from swarmrsi.contracts import canonical_sha256
+from swarmrsi.learning_evidence import source_ref
 
 
 def write(path, value):
@@ -33,10 +33,10 @@ def workflow(tmp_path, monkeypatch):
     prepared = tmp_path / 'data/prepared'; (prepared / 'public').mkdir(parents=True); (prepared / 'private').mkdir()
     custody = {'prepared': str(prepared), 'official_source': str(tmp_path / 'official')}
     assets = {'custody': tmp_path / 'custody.json', 'terminal_timeout_seconds': 600}
-    config = SimpleNamespace(task='synthetic', method='evolvcoder', runtime=RuntimeConfig(python=sys.executable),
+    config = SimpleNamespace(task='synthetic', method='swarmrsi', runtime=RuntimeConfig(python=sys.executable),
                              limits=SimpleNamespace(wall_seconds=3600), to_dict=lambda: {'synthetic': True})
     context = SimpleNamespace(run_id='synthetic', output_dir=output, config=config)
-    public = RunResult('synthetic', 'synthetic', 'evolvcoder', 'completed', original, .6,
+    public = RunResult('synthetic', 'synthetic', 'swarmrsi', 'completed', original, .6,
                        'synthetic-authority', final, 'public_search_done', {'evaluations': 3}, {})
     monkeypatch.setattr(bridge, 'manifest', lambda config: assets)
     monkeypatch.setattr(bridge, 'verify_assets', lambda path: custody)
@@ -58,7 +58,7 @@ def workflow(tmp_path, monkeypatch):
 
 def test_terminal_replay_and_environment_isolation(workflow, monkeypatch):
     import os
-    w = workflow; monkeypatch.setenv('EVOLVCODER_MODEL_CACHE', str(w.prepared / 'private'))
+    w = workflow; monkeypatch.setenv('SWARMRSI_MODEL_CACHE', str(w.prepared / 'private'))
     before = dict(os.environ)
     result = bridge.workflow_run(w.adapter, w.task, w.context)
     assert result.score == .7 and result.details['public_auc'] == .6
@@ -72,7 +72,7 @@ def test_terminal_binds_manifest_model_cache(workflow, monkeypatch, tmp_path):
     # that environment is restored, so it must bind the manifest cache itself.
     w = workflow; cache = tmp_path / 'model_cache'; cache.mkdir()
     bridge.manifest(w.context.config)['model_cache'] = cache
-    monkeypatch.delenv('EVOLVCODER_MODEL_CACHE', raising=False)
+    monkeypatch.delenv('SWARMRSI_MODEL_CACHE', raising=False)
     bridge.workflow_run(w.adapter, w.task, w.context)
     argv = w.calls[0]; bind = argv.index(str(cache.resolve()))
     assert argv[bind - 1] == '--ro-bind' and argv[bind + 1] == '/model_cache'

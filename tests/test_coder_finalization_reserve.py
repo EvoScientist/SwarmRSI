@@ -4,9 +4,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import coder_engine
-from evolvcoder import CoderExitStatus, ContractBoundedCoder
-from test_evolvcoder_coder import config, workspace
+from swarmrsi import coder_engine
+from swarmrsi import CoderExitStatus, ContractBoundedCoder
+from test_swarmrsi_coder import config, workspace
 
 
 @pytest.mark.parametrize("reserve", [0, -1, float("nan"), float("inf"), 600, True])

@@ -1,6 +1,6 @@
 import json
 
-from evolvcoder.run_cost import summarize_run_cost
+from swarmrsi.run_cost import summarize_run_cost
 
 
 def _event(payload):
@@ -29,7 +29,7 @@ def test_run_cost_sums_coder_and_planner_calls_and_flags_missing_fields(tmp_path
 
 def test_openrouter_records_cost_and_cached_tokens():
     from unittest.mock import patch
-    from evolvcoder.coder_openrouter import OpenRouterCoderModel
+    from swarmrsi.coder_openrouter import OpenRouterCoderModel
 
     payload = {"usage": {"prompt_tokens": 7, "completion_tokens": 3, "cost": 0.0001,
                          "prompt_tokens_details": {"cached_tokens": 5}},

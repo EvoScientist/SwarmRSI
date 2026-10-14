@@ -8,8 +8,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.baselines.aide_execution import AideExecutionUnresolved, AideNatureExecution
-from evolvcoder.baselines.aide_state import atomic_json, unseal
+from swarmrsi.baselines.aide_execution import AideExecutionUnresolved, AideNatureExecution
+from swarmrsi.baselines.aide_state import atomic_json, unseal
 
 
 @pytest.fixture
@@ -19,7 +19,7 @@ def executor(tmp_path, monkeypatch):
     bridge = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(bridge)
     monkeypatch.setattr(bridge.shutil, "which", lambda command: "/usr/bin/bwrap")
-    monkeypatch.delenv("EVOLVCODER_MODEL_CACHE", raising=False)
+    monkeypatch.delenv("SWARMRSI_MODEL_CACHE", raising=False)
     task = tmp_path / "task"
     (task / "problem/data").mkdir(parents=True)
     (task / "problem/data/public.txt").write_text("public input")
@@ -67,7 +67,7 @@ def fake_helper(executor, *, exc_type=None, produce_output=True, after=None):
 
 
 def test_one_execution_per_node_cache_continuity_and_immutable_snapshots(executor, monkeypatch):
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fake_helper(executor))
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fake_helper(executor))
     first = executor.execute(node_id="one", code="print(1)", execution_only=True)
     second = executor.execute(node_id="two", code="print(2)", execution_only=True)
     assert first["execution_result"]["term_out"] == ["real captured stdout\n", "real captured stderr\n"]
@@ -75,7 +75,7 @@ def test_one_execution_per_node_cache_continuity_and_immutable_snapshots(executo
     assert (executor.artifacts / "two/artifact/output/predictions.txt").read_text() == "2"
     assert (executor.artifacts / "one/workspace/working/count.txt").read_text() == "1"
     assert (executor.workspace / "working/count.txt").read_text() == "2"
-    assert not (executor.workspace / ".evolvcoder").exists()
+    assert not (executor.workspace / ".swarmrsi").exists()
     assert not (executor.workspace / "run.py").exists()
     assert second["evaluation"]["valid"] is True
     with pytest.raises(FileExistsError):
@@ -84,7 +84,7 @@ def test_one_execution_per_node_cache_continuity_and_immutable_snapshots(executo
 
 @pytest.mark.parametrize("exc_type,output", [("ValueError", False), (None, False)])
 def test_program_failure_retains_code_logs_and_never_scores(executor, monkeypatch, exc_type, output):
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run",
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run",
                         fake_helper(executor, exc_type=exc_type, produce_output=output))
     value = executor.execute(node_id="failed", code="raise ValueError('bad')")
     assert value["evaluation"]["valid"] is False
@@ -107,7 +107,7 @@ def test_completed_scoring_reconciles_without_reexecution(executor, monkeypatch,
                             "score_bearing_evaluation_attempted": True,
                             "metrics": {"aggregate_improvement": 0.25}})
         return SimpleNamespace(stdout="", stderr="", returncode=0)
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", run)
     bundle = executor.execute(node_id="recover", code="print(1)")
     assert len(invoked) == 2
     if damage == "code":
@@ -139,7 +139,7 @@ def test_scorer_completed_before_bundle_has_hash_bound_recovery(executor, monkey
                             "score_bearing_evaluation_attempted": True,
                             "metrics": {"aggregate_improvement": 0.25}})
         return SimpleNamespace(stdout="", stderr="", returncode=0)
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", run)
     original_score = executor.score
     def score_then_interrupt(**kwargs):
         original_score(**kwargs)
@@ -162,19 +162,19 @@ def test_scorer_completed_before_bundle_has_hash_bound_recovery(executor, monkey
 
 
 def test_failed_execution_reconciles_without_any_scorer(executor, monkeypatch):
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run",
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run",
                         fake_helper(executor, exc_type="ValueError", produce_output=False))
     bundle = executor.execute(node_id="recover-failure", code="raise ValueError()")
     def forbidden(*args, **kwargs):
         raise AssertionError("completed failed execution must never run or score again")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", forbidden)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", forbidden)
     assert executor.reconcile(node_id="recover-failure", code="raise ValueError()") == bundle
 
 
 def test_incomplete_execution_cannot_be_automatically_repeated(executor, monkeypatch):
     def fail(*args, **kwargs):
         raise OSError("interrupted before reliable receipt")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fail)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fail)
     with pytest.raises(OSError):
         executor.execute(node_id="uncertain", code="print(1)")
     with pytest.raises(AideExecutionUnresolved, match="do not rerun"):
@@ -182,17 +182,17 @@ def test_incomplete_execution_cannot_be_automatically_repeated(executor, monkeyp
 
 
 def test_execution_only_qualification_cannot_silently_start_scoring_on_recovery(executor, monkeypatch):
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fake_helper(executor))
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fake_helper(executor))
     executor.execute(node_id="execution-only", code="print(1)", execution_only=True)
     def forbidden(*args, **kwargs):
         raise AssertionError("qualification recovery cannot start a scientific evaluation")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", forbidden)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", forbidden)
     with pytest.raises(AideExecutionUnresolved, match="qualification cannot"):
         executor.reconcile(node_id="execution-only", code="print(1)")
 
 
 def test_execution_only_mode_retained_before_bundle_interrupt(executor, monkeypatch):
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fake_helper(executor))
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fake_helper(executor))
     def interrupt(phase, payload):
         if phase == "execution_complete":
             raise RuntimeError("cut after complete execution before bundle")
@@ -202,7 +202,7 @@ def test_execution_only_mode_retained_before_bundle_interrupt(executor, monkeypa
     assert not (executor.artifacts / "execution-only-cut/execution_bundle.json").exists()
     def forbidden(*args, **kwargs):
         raise AssertionError("recovery must not execute or score")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", forbidden)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", forbidden)
     with pytest.raises(AideExecutionUnresolved, match="qualification cannot"):
         executor.reconcile(node_id="execution-only-cut", code="print(1)")
 
@@ -214,7 +214,7 @@ def test_candidate_controller_path_cannot_redirect_host_write(executor, monkeypa
     sentinel = escaped / "keep.txt"
     sentinel.write_text("unchanged")
     def attack():
-        path = executor.workspace / ".evolvcoder"
+        path = executor.workspace / ".swarmrsi"
         if reserved_kind == "symlink":
             path.symlink_to(escaped, target_is_directory=True)
         elif reserved_kind == "directory":
@@ -222,15 +222,15 @@ def test_candidate_controller_path_cannot_redirect_host_write(executor, monkeypa
             (path / "execution_validation.json.tmp").symlink_to(sentinel)
         else:
             path.write_text("candidate object")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fake_helper(executor, after=attack))
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fake_helper(executor, after=attack))
     result = executor.execute(node_id="host_write_attack", code="print(1)", execution_only=True)
     assert result["evaluation"]["valid"] is True
     assert sentinel.read_text() == "unchanged"
     assert sorted(path.name for path in escaped.iterdir()) == ["keep.txt"]
-    retained = executor.artifacts / "host_write_attack/workspace/.evolvcoder"
+    retained = executor.artifacts / "host_write_attack/workspace/.swarmrsi"
     assert retained.exists() or retained.is_symlink()
     assert (executor.artifacts / "host_write_attack/program.py").is_file()
-    safe_receipt = executor.artifacts / "host_write_attack/artifact/.evolvcoder/execution_validation.json"
+    safe_receipt = executor.artifacts / "host_write_attack/artifact/.swarmrsi/execution_validation.json"
     assert not safe_receipt.parent.is_symlink() and safe_receipt.is_file()
 
 
@@ -241,7 +241,7 @@ def test_output_symlink_is_not_a_valid_execution_artifact(executor, monkeypatch,
     def attack():
         (executor.workspace / "output").rmdir()
         (executor.workspace / "output").symlink_to(target, target_is_directory=True)
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run",
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run",
                         fake_helper(executor, produce_output=False, after=attack))
     value = executor.execute(node_id="bad-output", code="print(1)", execution_only=True)
     assert value["evaluation"]["valid"] is False
@@ -259,7 +259,7 @@ def test_evaluator_failure_is_not_returned_as_buggy_candidate(executor, monkeypa
                             "score_bearing_evaluation_attempted": True,
                             "public_diagnostic": {"category": "official_evaluation"}})
         return SimpleNamespace(stdout="", stderr="", returncode=0)
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", run)
     with pytest.raises(AideExecutionUnresolved, match="not_candidate_bug"):
         executor.execute(node_id="grader-failure", code="print(1)")
     receipt = unseal(json.loads((executor.artifacts / "grader-failure/execution_receipt.json").read_text()))
@@ -271,7 +271,7 @@ def test_evaluator_failure_is_not_returned_as_buggy_candidate(executor, monkeypa
 def test_host_failure_still_retains_generated_program(executor, monkeypatch):
     def fail(*args, **kwargs):
         raise OSError("host launch failure")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fail)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fail)
     with pytest.raises(OSError):
         executor.execute(node_id="host-failure", code="print('retained')")
     assert (executor.artifacts / "host-failure/program.py").read_text() == "print('retained')"
@@ -280,7 +280,7 @@ def test_host_failure_still_retains_generated_program(executor, monkeypatch):
 def test_candidate_run_py_preserved_separately_from_original_source(executor, monkeypatch):
     def generated_auxiliary():
         (executor.workspace / "run.py").write_text("# auxiliary generated file")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run",
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run",
                         fake_helper(executor, after=generated_auxiliary))
     value = executor.execute(node_id="auxiliary", code="print('original')", execution_only=True)
     assert value["evaluation"]["valid"]
@@ -297,7 +297,7 @@ def test_scoring_timeout_cannot_silently_repeat_attempt(executor, monkeypatch):
         scorer_calls.append(command)
         import subprocess
         raise subprocess.TimeoutExpired(command, 35)
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", run)
     with pytest.raises(AideExecutionUnresolved, match="attempt_unresolved"):
         executor.execute(node_id="timed-grader", code="print(1)")
     assert (executor.artifacts / "timed-grader/score_started.json").is_file()
@@ -330,12 +330,12 @@ def test_prepare_resume_preserves_candidate_owned_failures_for_debug(executor, m
             output.write_text("broken output path")
         else:
             output.symlink_to(tmp_path / "absent-target")
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run",
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run",
                         fake_helper(executor, produce_output=False, after=break_output))
     failed = executor.execute(node_id="broken", code="print(1)", execution_only=True)
     assert not failed["evaluation"]["valid"]
     executor.prepare()  # Must not reject something an uninterrupted debug can fix.
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fake_helper(executor))
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fake_helper(executor))
     repaired = executor.execute(node_id="repaired", code="print(2)", execution_only=True)
     assert repaired["evaluation"]["valid"]
     assert (executor.artifacts / "broken/workspace/output").is_file() or kind == "symlink"

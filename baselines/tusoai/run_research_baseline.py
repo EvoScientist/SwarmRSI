@@ -131,7 +131,7 @@ def main():
     (work/'requests').mkdir(); (work/'evaluations').mkdir()
     write(work/'identity.json',identity)
     os.chdir(work);sys.path.insert(0,str(upstream))
-    l=Ledger(work,c['limits'],start_unix=float(os.environ['EVOLVCODER_TRIAL_STARTED_AT_UNIX']),
+    l=Ledger(work,c['limits'],start_unix=float(os.environ['SWARMRSI_TRIAL_STARTED_AT_UNIX']),
              deadline_unix=float(os.environ['OP_TRIAL_DEADLINE_UNIX'])); random.seed(c.get('seed',0))
     # Hard total wall includes literature and all initialization, unlike upstream TIME_LIMIT.
     signal.signal(signal.SIGALRM,lambda *_: (_ for _ in ()).throw(StopCell('wall_budget')))

@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from evolvcoder.model_defaults import DEFAULT_BACKBONE, DEFAULT_BASE_URL  # noqa: E402
+from swarmrsi.model_defaults import DEFAULT_BACKBONE, DEFAULT_BASE_URL  # noqa: E402
 
 DONOR = "config/naturebench/profile.json"
 
@@ -82,7 +82,7 @@ def load_envelope(path: Path) -> dict:
     missing = [k for k in require if k not in envelope]
     if missing:
         raise SystemExit(f"{path} is missing {missing}")
-    if envelope["schema_version"] != "evolvcoder-benchmark-envelope-v1":
+    if envelope["schema_version"] != "swarmrsi-benchmark-envelope-v1":
         raise SystemExit(f"{path}: unknown envelope schema {envelope['schema_version']!r}")
     return envelope
 
@@ -236,7 +236,7 @@ def build_profile(donor: Path, *, competition: str, metadata: dict, model: str,
             f"{wall_per_action * 0.55:.0f}s and cap the coder at 45% of every action. "
             f"Raise --per-action-wall-seconds above {(timeout + 30) / 0.55:.0f} or lower "
             f"--eval-timeout-seconds below {wall_per_action * 0.55 - 30:.0f}.")
-    profile["schema_version"] = "evolvcoder-mlebench-brs-panel-v1"
+    profile["schema_version"] = "swarmrsi-mlebench-brs-panel-v1"
     profile["selection_rule"] = (
         "MLE-Bench Lite split as published; siim-isic-melanoma-classification excluded "
         "for size. No score-based task selection.")
@@ -265,7 +265,7 @@ def main() -> int:
     parser.add_argument("--model", default=DEFAULT_BACKBONE)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--secret", default=".secrets/openrouter.json")
-    parser.add_argument("--image", default="evolvcoder-mle:h200")
+    parser.add_argument("--image", default="swarmrsi-mle:h200")
     parser.add_argument("--seed", type=int, default=1)
     parser.add_argument("--holdout", type=float, default=0.2)
     # MLEvolve's reference configuration for a candidate trial, as the MLE-Bench
@@ -488,7 +488,7 @@ def main() -> int:
     (root / "profiles").mkdir(exist_ok=True)
     (root / profile_name).write_text(json.dumps(profile, indent=1, sort_keys=True) + "\n")
 
-    assets = {"schema_version": "evolvcoder-mlebench-assets-v1", "profile": profile_name,
+    assets = {"schema_version": "swarmrsi-mlebench-assets-v1", "profile": profile_name,
               "tasks_root": "tasks", "custody": os.path.relpath(package / "custody.json", root),
               "trial_timeout_seconds": trial_timeout, "terminal_timeout_seconds": terminal_reserve}
     cache = args.model_cache or ((envelope or {}).get("ours") or {}).get("model_cache")
@@ -497,8 +497,8 @@ def main() -> int:
     assets_path = root / f"assets-{args.competition}.json"
     assets_path.write_text(json.dumps(assets, indent=1, sort_keys=True) + "\n")
 
-    config = {"schema_version": "evolvcoder-run-config-v1", "benchmark": "mlebench",
-              "benchmark_config": str(assets_path), "method": "evolvcoder",
+    config = {"schema_version": "swarmrsi-run-config-v1", "benchmark": "mlebench",
+              "benchmark_config": str(assets_path), "method": "swarmrsi",
               "task": args.competition, "seed": args.seed,
               "search": {"name": "bidirectional_research", "parameters": {
                   "consolidation_enabled": True,

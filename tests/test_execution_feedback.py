@@ -11,14 +11,14 @@ from pathlib import Path
 
 import pytest
 
-from evolvcoder import naturebench_evaluator as bridge
-from evolvcoder import naturebench_session as session
+from swarmrsi import naturebench_evaluator as bridge
+from swarmrsi import naturebench_session as session
 from test_grader_environment import _task
 
 
 def _run(tmp_path, task, workspace, *extra):
     result = tmp_path / ("result%d.json" % len(list(tmp_path.glob("result*.json"))))
-    subprocess.run([sys.executable, "-m", "evolvcoder.naturebench_evaluator", "--workspace", str(workspace),
+    subprocess.run([sys.executable, "-m", "swarmrsi.naturebench_evaluator", "--workspace", str(workspace),
                     "--result", str(result), "--task-root", str(task), "--runtime-python", sys.executable,
                     "--timeout-seconds", "120", *extra], capture_output=True, text=True)
     return json.loads(result.read_text())
@@ -43,8 +43,8 @@ def test_execution_only_keeps_the_trimmed_run_log_and_scoring_carries_it(tmp_pat
     assert log.startswith("epoch 0 val_auc") and "epoch 599 val_auc" in log
     assert "characters omitted" in log and "OpenBLAS" not in log and "train 12.5s" in log
     assert len(log) < bridge.EXECUTION_LOG_HEAD + bridge.EXECUTION_LOG_TAIL + 200
-    (workspace / ".evolvcoder").mkdir(exist_ok=True)
-    (workspace / ".evolvcoder/execution_validation.json").write_text(json.dumps(execution))
+    (workspace / ".swarmrsi").mkdir(exist_ok=True)
+    (workspace / ".swarmrsi/execution_validation.json").write_text(json.dumps(execution))
     scored = _run(tmp_path, task, workspace, "--score-existing-output")
     assert scored["valid"] is True
     assert scored["details"]["candidate_execution_log"] == log

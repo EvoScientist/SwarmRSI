@@ -19,7 +19,7 @@ mkdir -p $C/tmp/home $C/sock $C/grader_results
 rm -f $C/sock/*.sock
 python3 $K/allow_proxy_unix.py $C/sock/proxy.sock > $C/proxy.log 2>&1 & PROXY=$!
 cat > $C/grader_cfg.json <<CFG
-{"results": "$C/grader_results", "python": "$RT/bin/python", "evaluator": "$SRC/src/evolvcoder/naturebench_evaluator.py",
+{"results": "$C/grader_results", "python": "$RT/bin/python", "evaluator": "$SRC/src/swarmrsi/naturebench_evaluator.py",
  "task_root": "$TR/$TASK", "timeout": ${GRADER_TIMEOUT:-2400}, "pythonpath": "$SRC/src", "max_scores": 30, "socket": "$C/sock/grader.sock"}
 CFG
 $RT/bin/python $K/nb_grader_unix.py $C/spec.json $C/grader_cfg.json > $C/grader.log 2>&1 & GRADER=$!

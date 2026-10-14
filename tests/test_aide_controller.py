@@ -13,13 +13,13 @@ from types import SimpleNamespace
 
 import pytest
 
-import evolvcoder.baselines.aide_controller as controller
-from evolvcoder.baselines.aide_controller import AideRuntime, run_controller, verify_snapshot
-from evolvcoder.baselines.aide_openrouter import make_openrouter_query
-from evolvcoder.baselines.aide_resources import AideOperationBudget
-from evolvcoder.baselines.aide_session import AidePhaseCalls, AideSession
-from evolvcoder.baselines.aide_state import AideJournalStore, atomic_json, seal, unseal
-from evolvcoder.baselines.aide_transport import AideCallLedger
+import swarmrsi.baselines.aide_controller as controller
+from swarmrsi.baselines.aide_controller import AideRuntime, run_controller, verify_snapshot
+from swarmrsi.baselines.aide_openrouter import make_openrouter_query
+from swarmrsi.baselines.aide_resources import AideOperationBudget
+from swarmrsi.baselines.aide_session import AidePhaseCalls, AideSession
+from swarmrsi.baselines.aide_state import AideJournalStore, atomic_json, seal, unseal
+from swarmrsi.baselines.aide_transport import AideCallLedger
 from test_aide_original_session import MODEL, Provider, MockExecution, upstream
 
 

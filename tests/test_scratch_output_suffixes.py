@@ -3,10 +3,10 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import coder_engine, naturebench_session as session
+from swarmrsi import coder_engine, naturebench_session as session
 
 ENGINE = next(v for v in vars(coder_engine).values() if isinstance(v, type) and hasattr(v, '_ignored'))
-BASE = (".git/**", ".evolvcoder/**", "output/**", "**/__pycache__/**", ".pytest_cache/**", "*.pyc")
+BASE = (".git/**", ".swarmrsi/**", "output/**", "**/__pycache__/**", ".pytest_cache/**", "*.pyc")
 
 
 def ignored(patterns, relative):

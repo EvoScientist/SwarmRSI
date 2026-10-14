@@ -10,12 +10,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.baselines.aide_resources import (
+from swarmrsi.baselines.aide_resources import (
     AideOperationBudget, aide_run_lock, run_bounded_process,
 )
-from evolvcoder.baselines.aide_session import AidePhaseCalls
-from evolvcoder.baselines.aide_state import atomic_json, seal
-from evolvcoder.baselines.aide_transport import AideCallLedger, AideResourceStop
+from swarmrsi.baselines.aide_session import AidePhaseCalls
+from swarmrsi.baselines.aide_state import atomic_json, seal
+from swarmrsi.baselines.aide_transport import AideCallLedger, AideResourceStop
 from test_aide_execution_adapter import executor, fake_helper  # fixture, not an upstream replacement
 
 
@@ -133,7 +133,7 @@ def test_execute_does_not_dispatch_after_setup_consumes_deadline(executor, monke
     bound, clock = budget(tmp_path / "controller", executor.artifacts)
     executor.operation_budget = bound
     invoked = []
-    monkeypatch.setattr("evolvcoder.baselines.aide_resources.run_bounded_process",
+    monkeypatch.setattr("swarmrsi.baselines.aide_resources.run_bounded_process",
                         lambda *args, **kwargs: invoked.append(args))
     original_command = executor._command
 
@@ -170,19 +170,19 @@ def test_dispatch_shortens_both_helper_and_process_timeout(executor, monkeypatch
         assert kwargs["timeout"] == 35
         return helper(command, **kwargs)
 
-    monkeypatch.setattr("evolvcoder.baselines.aide_resources.run_bounded_process", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_resources.run_bounded_process", run)
     assert executor.execute(node_id="shorter", code="print(1)", execution_only=True,
                             phase_callback=phase)["evaluation"]["valid"] is True
 
 
 @pytest.mark.parametrize("slow_path", ["attestation", "receipt_write"])
 def test_score_does_not_dispatch_after_evidence_preparation_consumes_deadline(executor, monkeypatch, tmp_path, slow_path):
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.subprocess.run", fake_helper(executor))
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.subprocess.run", fake_helper(executor))
     executor.execute(node_id="score-setup", code="print(1)", execution_only=True)
     bound, clock = budget(tmp_path / "controller", executor.artifacts, scores=1)
     executor.operation_budget = bound
     invoked = []
-    monkeypatch.setattr("evolvcoder.baselines.aide_resources.run_bounded_process",
+    monkeypatch.setattr("swarmrsi.baselines.aide_resources.run_bounded_process",
                         lambda *args, **kwargs: invoked.append(args))
     original_attest, original_write = executor.bridge._attest, atomic_json
 
@@ -198,7 +198,7 @@ def test_score_does_not_dispatch_after_evidence_preparation_consumes_deadline(ex
             clock[0] += 101
 
     monkeypatch.setattr(executor.bridge, "_attest", attest)
-    monkeypatch.setattr("evolvcoder.baselines.aide_execution.atomic_json", write)
+    monkeypatch.setattr("swarmrsi.baselines.aide_execution.atomic_json", write)
     with pytest.raises(AideResourceStop, match="wall"):
         executor.score(node_id="score-setup")
     assert not invoked and bound.score_attempts() == 1
@@ -207,7 +207,7 @@ def test_score_does_not_dispatch_after_evidence_preparation_consumes_deadline(ex
 def test_run_lock_second_process_rejected_without_state_mutation(tmp_path):
     src = Path(__file__).resolve().parents[1] / "src"
     code = (
-        "from pathlib import Path; from evolvcoder.baselines.aide_resources import aide_run_lock; "
+        "from pathlib import Path; from swarmrsi.baselines.aide_resources import aide_run_lock; "
         f"ctx=aide_run_lock(Path({str(tmp_path)!r})); ctx.__enter__()"
     )
     with aide_run_lock(tmp_path):

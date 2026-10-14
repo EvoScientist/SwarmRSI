@@ -2,7 +2,7 @@
 import sys
 from pathlib import Path
 
-from evolvcoder import naturebench_evaluator as evaluator, naturebench_session as session
+from swarmrsi import naturebench_evaluator as evaluator, naturebench_session as session
 
 
 def test_search_and_terminal_sandboxes_share_the_cache_environment(tmp_path, monkeypatch):

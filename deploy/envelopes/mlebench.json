@@ -1,5 +1,5 @@
 {
- "schema_version": "evolvcoder-benchmark-envelope-v1",
+ "schema_version": "swarmrsi-benchmark-envelope-v1",
  "benchmark": "mlebench",
  "note": "One file per dataset. Every number states where it came from, so adding a dataset means writing its reference down rather than editing code, and every difference from that reference is listed rather than inherited by accident.",
  "reference": {

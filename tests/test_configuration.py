@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from evolvcoder.configuration import ConfigurationError, Limits, RuntimeConfig, config_from_dict, load_config
+from swarmrsi.configuration import ConfigurationError, Limits, RuntimeConfig, config_from_dict, load_config
 
 
 def payload():
@@ -129,7 +129,7 @@ def test_toml_and_json_have_same_semantics(tmp_path):
 
 
 def test_cli_checks_schema_only_and_does_not_read_credentials(tmp_path, capsys, monkeypatch):
-    from evolvcoder.cli import main
+    from swarmrsi.cli import main
     monkeypatch.setenv("OPENROUTER_API_KEY", "secret-not-in-output")
     path = tmp_path / "run.json"; path.write_text(json.dumps(payload()))
     assert main(["check-config", str(path)]) == 0
@@ -194,7 +194,7 @@ def test_remote_paths_do_not_expand_on_observer_host(tmp_path, runtime):
 
 
 def test_local_serialization_omits_container_and_container_options_round_trip(tmp_path):
-    from evolvcoder.configuration import ContainerOptions
+    from swarmrsi.configuration import ContainerOptions
     local = config_from_dict(payload(), base=tmp_path)
     assert local.runtime.container is None and "container" not in local.to_dict()["runtime"]
     data = payload(); data["runtime"] = {"kind": "container", "image": "sha256:" + "a" * 64, "cpus": 2, "memory_mb": 1024,

@@ -12,15 +12,15 @@ from unittest.mock import patch
 
 import pytest
 
-from evolvcoder import cli as public_cli, learning_cli as learning, naturebench_cli as inner
-from evolvcoder import naturebench_session as session
-from evolvcoder.installed_learning import InstalledValidationRunner, portable_profile
-from evolvcoder.learning_evidence import read_run_evidence, verify_run_evidence
-from evolvcoder.retained_results import read_json, write_immutable
-from evolvcoder.rsi import ValidationPending
-from evolvcoder.tree_policy import TreePolicy
-from test_evolvcoder_learning import make_run, FileValidator, Proposer
-from test_evolvcoder_learning_runtime import validation_runner
+from swarmrsi import cli as public_cli, learning_cli as learning, naturebench_cli as inner
+from swarmrsi import naturebench_session as session
+from swarmrsi.installed_learning import InstalledValidationRunner, portable_profile
+from swarmrsi.learning_evidence import read_run_evidence, verify_run_evidence
+from swarmrsi.retained_results import read_json, write_immutable
+from swarmrsi.rsi import ValidationPending
+from swarmrsi.tree_policy import TreePolicy
+from test_swarmrsi_learning import make_run, FileValidator, Proposer
+from test_swarmrsi_learning_runtime import validation_runner
 from test_naturebench_entrypoint import inputs, synthetic_root, forbid
 
 
@@ -30,7 +30,7 @@ def config_for(inputs):
     profile = read_json(inputs.profile)
     profile["tasks"]["fixture"]["claude_code_score"] = .5
     inputs.profile.write_text(json.dumps(profile))
-    config = {"schema_version": "evolvcoder-installed-learning-v1", "root": "learning",
+    config = {"schema_version": "swarmrsi-installed-learning-v1", "root": "learning",
               "profile": "profile.json", "tasks_root": "tasks", "runtime_python": sys.executable,
               "credential_file": "credential.json", "base_url": "https://example.invalid",
               "rounds": 2, "wisdom": {"mode": "readonly"}, "feedback_sources": [{
@@ -61,8 +61,8 @@ def test_installed_prepare_resolves_original_starter_and_is_idempotent(inputs, c
     assert len(pool.snapshot()["records"]) == 1
     root, command = runner._prepare(TreePolicy(parent_exploration_weight=1), "fixture", 0)
     assert read_json(root / "profile.json")["tasks"] == profile["tasks"]
-    assert command[1:3] == ["-m", "evolvcoder.naturebench_cli"]
-    assert not any("scripts/run_evolvcoder_v_search.py" in part for part in command)
+    assert command[1:3] == ["-m", "swarmrsi.naturebench_cli"]
+    assert not any("scripts/run_swarmrsi_v_search.py" in part for part in command)
     assert command[command.index("--base-url") + 1] == inputs.base_url
     assert "synthetic-never-sent" not in json.dumps(runner.config) + capsys.readouterr().out
 
@@ -158,7 +158,7 @@ def test_captured_runner_cannot_drift_before_first_trial(inputs, field):
 def test_real_installed_outer_help_prepare_status_and_zero_call_preflight(inputs):
     path, _ = config_for(inputs)
     env = dict(os.environ); env.pop("PYTHONPATH", None)
-    base = [sys.executable, "-m", "evolvcoder.cli", "learn"]
+    base = [sys.executable, "-m", "swarmrsi.cli", "learn"]
     def invoke(stage):
         return subprocess.run([*base, stage, "--config", str(path)], cwd=path.parent,
                               env=env, text=True, capture_output=True, timeout=60)
@@ -280,9 +280,9 @@ def test_real_child_clock_finishes_before_watchdog_including_startup(tmp_path, s
     code = """
 import json,os,sys,time
 from pathlib import Path
-from evolvcoder.session_runtime import SessionClock, runtime_clock_controls
+from swarmrsi.session_runtime import SessionClock, runtime_clock_controls
 time.sleep(float(sys.argv[2]))
-origin=float(os.environ['EVOLVCODER_TRIAL_STARTED_AT_UNIX'])
+origin=float(os.environ['SWARMRSI_TRIAL_STARTED_AT_UNIX'])
 clock=SessionClock(started_unix=time.time(), started_monotonic=time.monotonic(),
     wall_limit=1.5, identity={'synthetic_timer_only':True},
     runtime_controls=runtime_clock_controls(1.5,1.5), trial_started_unix=origin)
@@ -302,7 +302,7 @@ Path(sys.argv[1],'timer_final.json').write_text(json.dumps({
 
 
 def test_receipt_failure_still_cleans_actual_started_process(tmp_path, monkeypatch):
-    import evolvcoder.learning_trials as module
+    import swarmrsi.learning_trials as module
     runner = validation_runner(tmp_path)
     root = tmp_path / "receipt"; root.mkdir()
     original = module.write_immutable
@@ -334,7 +334,7 @@ def test_postfinal_control_error_preserves_evidence_and_blocks_next_trial(tmp_pa
 
 
 def test_secondary_control_receipt_failure_keeps_final_and_blocks_another_arm(inputs, monkeypatch):
-    import evolvcoder.learning_trials as module
+    import swarmrsi.learning_trials as module
     path, _ = config_for(inputs); record = learning.prepare(path)
     _, on, _ = learning.components(record, execute=True)
     off_root = Path(record["root"]) / "validation_no_wisdom"
@@ -390,7 +390,7 @@ def test_complete_installed_campaign_dispatch_accumulates_two_policy_rounds(inpu
         if "fixture" not in old["tasks"]:
             old["tasks"]["fixture"] = deepcopy(old["tasks"]["won"]); pp.write_text(json.dumps(old))
             manifest = Path(ev["run_dir"]) / "manifest.json"; m = read_json(manifest)
-            from evolvcoder.retained_results import file_sha
+            from swarmrsi.retained_results import file_sha
             m["source_hashes"]["profile.json"] = file_sha(pp); manifest.write_text(json.dumps(m))
             ev = read_run_evidence(Path(ev["run_dir"]), Path(ev["source_root"]), original_run_root="/original/run", source_role="selection")
             fixture.runs[(kwargs["policy"].sha256, kwargs["task_id"], kwargs["seed"])] = ev

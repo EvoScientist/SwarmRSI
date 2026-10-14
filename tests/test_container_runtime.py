@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import pytest
 
-from evolvcoder import container_runtime as runtime
+from swarmrsi import container_runtime as runtime
 
 
 @pytest.fixture
@@ -301,7 +301,7 @@ def test_cancel_of_completed_action_is_read_only(action, monkeypatch):
 
 
 def test_submission_fit_flag_is_allowlisted_but_secrets_still_are_not(spec):
-    environment = runtime.candidate_environment(spec, {"EVOLVCODER_SUBMISSION_FIT": "full"})
-    assert environment["EVOLVCODER_SUBMISSION_FIT"] == "full" and environment["DATA_DIR"] == "/public_data"
+    environment = runtime.candidate_environment(spec, {"SWARMRSI_SUBMISSION_FIT": "full"})
+    assert environment["SWARMRSI_SUBMISSION_FIT"] == "full" and environment["DATA_DIR"] == "/public_data"
     with pytest.raises(ValueError):
-        runtime.candidate_environment(spec, {"EVOLVCODER_SUBMISSION_FIT": "full", "OPENROUTER_API_KEY": "x"})
+        runtime.candidate_environment(spec, {"SWARMRSI_SUBMISSION_FIT": "full", "OPENROUTER_API_KEY": "x"})

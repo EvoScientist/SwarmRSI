@@ -7,24 +7,24 @@ from unittest.mock import Mock
 
 import pytest
 
-from evolvcoder import learning_cli
-from evolvcoder.learning_trials import SubprocessValidationRunner
-from evolvcoder.learning_evidence import FeedbackPool
-from evolvcoder.retained_results import read_json, write_immutable
-from evolvcoder.rsi import RSIChain, ValidationPending
-from evolvcoder.tree_policy import TreePolicy
-from evolvcoder.validation_failure import ValidationUnavailable, verify_unavailable
-from test_evolvcoder_learning import make_run, FileValidator, Proposer
+from swarmrsi import learning_cli
+from swarmrsi.learning_trials import SubprocessValidationRunner
+from swarmrsi.learning_evidence import FeedbackPool
+from swarmrsi.retained_results import read_json, write_immutable
+from swarmrsi.rsi import RSIChain, ValidationPending
+from swarmrsi.tree_policy import TreePolicy
+from swarmrsi.validation_failure import ValidationUnavailable, verify_unavailable
+from test_swarmrsi_learning import make_run, FileValidator, Proposer
 
 
 def runner_fixture(root, cells):
     source = root / 'source'
-    for directory in ('src/evolvcoder', 'scripts', 'starter'):
+    for directory in ('src/swarmrsi', 'scripts', 'starter'):
         (source / directory).mkdir(parents=True, exist_ok=True)
-    (source / 'src/evolvcoder/fixture.py').write_text('# synthetic\n')
+    (source / 'src/swarmrsi/fixture.py').write_text('# synthetic\n')
     (source / 'starter/run.py').write_text('# no scientific code executes\n')
     (source / 'scripts/evaluate_naturebench_local_workspace.py').write_text('# never called\n')
-    (source / 'scripts/run_evolvcoder_v_search.py').write_text(
+    (source / 'scripts/run_swarmrsi_v_search.py').write_text(
         'import sys\nraise SystemExit(0 if "--preflight" in sys.argv else 17)\n')
     profile = source / 'profile.json'
     write_immutable(profile, {'tree_search': {'policy': 'continuation_tree'},
@@ -143,7 +143,7 @@ def test_present_corrupted_final_is_not_reclassified_as_unavailable(tmp_path, po
 
 
 def test_crash_before_round_seal_does_not_read_credentials_or_reissue(tmp_path, monkeypatch):
-    import evolvcoder.rsi as module
+    import swarmrsi.rsi as module
     chain, pool, proposer, mixed, runner = paired_fixture(tmp_path, 2)
     original_write = module.write_immutable
     def fail_result(path, value):

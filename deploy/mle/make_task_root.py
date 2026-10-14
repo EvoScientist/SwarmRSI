@@ -33,10 +33,10 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from evolvcoder.contracts import canonical_sha256  # noqa: E402
-from evolvcoder.learning_evidence import source_ref  # noqa: E402
-from evolvcoder.mlebench_tasks import verify_assets  # noqa: E402
-from evolvcoder.retained_results import write_immutable  # noqa: E402
+from swarmrsi.contracts import canonical_sha256  # noqa: E402
+from swarmrsi.learning_evidence import source_ref  # noqa: E402
+from swarmrsi.mlebench_tasks import verify_assets  # noqa: E402
+from swarmrsi.retained_results import write_immutable  # noqa: E402
 
 STARTER = '''"""Uniform prior baseline: predict the training-set label frequencies for every row.
 
@@ -391,7 +391,7 @@ def carve_extra_folds(prepared: Path, root: Path, *, seed: int, holdout: float, 
 def score_starter_on_fold(python: str, root: Path, metric: str, fold: int) -> float:
     """The starter scored on one extra fold through the same fold view the search uses."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-    from evolvcoder.naturebench_evaluator import fold_evaluation_root
+    from swarmrsi.naturebench_evaluator import fold_evaluation_root
 
     work = Path(tempfile.mkdtemp(prefix=f"starter_{root.name}_fold{fold}_"))
     try:
@@ -798,7 +798,7 @@ def main() -> int:
     refs += [source_ref(p) for p in sorted((args.official_source / "mlebench").rglob("*"))
              if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc"]
     refs += [source_ref(p) for p in sorted(root.rglob("*")) if p.is_file()]
-    body = {"schema_version": "evolvcoder-mlebench-task-assets-v1", "task": args.competition,
+    body = {"schema_version": "swarmrsi-mlebench-task-assets-v1", "task": args.competition,
             "official_source": str(args.official_source), "official_revision": revision,
             "prepared": str(prepared), "search_metric": metric, "starter_baseline": measured,
             "refs": refs}

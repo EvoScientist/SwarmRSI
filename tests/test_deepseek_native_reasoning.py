@@ -7,7 +7,7 @@ both lines, at every effort level, at a realistic output budget. So reasoning is
 and the tool call is asked for rather than compelled -- parity with the OpenRouter route
 rather than a downgrade.
 """
-from evolvcoder.coder_openrouter import OpenRouterCoderModel
+from swarmrsi.coder_openrouter import OpenRouterCoderModel
 
 
 def build(base_url, effort="high"):

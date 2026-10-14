@@ -5,7 +5,7 @@ Use the official low-complexity split (22 competitions) from openai/mle-bench co
 - `deploy/mle/prepare_one.py`: prepare a competition with the official benchmark.
 - `deploy/mle/make_task_root.py`: separate public search validation from official private-test grading; includes image, page, record and subject-aware projections.
 - `deploy/mle/run_matched.py`: assemble a run package/profile/config and launcher.
-- `src/evolvcoder/mlebench_run.py`: preflight, search, retained candidate delivery and official terminal grading.
+- `src/swarmrsi/mlebench_run.py`: preflight, search, retained candidate delivery and official terminal grading.
 - `deploy/envelopes/mlebench.json`: declared resource envelope; override paths and choose budgets explicitly.
 
 ```bash

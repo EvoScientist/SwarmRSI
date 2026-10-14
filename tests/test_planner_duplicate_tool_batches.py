@@ -6,7 +6,7 @@ so the copies are redundant, not a batch split across calls. The provider cannot
 asked to stop: OpenRouter has no flash provider accepting parallel_tool_calls, and
 sending it alongside require_parameters routes to no provider and returns 404.
 """
-from evolvcoder.coder_openrouter import OpenRouterCoderModel
+from swarmrsi.coder_openrouter import OpenRouterCoderModel
 
 BATCH = {"type": "function",
          "function": {"name": "submit_proposals", "arguments": '{"proposals": [{"family": "f"}]}'}}

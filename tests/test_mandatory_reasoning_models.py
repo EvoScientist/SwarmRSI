@@ -7,7 +7,7 @@ Other models keep their exact request bodies.
 import json
 from unittest.mock import patch
 
-from evolvcoder.coder_openrouter import OpenRouterCoderModel
+from swarmrsi.coder_openrouter import OpenRouterCoderModel
 
 PAYLOAD = {"usage": {"prompt_tokens": 1, "completion_tokens": 1},
            "choices": [{"finish_reason": "tool_calls", "message": {"content": None, "tool_calls": [{

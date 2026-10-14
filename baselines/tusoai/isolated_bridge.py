@@ -13,13 +13,13 @@ def main():
     p.add_argument('--candidate-runtime-file',type=Path)
     a=p.parse_args();w=a.output_dir/'workspace';w.mkdir()
     shutil.copy2(a.candidate,w/'solution.py');shutil.copy2(a.driver,w/'run.py')
-    evidence=w/'.evolvcoder/execution_validation.json';evidence.parent.mkdir()
+    evidence=w/'.swarmrsi/execution_validation.json';evidence.parent.mkdir()
     result=a.output_dir/'external-result.json'
-    common=[sys.executable,'-m','evolvcoder.naturebench_evaluator','--workspace',str(w),'--task-root',str(a.task_root),
+    common=[sys.executable,'-m','swarmrsi.naturebench_evaluator','--workspace',str(w),'--task-root',str(a.task_root),
          '--runtime-python',a.runtime_python,'--require-candidate-sandbox']
     if a.candidate_runtime_file:common+=['--candidate-runtime-json',a.candidate_runtime_file.read_text()]
     env={k:v for k,v in os.environ.items() if not any(x in k.upper() for x in ('API_KEY','ACCESS_TOKEN','AUTH_TOKEN','SECRET'))
-         and k not in {'EVOLVCODER_TRIAL_STARTED_AT_UNIX','OP_TRIAL_DEADLINE_UNIX','BASELINE_CELL_DEADLINE_MONOTONIC'}}
+         and k not in {'SWARMRSI_TRIAL_STARTED_AT_UNIX','OP_TRIAL_DEADLINE_UNIX','BASELINE_CELL_DEADLINE_MONOTONIC'}}
     deadline=float(os.environ.get('BASELINE_CELL_DEADLINE_MONOTONIC','inf'))
     def phase(mode,destination,ceiling):
         remaining=deadline-time.monotonic()

@@ -1,7 +1,7 @@
 """A planner batch cut off at the output cap lowers reasoning effort instead of ending the run."""
 from types import SimpleNamespace
 
-from evolvcoder.naturebench_session import REASONING_EFFORTS, step_reasoning_down
+from swarmrsi.naturebench_session import REASONING_EFFORTS, step_reasoning_down
 
 
 def test_effort_steps_down_one_level_at_a_time_and_stops_at_the_floor():

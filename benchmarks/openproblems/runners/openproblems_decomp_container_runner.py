@@ -17,7 +17,7 @@ class DecompContractError(ValueError):
 
 
 def _load_solution(path: Path):
-    spec = importlib.util.spec_from_file_location("evocoder_decomp_solution", path)
+    spec = importlib.util.spec_from_file_location("swarmrsi_decomp_solution", path)
     if spec is None or spec.loader is None:
         raise DecompContractError("cannot import solution.py")
     module = importlib.util.module_from_spec(spec)

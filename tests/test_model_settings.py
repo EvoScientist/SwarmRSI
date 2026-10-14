@@ -6,11 +6,11 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from evolvcoder.configuration import ConfigurationError, Limits, ModelConfig
-from evolvcoder.model_settings import request_controls, profile_with_model_controls
-from evolvcoder import learning_cli, naturebench_cli, naturebench_session as session
-from evolvcoder.coder_openrouter import OpenRouterCoderModel
-from evolvcoder.session_limits import SessionLimits
+from swarmrsi.configuration import ConfigurationError, Limits, ModelConfig
+from swarmrsi.model_settings import request_controls, profile_with_model_controls
+from swarmrsi import learning_cli, naturebench_cli, naturebench_session as session
+from swarmrsi.coder_openrouter import OpenRouterCoderModel
+from swarmrsi.session_limits import SessionLimits
 from test_session_limits import ACTION, usage
 import test_naturebench_entrypoint as entry_tests
 
@@ -141,7 +141,7 @@ def test_invalid_profile_rejected_in_actual_installed_preflight(inputs, monkeypa
 
 
 def test_full_session_per_step_assignments_preserve_shared_http_cap(inputs, monkeypatch):
-    from test_evolvcoder_incremental_feedback import ScriptedExecutor
+    from test_swarmrsi_incremental_feedback import ScriptedExecutor
     from test_session_limits import SessionRecordingProposer
     from test_naturebench_entrypoint import synthetic_root
     profile = json.loads(inputs.profile.read_text())

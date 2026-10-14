@@ -6,10 +6,10 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import naturebench_cli as cli, naturebench_session as ns, session_runtime as sr
-from evolvcoder.coder_openrouter import OpenRouterCoderModel
-from evolvcoder.configuration import Limits
-from evolvcoder.session_limits import SessionLimits
+from swarmrsi import naturebench_cli as cli, naturebench_session as ns, session_runtime as sr
+from swarmrsi.coder_openrouter import OpenRouterCoderModel
+from swarmrsi.configuration import Limits
+from swarmrsi.session_limits import SessionLimits
 from test_naturebench_entrypoint import inputs, synthetic_root, forbid  # noqa: F401
 from test_session_limits import usage, ACTION
 
@@ -121,7 +121,7 @@ def test_deadline_checkpoint_without_final_cannot_restart(inputs, monkeypatch):
 
 
 def test_new_terminal_cannot_omit_unknown_usage_receipt(inputs, monkeypatch):
-    from evolvcoder.contracts import canonical_sha256
+    from swarmrsi.contracts import canonical_sha256
     prepare(inputs, monkeypatch)
     assert cli.execute(inputs) == 0
     cp_path, final_path = inputs.run_dir / "checkpoint.json", inputs.run_dir / "final.json"
@@ -199,7 +199,7 @@ def test_clock_restricts_executor_without_changing_accounted_wall(monkeypatch, t
 @pytest.mark.parametrize("during_evaluation", [False, True])
 def test_paid_coder_result_survives_evaluation_deadline(inputs, monkeypatch, during_evaluation):
     from test_internal_validation_gate import fake_coder, estimate
-    from test_evolvcoder_incremental_feedback import campaign
+    from test_swarmrsi_incremental_feedback import campaign
     cli.configure(inputs)
     loop = campaign(inputs.profile.parent / "evaluation-case", scores=[])
     loop.expand()

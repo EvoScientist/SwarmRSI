@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import coder_engine as ce, naturebench_session as ns
+from swarmrsi import coder_engine as ce, naturebench_session as ns
 
 
 def engine(model):

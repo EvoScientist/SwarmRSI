@@ -4,17 +4,17 @@ from unittest.mock import patch
 
 import pytest
 
-from evolvcoder import cli, naturebench_session as session
-from evolvcoder.contracts import canonical_sha256
-from evolvcoder.installed_learning import InstalledValidationRunner, portable_profile
-from evolvcoder.learning_analysis import analyze_learning, export_learning_analysis
-from evolvcoder.learning_evidence import source_ref
-from evolvcoder.retained_results import read_json
-from evolvcoder.tree_policy import TreePolicy
-from evolvcoder.validation_failure import unavailable_record, ValidationUnavailable
-from test_evolvcoder_learning import setup_chain, Proposer
-from test_evolvcoder_learning_analysis import inventory
-from test_evolvcoder_retained_results import put
+from swarmrsi import cli, naturebench_session as session
+from swarmrsi.contracts import canonical_sha256
+from swarmrsi.installed_learning import InstalledValidationRunner, portable_profile
+from swarmrsi.learning_analysis import analyze_learning, export_learning_analysis
+from swarmrsi.learning_evidence import source_ref
+from swarmrsi.retained_results import read_json
+from swarmrsi.tree_policy import TreePolicy
+from swarmrsi.validation_failure import unavailable_record, ValidationUnavailable
+from test_swarmrsi_learning import setup_chain, Proposer
+from test_swarmrsi_learning_analysis import inventory
+from test_swarmrsi_retained_results import put
 from test_installed_learning import runner_for
 from test_naturebench_entrypoint import inputs  # noqa: F401 -- shared pytest fixture
 
@@ -59,7 +59,7 @@ def test_original_installed_argv_and_public_export_without_execution(inputs, tmp
     assert row["status"] == "launch_intent_process_unknown"
     assert row["process_liveness"] == "not_checked" and row["reported_cost_usd"] is None
     assert row["wisdom_usage_batches"] is None
-    assert command[1:3] == ["-m", "evolvcoder.naturebench_cli"]
+    assert command[1:3] == ["-m", "swarmrsi.naturebench_cli"]
     assert {k: v for k, v in inventory(tmp_path).items() if not k.startswith("export/")} == before
 
 
@@ -143,7 +143,7 @@ def test_chain_only_unavailable_protects_implicit_runner_and_source(inputs, tmp_
 
 
 def test_appearing_destination_keeps_other_writers_output(inputs, tmp_path, monkeypatch):
-    import evolvcoder.learning_analysis as module
+    import swarmrsi.learning_analysis as module
     runner, _, _ = prepare(inputs, "file")
     chain, _ = setup_chain(tmp_path / "chain")
     output = tmp_path / "export"

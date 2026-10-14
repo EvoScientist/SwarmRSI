@@ -8,7 +8,7 @@ def test_accelerator_section_states_what_the_candidate_can_see(monkeypatch):
     measured in the candidate runtime rather than assumed, so a CPU-only deployment
     still gets told the truth.
     """
-    import evolvcoder.naturebench_session as ns
+    import swarmrsi.naturebench_session as ns
 
     class Probe:
         def __init__(self, out, rc=0): self.stdout, self.returncode = out, rc

@@ -14,9 +14,9 @@ import uuid
 
 import pytest
 
-from evolvcoder import candidate_execution as backend
-from evolvcoder import container_runtime as runtime
-from evolvcoder.configuration import config_from_dict
+from swarmrsi import candidate_execution as backend
+from swarmrsi import container_runtime as runtime
+from swarmrsi.configuration import config_from_dict
 from test_configuration import payload
 from test_container_runtime import inspected, install_request
 
@@ -204,7 +204,7 @@ def test_execute_forwards_an_explicit_environment_only_when_given(tmp_path, monk
     calls = []
     monkeypatch.setattr(runtime, "run", lambda spec, **kwargs: calls.append(kwargs) or {"status": "synthetic"})
     backend.execute(binding, workspace=root / "workspace", public_data=root / "public",
-                    argv=[PYTHON, "run.py"], timeout=5, environment={"EVOLVCODER_SUBMISSION_FIT": "full"})
-    assert calls[0]["environment"] == {"EVOLVCODER_SUBMISSION_FIT": "full"}
+                    argv=[PYTHON, "run.py"], timeout=5, environment={"SWARMRSI_SUBMISSION_FIT": "full"})
+    assert calls[0]["environment"] == {"SWARMRSI_SUBMISSION_FIT": "full"}
     backend.execute(binding, workspace=root / "workspace", public_data=root / "public", argv=[PYTHON, "run.py"], timeout=5)
     assert "environment" not in calls[1]

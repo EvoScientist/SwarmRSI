@@ -177,7 +177,7 @@ def test_main_and_identical_native_public_terminal_contract(tmp_path):
     for index, data in enumerate((out / 'problem/data', source / 'public')):
         output = tmp_path / f'output{index}'
         env = {**os.environ, 'DATA_DIR': str(data), 'OUTPUT_DIR': str(output),
-            'EVOLVCODER_SUBMISSION_FIT': 'full' if index else 'validation'}
+            'SWARMRSI_SUBMISSION_FIT': 'full' if index else 'validation'}
         subprocess.run([sys.executable, '-c', aptos.STARTER], check=True, env=env)
         prediction = pd.read_csv(output / 'submission.csv', dtype={'id_code': str})
         sample = pd.read_csv(data / 'sample_submission.csv', dtype={'id_code': str})

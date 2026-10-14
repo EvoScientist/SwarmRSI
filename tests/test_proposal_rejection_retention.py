@@ -5,9 +5,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import naturebench_cli as cli, naturebench_session as session
-from evolvcoder.contracts import ActionOperator, ProposalRejected, ScientificFamily
-from evolvcoder.campaign import VSearchCoordinator
+from swarmrsi import naturebench_cli as cli, naturebench_session as session
+from swarmrsi.contracts import ActionOperator, ProposalRejected, ScientificFamily
+from swarmrsi.campaign import VSearchCoordinator
 from test_brs_strategy import brs_campaign, brs, run_steps, _eclc_params
 from test_naturebench_entrypoint import inputs, synthetic_root, forbid  # noqa: F401
 

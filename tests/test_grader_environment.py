@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from evolvcoder import naturebench_evaluator as bridge
+from swarmrsi import naturebench_evaluator as bridge
 
 
 @pytest.mark.parametrize("text", [
@@ -76,7 +76,7 @@ def _task(tmp_path, grader_body, *, sota="~0.822"):
 
 def _score(tmp_path, task, workspace):
     result = tmp_path / "result.json"
-    rc = subprocess.run([sys.executable, "-m", "evolvcoder.naturebench_evaluator",
+    rc = subprocess.run([sys.executable, "-m", "swarmrsi.naturebench_evaluator",
                          "--workspace", str(workspace), "--result", str(result),
                          "--task-root", str(task), "--runtime-python", sys.executable,
                          "--timeout-seconds", "120"], capture_output=True, text=True)
@@ -169,9 +169,9 @@ def test_readiness_still_requires_imports_under_the_main_guard(tmp_path):
 
 from types import SimpleNamespace  # noqa: E402
 
-from evolvcoder import naturebench_cli as cli, naturebench_session as session  # noqa: E402
-from evolvcoder.campaign import CampaignStep  # noqa: E402
-from evolvcoder.contracts import ProposalRejected  # noqa: E402
+from swarmrsi import naturebench_cli as cli, naturebench_session as session  # noqa: E402
+from swarmrsi.campaign import CampaignStep  # noqa: E402
+from swarmrsi.contracts import ProposalRejected  # noqa: E402
 from test_naturebench_entrypoint import inputs, synthetic_root  # noqa: E402,F401
 
 ENVIRONMENT = {"public_diagnostic": {"category": "grader_environment", "candidate_only": False,

@@ -1,5 +1,5 @@
 {
- "schema_version": "evolvcoder-benchmark-envelope-v1",
+ "schema_version": "swarmrsi-benchmark-envelope-v1",
  "benchmark": "naturebench",
  "note": "One file per dataset. Every number states where it came from, so adding a dataset means writing its reference down rather than editing code, and every difference from that reference is listed rather than inherited by accident.",
  "reference": {
@@ -7,7 +7,7 @@
   "sources": [
    "Per-task scores: metadata/index.parquet of huggingface.co/datasets/FrontisAI/NatureBench-traces, rows where harness=claude-code and model=deepseek-v4-pro, column effective_improvement; each value cross-checked against that case's own submissions.jsonl and all 90 agree",
    "Protocol: the leaderboard entry deepseek-v4-pro-claude-code states 'solvingBudget: 4 h / task', 'externalAccess: Web search and web fetch tools disabled', and one GPU per GPU task",
-   "Copy of the index committed at config/evolvcoder/naturebench_traces_index_20260919.parquet"
+   "Copy of the index committed at config/swarmrsi/naturebench_traces_index_20260919.parquet"
   ],
   "backbone": "deepseek-v4-pro",
   "seeds": 1,

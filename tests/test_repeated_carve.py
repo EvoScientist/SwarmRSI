@@ -21,8 +21,8 @@ REPO = Path(__file__).resolve().parents[1]
 MODULE = REPO / "deploy/mle/make_task_root.py"
 COMPETITION = "toy-table"
 
-from evolvcoder import naturebench_evaluator as bridge  # noqa: E402
-from evolvcoder import naturebench_session as session  # noqa: E402
+from swarmrsi import naturebench_evaluator as bridge  # noqa: E402
+from swarmrsi import naturebench_session as session  # noqa: E402
 
 
 def load(path, name):
@@ -302,7 +302,7 @@ def candidate(tmp_path, extra="", name="workspace", root=None):
 def evaluate(tmp_path, root, workspace, *extra):
     result = tmp_path / ("result%d.json" % len(list(tmp_path.glob("result*.json"))))
     completed = subprocess.run(
-        [sys.executable, "-m", "evolvcoder.naturebench_evaluator", "--workspace", str(workspace),
+        [sys.executable, "-m", "swarmrsi.naturebench_evaluator", "--workspace", str(workspace),
          "--result", str(result), "--task-root", str(root), "--runtime-python", sys.executable,
          "--timeout-seconds", "120", *extra],
         capture_output=True, text=True, env={**os.environ, "PYTHONPATH": os.pathsep.join(
@@ -350,8 +350,8 @@ def test_score_existing_output_reuses_fold_zero_and_runs_the_others(tmp_path, mo
     _, root = build(tmp_path, monkeypatch, capsys, folds=3)
     workspace = candidate(tmp_path)
     execution = evaluate(tmp_path, root, workspace, "--execution-only")
-    (workspace / ".evolvcoder").mkdir()
-    (workspace / ".evolvcoder/execution_validation.json").write_text(json.dumps(execution))
+    (workspace / ".swarmrsi").mkdir()
+    (workspace / ".swarmrsi/execution_validation.json").write_text(json.dumps(execution))
     fresh = evaluate(tmp_path, root, candidate(tmp_path, name="fresh"), "--carve-folds", "3")
     scored = evaluate(tmp_path, root, workspace, "--score-existing-output", "--carve-folds", "3")
     assert scored["valid"] is True and scored["details"]["candidate_execution_reused"] is True
@@ -362,7 +362,7 @@ def test_score_existing_output_reuses_fold_zero_and_runs_the_others(tmp_path, mo
     # --execution-only never runs folds.
     result = tmp_path / "combo.json"
     completed = subprocess.run(
-        [sys.executable, "-m", "evolvcoder.naturebench_evaluator", "--workspace", str(workspace),
+        [sys.executable, "-m", "swarmrsi.naturebench_evaluator", "--workspace", str(workspace),
          "--result", str(result), "--task-root", str(root), "--runtime-python", sys.executable,
          "--execution-only", "--carve-folds", "3"], capture_output=True, text=True,
         env={**os.environ, "PYTHONPATH": str(REPO / "src")})

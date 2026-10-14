@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from evolvcoder import naturebench_session as session
+from swarmrsi import naturebench_session as session
 
 
 @pytest.mark.skipif(shutil.which("bwrap") is None, reason="bwrap not installed")

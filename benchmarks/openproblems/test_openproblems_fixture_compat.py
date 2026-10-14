@@ -15,10 +15,10 @@ import numpy as np
 import anndata as ad
 from scipy.sparse import csr_matrix
 
-from evolvcoder.api import Application, TaskSpec
-from evolvcoder.configuration import config_from_dict
-from evolvcoder.openproblems_run import OpenProblemsAdapter
-from evolvcoder.openproblems_tasks import (METRIC, TASK, canonical, mse, normalize_cp10k_log1p,
+from swarmrsi.api import Application, TaskSpec
+from swarmrsi.configuration import config_from_dict
+from swarmrsi.openproblems_run import OpenProblemsAdapter
+from swarmrsi.openproblems_tasks import (METRIC, TASK, canonical, mse, normalize_cp10k_log1p,
                                            prepare, read_prediction, split_molecules, verify_assets)
 
 
@@ -124,9 +124,9 @@ def task_config(tmp_path, root, **overrides):
                    "wall_time_seconds": 600, "tokens": {"input": 1000, "output": 1000}}}}}
     (root / "profile.json").write_text(json.dumps(profile))
     (root / "assets.json").write_text(json.dumps({
-        "schema_version": "evolvcoder-openproblems-assets-v1", "profile": "profile.json",
+        "schema_version": "swarmrsi-openproblems-assets-v1", "profile": "profile.json",
         "tasks_root": str(root), "custody": "custody.json", "trial_timeout_seconds": 600}))
-    data = {"benchmark": "openproblems", "task": TASK, "method": "evolvcoder",
+    data = {"benchmark": "openproblems", "task": TASK, "method": "swarmrsi",
             "model": {"model": "provider/model"}, "benchmark_config": str(root / "assets.json"),
             "output_root": str(tmp_path / "runs")}
     data.update(overrides)

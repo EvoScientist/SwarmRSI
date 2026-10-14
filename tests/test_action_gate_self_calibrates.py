@@ -1,7 +1,7 @@
 """The action-admission gate must measure this run rather than trust a tuned constant."""
 from types import SimpleNamespace
 
-from evolvcoder.naturebench_session import action_start_envelope, observed_action_cost
+from swarmrsi.naturebench_session import action_start_envelope, observed_action_cost
 
 LIMITS = {
     "model_calls_per_action": 16, "tool_calls_per_action": 32,

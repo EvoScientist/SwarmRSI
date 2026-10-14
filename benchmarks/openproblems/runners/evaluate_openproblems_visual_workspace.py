@@ -96,7 +96,7 @@ def evaluate_dataset(*, solution_py: Path, dataset_path: Path, gold_path: Path,
     gold = ad.read_h5ad(gold_path)
     if not dataset.obs_names.equals(gold.obs_names):
         raise VisualEvaluationError("dataset and gold obs_names differ")
-    with tempfile.TemporaryDirectory(prefix="evocoder-visual-") as temp_dir:
+    with tempfile.TemporaryDirectory(prefix="swarmrsi-visual-") as temp_dir:
         output = Path(temp_dir) / "embedding.npz"
         completed = subprocess.run([
             sys.executable, str(runner), "--solution", str(solution_py),

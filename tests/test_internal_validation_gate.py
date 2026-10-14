@@ -9,10 +9,10 @@ from pathlib import Path
 import pytest
 from test_naturebench_entrypoint import inputs  # noqa: F401
 
-from evolvcoder.coder_models import CoderExitStatus
-from evolvcoder.naturebench_session import internal_validation_gate, read_internal_validation
-from evolvcoder.routing import RecoveryRoute, classify_recovery_route
-from evolvcoder.coder_models import CoderOutcome, CoderVersion
+from swarmrsi.coder_models import CoderExitStatus
+from swarmrsi.naturebench_session import internal_validation_gate, read_internal_validation
+from swarmrsi.routing import RecoveryRoute, classify_recovery_route
+from swarmrsi.coder_models import CoderOutcome, CoderVersion
 
 
 def coder_outcome(status):
@@ -42,7 +42,7 @@ def estimate(value, *, direction="maximize", metric="aggregate_improvement"):
     ("maximize", 0.9, 0.8), ("minimize", 0.1, 0.2)])
 def test_controller_only_does_not_reject_unattested_child(tmp_path, direction, parent_score, child_score):
     from types import SimpleNamespace
-    from evolvcoder.brs_strategy import BidirectionalResearchStrategy
+    from swarmrsi.brs_strategy import BidirectionalResearchStrategy
 
     parent = artifact(tmp_path, "parent", estimate(parent_score, direction=direction))
     child = artifact(tmp_path, "child", estimate(child_score, direction=direction))
@@ -62,7 +62,7 @@ def test_unknown_validation_policy_fails_closed(tmp_path):
 
 def test_controller_policy_reaches_planner_and_candidate_context(inputs):
     from types import SimpleNamespace
-    from evolvcoder import naturebench_cli as cli, naturebench_session as session
+    from swarmrsi import naturebench_cli as cli, naturebench_session as session
 
     cli.configure(inputs)
     root = inputs.tasks_root / inputs.task_id
@@ -131,9 +131,9 @@ def test_rejection_lane_spends_nothing_and_never_repairs():
 
 def fake_coder(proposal, parent, record):
     """A coder that writes one candidate program plus the given self-estimate."""
-    from evolvcoder.coder_models import CoderOutcome, CoderVersion
-    from evolvcoder.campaign import artifact_workspace_sha256
-    from test_evolvcoder_incremental_feedback import file_sha
+    from swarmrsi.coder_models import CoderOutcome, CoderVersion
+    from swarmrsi.campaign import artifact_workspace_sha256
+    from test_swarmrsi_incremental_feedback import file_sha
 
     class FakeCoder:
         def __init__(self, config, model):
@@ -161,12 +161,12 @@ def fake_coder(proposal, parent, record):
 def test_executor_skips_the_official_evaluator_for_a_self_rejected_candidate(inputs, monkeypatch, tmp_path):
     """The hook in the session executor: no evaluator subprocess, no score, a gate record."""
     from types import SimpleNamespace
-    from evolvcoder import naturebench_cli as cli, naturebench_session as session
-    from evolvcoder.coder_models import CoderOutcome, CoderVersion
-    from evolvcoder.campaign import artifact_workspace_sha256
-    from evolvcoder.session_limits import SessionLimits
-    from evolvcoder.configuration import Limits
-    from test_evolvcoder_incremental_feedback import campaign, file_sha
+    from swarmrsi import naturebench_cli as cli, naturebench_session as session
+    from swarmrsi.coder_models import CoderOutcome, CoderVersion
+    from swarmrsi.campaign import artifact_workspace_sha256
+    from swarmrsi.session_limits import SessionLimits
+    from swarmrsi.configuration import Limits
+    from test_swarmrsi_incremental_feedback import campaign, file_sha
     from test_session_limits import ACTION, usage
 
     cli.configure(inputs)
@@ -196,10 +196,10 @@ def test_executor_skips_the_official_evaluator_for_a_self_rejected_candidate(inp
 def test_the_gate_can_be_ablated_off_and_then_everything_is_scored(tmp_path, monkeypatch, inputs, controller_only):
     """Ablation 4: with the gate disabled a worse self-estimate still reaches the evaluator."""
     from types import SimpleNamespace
-    from evolvcoder import naturebench_cli as cli, naturebench_session as session
-    from evolvcoder.session_limits import SessionLimits
-    from evolvcoder.configuration import Limits
-    from test_evolvcoder_incremental_feedback import campaign
+    from swarmrsi import naturebench_cli as cli, naturebench_session as session
+    from swarmrsi.session_limits import SessionLimits
+    from swarmrsi.configuration import Limits
+    from test_swarmrsi_incremental_feedback import campaign
     from test_session_limits import ACTION, usage
 
     cli.configure(inputs)
@@ -250,8 +250,8 @@ def test_the_gate_artifact_is_inside_the_action_contract(inputs):
     The standing instruction asks the coder for internal_validation.json, so the
     contract the planner builds must permit exactly that path.
     """
-    from evolvcoder import naturebench_session as session
-    from evolvcoder.coder_models import ScientificActionContract
+    from swarmrsi import naturebench_session as session
+    from swarmrsi.coder_models import ScientificActionContract
 
     assert session.INTERNAL_VALIDATION_NAME in session.CANDIDATE_WRITE_PATHS
     # The instruction that asks for it and the contract that permits it agree.
@@ -262,7 +262,7 @@ def test_the_gate_artifact_is_inside_the_action_contract(inputs):
                                         allowed_write_paths=session.CANDIDATE_WRITE_PATHS,
                                         protected_paths=("TASK_CONTEXT.md",))
     assert session.INTERNAL_VALIDATION_NAME not in contract.protected_paths
-    from evolvcoder.coder_engine import ContractBoundedCoder
+    from swarmrsi.coder_engine import ContractBoundedCoder
     allowed = ContractBoundedCoder._write_allowed
     probe = type("C", (), {"config": type("K", (), {"action": contract})()})()
     assert allowed(probe, session.INTERNAL_VALIDATION_NAME) is True
@@ -272,7 +272,7 @@ def test_the_gate_artifact_is_inside_the_action_contract(inputs):
 
 def test_the_instruction_follows_the_switch_and_is_bounded(inputs):
     """R35: the unbounded wording put k-fold CV inside run.py and exhausted wall budgets."""
-    from evolvcoder import naturebench_session as session
+    from swarmrsi import naturebench_session as session
     task_root = inputs.tasks_root / inputs.task_id
     on = session.public_task_context(task_root, execution_timeout_seconds=60, internal_validation=True)
     off = session.public_task_context(task_root, execution_timeout_seconds=60, internal_validation=False)
@@ -289,11 +289,11 @@ def test_the_instruction_follows_the_switch_and_is_bounded(inputs):
 
 def test_operational_allowlist_carries_an_egress_proxy_but_candidates_do_not(monkeypatch, tmp_path):
     """A host with no direct route needs the proxy; the candidate still gets none."""
-    from evolvcoder.naturebench_cli import OPERATIONAL_ENVIRONMENT_KEYS
+    from swarmrsi.naturebench_cli import OPERATIONAL_ENVIRONMENT_KEYS
     for name in ("HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "http_proxy", "https_proxy", "no_proxy"):
         assert name in OPERATIONAL_ENVIRONMENT_KEYS, name
     # A proxy variable names a route, so it may not be used to carry a credential.
-    from evolvcoder.naturebench_cli import validate_credential_env
+    from swarmrsi.naturebench_cli import validate_credential_env
     with pytest.raises(ValueError):
         validate_credential_env("HTTPS_PROXY")
     # The candidate's environment drops every proxy name even before bwrap unshares the network.
@@ -311,7 +311,7 @@ def test_operational_allowlist_carries_an_egress_proxy_but_candidates_do_not(mon
 def test_submission_fit_policy_reaches_planner_and_candidate_context(inputs):
     """Opt-in contract: the coder is told the terminal re-execution must fit on every row."""
     from types import SimpleNamespace
-    from evolvcoder import naturebench_cli as cli, naturebench_session as session
+    from swarmrsi import naturebench_cli as cli, naturebench_session as session
 
     cli.configure(inputs)
     root = inputs.tasks_root / inputs.task_id

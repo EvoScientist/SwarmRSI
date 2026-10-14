@@ -15,9 +15,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import candidate_execution as backend
-from evolvcoder import naturebench_evaluator as evaluator
-from evolvcoder import naturebench_session as session
+from swarmrsi import candidate_execution as backend
+from swarmrsi import naturebench_evaluator as evaluator
+from swarmrsi import naturebench_session as session
 from test_candidate_execution import PYTHON, completed_action, make_spec
 
 
@@ -85,7 +85,7 @@ def execution_only(monkeypatch, bound, task, workspace, result):
 def test_evaluator_executes_in_bound_backend_and_reuses_receipt_by_content(bound, monkeypatch):
     task, workspace, marker = task_package(bound.root)
     calls = fake_execute(monkeypatch, on_run=candidate_output)
-    result = workspace / ".evolvcoder/execution_validation.json"
+    result = workspace / ".swarmrsi/execution_validation.json"
     assert execution_only(monkeypatch, bound, task, workspace, result) == 0
     payload = json.loads(result.read_text())
     assert payload["valid"] is True and payload["execution_valid"] is True and not marker.exists()
@@ -113,7 +113,7 @@ def test_evaluator_executes_in_bound_backend_and_reuses_receipt_by_content(bound
 def test_reuse_rejects_foreign_receipts_and_backends(bound, monkeypatch, fault):
     task, workspace, marker = task_package(bound.root)
     fake_execute(monkeypatch, on_run=candidate_output)
-    result = workspace / ".evolvcoder/execution_validation.json"
+    result = workspace / ".swarmrsi/execution_validation.json"
     assert execution_only(monkeypatch, bound, task, workspace, result) == 0
     binding, evidence = bound.binding, json.loads(result.read_text())
     if fault == "receipt":

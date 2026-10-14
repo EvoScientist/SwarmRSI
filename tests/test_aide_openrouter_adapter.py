@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.baselines.aide_openrouter import (
+from swarmrsi.baselines.aide_openrouter import (
     apply_official_evaluation,
     assert_upstream_hashes,
     install_openrouter_query,

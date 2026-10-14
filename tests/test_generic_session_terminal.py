@@ -2,12 +2,12 @@
 import json
 from dataclasses import replace
 import pytest
-from evolvcoder.api import Application
-from evolvcoder.unified_run import context_for
-from evolvcoder import naturebench_session as session
-from evolvcoder.retained_results import read_json
-from evolvcoder.planner_protocol import proposal_structure_error
-from evolvcoder.mlebench_tasks import METRIC
+from swarmrsi.api import Application
+from swarmrsi.unified_run import context_for
+from swarmrsi import naturebench_session as session
+from swarmrsi.retained_results import read_json
+from swarmrsi.planner_protocol import proposal_structure_error
+from swarmrsi.mlebench_tasks import METRIC
 from test_unified_run import setup  # noqa: F401
 from test_naturebench_entrypoint import inputs  # noqa: F401
 
@@ -60,7 +60,7 @@ def test_native_existing_protocol_enabled_explicitly(monkeypatch):
 
 
 def test_native_minimize_target_and_utility_are_aligned():
-    from evolvcoder.task_metrics import public_metric, target, terminal_targets, planner_metric_instruction
+    from swarmrsi.task_metrics import public_metric, target, terminal_targets, planner_metric_instruction
     task = {'search_metric': {'name': 'mse', 'direction': 'minimize', 'role': 'public_validation'}, 'search_target': .2}
     assert target(task) == -.2
     native, utility = public_metric({'mse': .1}, task)

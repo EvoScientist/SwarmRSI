@@ -6,14 +6,14 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.configuration import ConfigurationError, Limits
-from evolvcoder.session_limits import SessionLimits, profile_with_limits, remaining
-from evolvcoder.campaign import VSearchCoordinator
-from evolvcoder import naturebench_cli as cli, naturebench_session as session
-from evolvcoder.strategies import (HypothesisProgramTreeStrategy, ContinuationTreeStrategy,
+from swarmrsi.configuration import ConfigurationError, Limits
+from swarmrsi.session_limits import SessionLimits, profile_with_limits, remaining
+from swarmrsi.campaign import VSearchCoordinator
+from swarmrsi import naturebench_cli as cli, naturebench_session as session
+from swarmrsi.strategies import (HypothesisProgramTreeStrategy, ContinuationTreeStrategy,
     MultiParentGraphStrategy, HeterogeneousMultiIslandStrategy, EvidenceCoupledStrategy)
-from evolvcoder.tree_policy import PolicyTreeStrategy, TreePolicy
-from test_evolvcoder_incremental_feedback import campaign, next_step, RecordingProposer, ScriptedExecutor
+from swarmrsi.tree_policy import PolicyTreeStrategy, TreePolicy
+from test_swarmrsi_incremental_feedback import campaign, next_step, RecordingProposer, ScriptedExecutor
 import test_naturebench_entrypoint as entry_tests
 
 inputs = entry_tests.inputs
@@ -185,7 +185,7 @@ def test_missing_per_action_controls_fail_in_real_entry_before_provider(inputs, 
 
 @pytest.mark.parametrize('limits', [Limits(), Limits(input_tokens=100000), Limits(output_tokens=100000)])
 def test_actual_coder_config_and_model_payload_never_receive_infinity(inputs, monkeypatch, limits):
-    from evolvcoder.coder_engine import ContractBoundedCoder
+    from swarmrsi.coder_engine import ContractBoundedCoder
     cli.configure(inputs)
     loop = campaign(inputs.profile.parent / 'payload-case', scores=[])
     loop.expand()
@@ -229,8 +229,8 @@ def test_only_finite_dimension_stops_complete_session(inputs, monkeypatch, dimen
 
 
 def _budget(**caps):
-    from evolvcoder.configuration import Limits
-    from evolvcoder.session_limits import SessionLimits
+    from swarmrsi.configuration import Limits
+    from swarmrsi.session_limits import SessionLimits
     base = dict(model_calls=None, input_tokens=None, output_tokens=None,
                 tool_calls=None, evaluations=None, wall_seconds=14400.0)
     return SessionLimits(Limits(**{**base, **caps}))

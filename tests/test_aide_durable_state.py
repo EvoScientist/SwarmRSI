@@ -6,11 +6,11 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.baselines.aide_state import AideJournalStore, atomic_json, seal, unseal
-from evolvcoder.baselines.aide_transport import (
+from swarmrsi.baselines.aide_state import AideJournalStore, atomic_json, seal, unseal
+from swarmrsi.baselines.aide_transport import (
     AideCallLedger, AideResourceStop, AideTransportUnresolved,
 )
-from evolvcoder.baselines.aide_openrouter import make_openrouter_query
+from swarmrsi.baselines.aide_openrouter import make_openrouter_query
 
 
 class Metric:

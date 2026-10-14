@@ -11,10 +11,10 @@ from unittest.mock import Mock
 
 import pytest
 
-from evolvcoder import learning_cli, naturebench_cli as cli, naturebench_session as session
-from evolvcoder.installed_learning import InstalledValidationRunner, portable_profile
-from evolvcoder.retained_results import read_json
-from evolvcoder.tree_policy import TreePolicy
+from swarmrsi import learning_cli, naturebench_cli as cli, naturebench_session as session
+from swarmrsi.installed_learning import InstalledValidationRunner, portable_profile
+from swarmrsi.retained_results import read_json
+from swarmrsi.tree_policy import TreePolicy
 from test_installed_learning import config_for
 from test_naturebench_entrypoint import inputs, synthetic_root
 
@@ -42,7 +42,7 @@ def use_env(inputs):
     "PYTHONHOME", "PYTHONPATH", "PYTHONINSPECT", "PYTHONWARNINGS", "PYTHONSTARTUP",
     "LD_PRELOAD", "LD_AUDIT", "LD_DEBUG", "DYLD_INSERT_LIBRARIES", "DYLD_PRINT_LIBRARIES",
     "BASH_ENV", "ENV", "GCONV_PATH", "GLIBC_TUNABLES", "MALLOC_TRACE",
-    "EVOLVCODER_MODEL_CACHE", "TORCH_HOME", "MPLBACKEND", "SSLKEYLOGFILE",
+    "SWARMRSI_MODEL_CACHE", "TORCH_HOME", "MPLBACKEND", "SSLKEYLOGFILE",
 ])
 def test_reject_unsafe_credential_names_before_configure(inputs, name):
     use_env(inputs).credential_env = name

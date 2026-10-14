@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from evolvcoder import naturebench_session as session
+from swarmrsi import naturebench_session as session
 
 
 def task(tmp_path, name):

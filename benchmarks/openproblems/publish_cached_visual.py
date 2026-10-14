@@ -4,7 +4,7 @@ from pathlib import Path
 from visual_reference_cache import sha
 p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--references',type=Path,required=True);p.add_argument('--core-src',type=Path,required=True);a=p.parse_args()
 if a.destination.exists():raise ValueError('destination immutable and already exists')
-sys.path.insert(0,str(a.core_src));from evolvcoder.panel_tasks import seal,verify_assets
+sys.path.insert(0,str(a.core_src));from swarmrsi.panel_tasks import seal,verify_assets
 verify_assets(a.source/'custody.json')
 # Full copy: future writes can never affect live uncached package bytes.
 shutil.copytree(a.source,a.destination)

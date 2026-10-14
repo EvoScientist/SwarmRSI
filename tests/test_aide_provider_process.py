@@ -11,9 +11,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder.baselines.aide_provider_process import AideProviderProcess
-from evolvcoder.baselines.aide_session import AidePhaseCalls
-from evolvcoder.baselines.aide_transport import (
+from swarmrsi.baselines.aide_provider_process import AideProviderProcess
+from swarmrsi.baselines.aide_session import AidePhaseCalls
+from swarmrsi.baselines.aide_transport import (
     AideCallLedger, AideResourceStop, AideTransportUnresolved,
 )
 
@@ -40,7 +40,7 @@ def test_preserves_reserved_request_and_refreshes_hard_deadline(monkeypatch):
         return SimpleNamespace(returncode=0, stdout=json.dumps({
             "schema_version": "aide-provider-worker-v1", "response": RAW}), stderr="")
 
-    monkeypatch.setattr("evolvcoder.baselines.aide_provider_process.run_bounded_process", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_provider_process.run_bounded_process", run)
     request = {"model": MODEL, "timeout": 80, "messages": [{"role": "user", "content": "fixture"}],
                "max_tokens": 25, "extra_body": {"provider": {"order": ["Fireworks"]}}}
     assert transport(remaining=lambda: 7.0)(**request) == RAW
@@ -61,7 +61,7 @@ def test_keeps_virtualenv_interpreter_invocation_path(tmp_path, monkeypatch):
         return SimpleNamespace(returncode=0, stdout=json.dumps({
             "schema_version": "aide-provider-worker-v1", "response": RAW}), stderr="")
 
-    monkeypatch.setattr("evolvcoder.baselines.aide_provider_process.run_bounded_process", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_provider_process.run_bounded_process", run)
     provider = AideProviderProcess(python=python, helper=HELPER,
         remaining_seconds=lambda: 10, environment={"OPENROUTER_API_KEY": "fixture"})
     assert provider(model=MODEL, timeout=10) == RAW
@@ -71,7 +71,7 @@ def test_keeps_virtualenv_interpreter_invocation_path(tmp_path, monkeypatch):
 
 @pytest.mark.parametrize("remaining", [-2.0, 0.0, 0.9, 1.0])
 def test_expired_deadline_never_starts_worker(monkeypatch, remaining):
-    monkeypatch.setattr("evolvcoder.baselines.aide_provider_process.run_bounded_process",
+    monkeypatch.setattr("swarmrsi.baselines.aide_provider_process.run_bounded_process",
                         lambda *a, **k: pytest.fail("expired worker was dispatched"))
     with pytest.raises(AideResourceStop, match="provider_wall"):
         transport(remaining=lambda: remaining)(model=MODEL, timeout=20)
@@ -89,7 +89,7 @@ def test_worker_uncertainty_is_durable_and_not_retried(tmp_path, monkeypatch, fa
                                stdout="synthetic-test-secret" if failure != "invalid_receipt" else "{}",
                                stderr="synthetic-test-secret")
 
-    monkeypatch.setattr("evolvcoder.baselines.aide_provider_process.run_bounded_process", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_provider_process.run_bounded_process", run)
     ledger = AideCallLedger(tmp_path, model=MODEL, max_calls=3, max_output_tokens=100,
                            wall_seconds=100, per_call_output_tokens=20, create=transport())
     for _ in range(2):
@@ -109,7 +109,7 @@ def test_successful_worker_response_accounted_before_replay(tmp_path, monkeypatc
         return SimpleNamespace(returncode=0, stdout=json.dumps({
             "schema_version": "aide-provider-worker-v1", "response": RAW}), stderr="")
 
-    monkeypatch.setattr("evolvcoder.baselines.aide_provider_process.run_bounded_process", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_provider_process.run_bounded_process", run)
     ledger = AideCallLedger(tmp_path, model=MODEL, max_calls=1, max_output_tokens=3,
                            wall_seconds=100, per_call_output_tokens=3, create=transport())
     assert ledger.create(model=MODEL) == RAW
@@ -130,7 +130,7 @@ def test_invalid_sdk_schema_is_saved_and_charged_before_parsing(tmp_path, monkey
         assert raw == RAW
         raise ValueError("synthetic SDK schema rejection")
 
-    monkeypatch.setattr("evolvcoder.baselines.aide_provider_process.run_bounded_process", run)
+    monkeypatch.setattr("swarmrsi.baselines.aide_provider_process.run_bounded_process", run)
     ledger = AideCallLedger(tmp_path, model=MODEL, max_calls=1, max_output_tokens=3,
                            wall_seconds=100, per_call_output_tokens=3, create=transport())
     for _ in range(2):

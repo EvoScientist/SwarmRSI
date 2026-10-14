@@ -1,7 +1,7 @@
 """Bounded negative-state snapshot race; synthetic local journals only."""
 import pytest
 
-from evolvcoder import learning_analysis as analysis
+from swarmrsi import learning_analysis as analysis
 from test_learning_analysis_integrity import halted_chain
 from test_naturebench_entrypoint import inputs  # noqa: F401
 

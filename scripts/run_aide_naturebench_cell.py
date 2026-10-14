@@ -32,22 +32,22 @@ from pathlib import Path
 # Import the shared defaults whether or not the package is installed: these scripts
 # are run straight from a checkout as often as from an install.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from evolvcoder.model_defaults import DEFAULT_BACKBONE  # noqa: E402
+from swarmrsi.model_defaults import DEFAULT_BACKBONE  # noqa: E402
 
 from types import SimpleNamespace
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from evolvcoder.baselines.aide_controller import AideRuntime, run_controller  # noqa: E402
-from evolvcoder.baselines.aide_execution import AideNatureExecution  # noqa: E402
-from evolvcoder.baselines.aide_openrouter import make_openrouter_query  # noqa: E402
-from evolvcoder.baselines.aide_provider_process import AideProviderProcess  # noqa: E402
-from evolvcoder.baselines.aide_resources import AideOperationBudget  # noqa: E402
-from evolvcoder.baselines.aide_session import AidePhaseCalls, AideSession  # noqa: E402
-from evolvcoder.baselines.aide_state import AideJournalStore  # noqa: E402
-from evolvcoder.baselines.aide_transport import AideCallLedger  # noqa: E402
-from evolvcoder import naturebench_evaluator as nature_bridge  # noqa: E402
+from swarmrsi.baselines.aide_controller import AideRuntime, run_controller  # noqa: E402
+from swarmrsi.baselines.aide_execution import AideNatureExecution  # noqa: E402
+from swarmrsi.baselines.aide_openrouter import make_openrouter_query  # noqa: E402
+from swarmrsi.baselines.aide_provider_process import AideProviderProcess  # noqa: E402
+from swarmrsi.baselines.aide_resources import AideOperationBudget  # noqa: E402
+from swarmrsi.baselines.aide_session import AidePhaseCalls, AideSession  # noqa: E402
+from swarmrsi.baselines.aide_state import AideJournalStore  # noqa: E402
+from swarmrsi.baselines.aide_transport import AideCallLedger  # noqa: E402
+from swarmrsi import naturebench_evaluator as nature_bridge  # noqa: E402
 
 
 def tolerate_non_utf8_previews() -> None:
@@ -98,7 +98,7 @@ def parse() -> argparse.Namespace:
     p.add_argument("--request-timeout", type=float, default=None,
                    help="per-request ceiling in seconds (default: the remaining wall)")
     p.add_argument("--evaluator-src", type=Path, default=None,
-                   help="src directory whose evolvcoder/naturebench_evaluator.py scores candidates (default: this checkout)")
+                   help="src directory whose swarmrsi/naturebench_evaluator.py scores candidates (default: this checkout)")
     p.add_argument("--steps", type=int, default=None,
                    help="override the budget-derived step count (audit only)")
     p.add_argument("--dry-run", action="store_true", help="wire everything, make no model call")
@@ -173,7 +173,7 @@ def main() -> int:
         freeze = subprocess.run([str(args.runtime_python), "-m", "pip", "list", "--format=freeze"],
                                 capture_output=True, text=True, check=True).stdout
         packages = sorted({line.split("==")[0] for line in freeze.splitlines() if "==" in line}, key=str.lower)
-        cache = os.environ.get("EVOLVCODER_MODEL_CACHE")
+        cache = os.environ.get("SWARMRSI_MODEL_CACHE")
         paths = []
         if cache:
             root = Path(cache)
@@ -193,9 +193,9 @@ def main() -> int:
 
     # The scorer subprocess can come from another checkout so every method in a comparison is scored by
     # the same evaluator code (source_22944f9, as BRS and Arbor). The runner itself is unchanged.
-    evaluator_script = REPO / "src/evolvcoder/naturebench_evaluator.py"
+    evaluator_script = REPO / "src/swarmrsi/naturebench_evaluator.py"
     if args.evaluator_src is not None:
-        evaluator_script = args.evaluator_src.resolve() / "evolvcoder/naturebench_evaluator.py"
+        evaluator_script = args.evaluator_src.resolve() / "swarmrsi/naturebench_evaluator.py"
         os.environ["PYTHONPATH"] = str(args.evaluator_src.resolve()) + (os.pathsep + os.environ["PYTHONPATH"] if os.environ.get("PYTHONPATH") else "")
 
     def initialize(root: Path) -> AideRuntime:

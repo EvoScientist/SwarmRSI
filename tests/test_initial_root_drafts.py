@@ -2,11 +2,11 @@ import json
 
 import pytest
 
-from evolvcoder import EvidenceCoupledStrategy
-from evolvcoder.campaign import VSearchCoordinator
-from evolvcoder.naturebench_session import strategy
-from evolvcoder.root_drafts import RootDraftingEvidenceStrategy
-from test_evolvcoder_incremental_feedback import campaign, next_step, RecordingProposer, ScriptedExecutor
+from swarmrsi import EvidenceCoupledStrategy
+from swarmrsi.campaign import VSearchCoordinator
+from swarmrsi.naturebench_session import strategy
+from swarmrsi.root_drafts import RootDraftingEvidenceStrategy
+from test_swarmrsi_incremental_feedback import campaign, next_step, RecordingProposer, ScriptedExecutor
 
 
 def _loop(tmp_path, drafts, scores):
@@ -64,8 +64,8 @@ def test_profile_wiring_and_validation():
 
 
 def _tree_loop(tmp_path, drafts, scores):
-    from evolvcoder.root_drafts import RootDraftingContinuationTree
-    from evolvcoder.strategies import ContinuationTreeStrategy
+    from swarmrsi.root_drafts import RootDraftingContinuationTree
+    from swarmrsi.strategies import ContinuationTreeStrategy
     loop = campaign(tmp_path, scores=scores)
     loop.strategy = (RootDraftingContinuationTree(initial_root_drafts=drafts) if drafts
                      else ContinuationTreeStrategy())
@@ -90,7 +90,7 @@ def test_v1_refines_the_best_draft_wherever_it_came(tmp_path, scores, best):
 
 
 def test_v1_best_draft_burst_survives_resume(tmp_path):
-    from evolvcoder.root_drafts import RootDraftingContinuationTree
+    from swarmrsi.root_drafts import RootDraftingContinuationTree
     loop = _tree_loop(tmp_path, 3, [.1, .4, .2])
     for _ in range(3):
         next_step(loop)
@@ -109,8 +109,8 @@ def test_v1_without_drafts_is_unchanged(tmp_path):
 
 
 def test_v1_profile_wiring():
-    from evolvcoder.root_drafts import RootDraftingContinuationTree
-    from evolvcoder.strategies import ContinuationTreeStrategy
+    from swarmrsi.root_drafts import RootDraftingContinuationTree
+    from swarmrsi.strategies import ContinuationTreeStrategy
     tree = {"policy": "continuation_tree", "max_scored_continuations": 3}
     drafting = strategy("v1", 0, {"tree_search": tree, "screening_execution_limits": {"initial_root_drafts": 3}})
     assert isinstance(drafting, RootDraftingContinuationTree) and drafting.initial_root_drafts == 3

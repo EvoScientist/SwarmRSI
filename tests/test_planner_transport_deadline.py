@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from evolvcoder import naturebench_session as ns
+from swarmrsi import naturebench_session as ns
 
 
 def planner(model, root, deadline=100):

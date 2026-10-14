@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from evolvcoder import naturebench_cli as cli, naturebench_session as ns
+from swarmrsi import naturebench_cli as cli, naturebench_session as ns
 from test_naturebench_entrypoint import inputs, forbid  # noqa: F401
 from test_session_elapsed_deadline import prepare
 
@@ -115,7 +115,7 @@ def test_step_boundary_retains_provider_failure(inputs, monkeypatch):
 
 
 def test_pending_transport_requires_matching_sealed_terminal_intent(inputs, monkeypatch):
-    from evolvcoder.contracts import canonical_sha256
+    from swarmrsi.contracts import canonical_sha256
     failing_provider(inputs, monkeypatch)
     assert cli.execute(inputs) == 0
     path = inputs.run_dir/'checkpoint.json'

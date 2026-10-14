@@ -119,11 +119,11 @@ def _candidate_command(
         "--bind", str(workspace), "/workspace",
         "--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp",
     ))
-    model_cache_value = os.environ.get("EVOLVCODER_MODEL_CACHE")
+    model_cache_value = os.environ.get("SWARMRSI_MODEL_CACHE")
     model_cache = Path(model_cache_value).resolve() if model_cache_value else None
     if model_cache is not None:
         if not model_cache.is_dir():
-            raise RuntimeError("EVOLVCODER_MODEL_CACHE is not a directory")
+            raise RuntimeError("SWARMRSI_MODEL_CACHE is not a directory")
         command.extend(("--ro-bind", str(model_cache), "/model_cache"))
     if Path("/proc/driver/nvidia").is_dir():
         command.extend((
@@ -190,7 +190,7 @@ def main() -> int:
     })
     reused_execution_evidence_sha256 = None
     if args.score_existing_output:
-        execution_evidence_path = workspace / ".evolvcoder/execution_validation.json"
+        execution_evidence_path = workspace / ".swarmrsi/execution_validation.json"
         try:
             evidence_bytes = execution_evidence_path.read_bytes()
             execution_evidence = json.loads(evidence_bytes)
