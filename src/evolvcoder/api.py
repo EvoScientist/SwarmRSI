@@ -147,8 +147,6 @@ class Application:
             self.benchmarks.register("mlebench", MLEBenchAdapter())
             from .openproblems_run import OpenProblemsAdapter
             self.benchmarks.register("openproblems", OpenProblemsAdapter())
-            from .terminalbench_run import TerminalBenchAdapter
-            self.benchmarks.register("terminalbench", TerminalBenchAdapter())
 
     def _operation(self, name: str, context: RunContext) -> dict:
         config = context.config

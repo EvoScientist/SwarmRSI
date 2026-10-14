@@ -389,7 +389,7 @@ def coder_sandbox_config(task_root: Path) -> dict[str, Any]:
             "wrapper": (), "rewrites": (), "environment": (), "available": False,
         }
     # --unshare-pid: without it the candidate could enumerate the controller's
-    # /proc/<pid>/fd (NB 02926 zero-call probe job 27258474).
+    # /proc/<pid>/fd (NB 02926 zero-call probe).
     wrapper: list[str] = [bwrap, "--die-with-parent", "--unshare-net", "--unshare-pid"]
     for source in (Path("/usr"), Path("/bin"), Path("/lib"), Path("/lib64"), Path("/etc")):
         if source.exists():

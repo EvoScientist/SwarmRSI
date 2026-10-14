@@ -17,7 +17,7 @@ SwarmRSI supports **OpenProblems**, **NatureBench**, and **MLE-Bench Lite**, wit
 Use Python 3.11 or 3.12. Candidate execution requires Linux and `bubblewrap`.
 
 ```bash
-git clone https://github.com/Changanyuexia/SwarmRSI.git
+git clone <repository-url> SwarmRSI
 cd SwarmRSI
 
 python3.11 -m venv .venv

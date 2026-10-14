@@ -211,7 +211,7 @@ def test_actual_helper_process_without_network(tmp_path, hang):
     provider = AideProviderProcess(
         python=Path(sys.executable), helper=HELPER,
         # The hang case must leave the helper enough budget to reach the fake
-        # SDK before the deadline cuts it: on a loaded Snellius node a 2 s budget
+        # SDK before the deadline cuts it: on a loaded cluster node a 2 s budget
         # expired during interpreter spawn, so the marker was never written and
         # the test failed for the wrong reason. 6 s is still well under the
         # SDK's 10 s sleep, so the deadline is what ends the call.
@@ -234,7 +234,7 @@ def test_actual_helper_process_without_network(tmp_path, hang):
         # unresolved (a helper that ignored the deadline would complete and
         # return RAW), and the fake SDK was entered exactly once (asserted
         # below). A wall-clock bound was tried at 4 s, 10 s and 20 s and each
-        # failed a Snellius qualification purely on subprocess spawn under load
+        # failed a cluster qualification purely on subprocess spawn under load
         # (whole suites of 22-62 minutes), so it is not asserted.
         assert ledger.read()["attempts"][0]["state"] == "unresolved"
     else:

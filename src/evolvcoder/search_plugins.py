@@ -264,11 +264,6 @@ def _islands(*, seed, parameters):
     return HeterogeneousMultiIslandStrategy(seed=seed, **parameters)
 
 
-def _smc(*, seed, parameters):
-    from .smc_search import SMCSearchStrategy
-    return SMCSearchStrategy(seed=seed, **parameters)
-
-
 def _bidirectional(*, seed, parameters):
     from .brs_strategy import BidirectionalResearchStrategy
     return BidirectionalResearchStrategy(seed=seed, **parameters)
@@ -278,6 +273,6 @@ def default_search_registry():
     registry = SearchRegistry()
     for name, factory in [('continuation_tree', _continuation), ('legacy_tree', _legacy),
                           ('multi_parent_graph', _graph), ('heterogeneous_islands', _islands),
-                          ('bidirectional_research', _bidirectional), ('research_smc', _smc)]:
+                          ('bidirectional_research', _bidirectional)]:
         registry.register(name, factory)
     return registry

@@ -192,7 +192,7 @@ def main() -> int:
                    "HF_HUB_OFFLINE=1): " + "; ".join(paths) + ". Nothing else can be downloaded.\n" if paths else ""))
 
     # The scorer subprocess can come from another checkout so every method in a comparison is scored by
-    # the same evaluator code (Snellius: source_22944f9, as BRS and Arbor). The runner itself is unchanged.
+    # the same evaluator code (source_22944f9, as BRS and Arbor). The runner itself is unchanged.
     evaluator_script = REPO / "src/evolvcoder/naturebench_evaluator.py"
     if args.evaluator_src is not None:
         evaluator_script = args.evaluator_src.resolve() / "evolvcoder/naturebench_evaluator.py"

@@ -1,4 +1,4 @@
-"""(Snellius: served on a unix socket bound into the Arbor sandbox.) Score an Arbor NatureBench workspace with the official evaluator, one snapshot per request.
+"""(Served on a unix socket bound into the Arbor sandbox.) Score an Arbor NatureBench workspace with the official evaluator, one snapshot per request.
 
 Copies run.py and the small files beside it (no data/, output/, .git, .arbor, nothing over 5 MB)
 into a fresh directory and runs naturebench_evaluator.py in full mode: execute in the offline bwrap

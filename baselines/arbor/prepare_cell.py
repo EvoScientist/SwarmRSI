@@ -1,4 +1,4 @@
-"""(Snellius) Build an Arbor workspace for one NatureBench task, matched to the BRS protocol.
+"""Build an Arbor workspace for one NatureBench task, matched to the BRS protocol.
 
 The workspace starts from the same root program BRS starts from (the task's starter run.py),
 sees the same public data (mounted read-only at data/ when Arbor runs), and is scored by the

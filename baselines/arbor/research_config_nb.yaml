@@ -1,5 +1,5 @@
-# Arbor (RUC-NLPIR/Arbor @7cdaf1f) on NatureBench, Snellius: DeepSeek v4.1 flash via the official
-# DeepSeek API, 4 h wall, one GPU, no web or literature search, as the H200 r2 protocol otherwise.
+# Arbor (RUC-NLPIR/Arbor @7cdaf1f) on NatureBench: DeepSeek v4.1 flash via the official
+# DeepSeek API, 4 h wall, one GPU, no web or literature search, as the matched protocol otherwise.
 llm:
   provider: litellm
   model: openai/deepseek-flash

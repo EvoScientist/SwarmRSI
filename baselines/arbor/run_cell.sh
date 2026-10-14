@@ -1,5 +1,5 @@
 #!/bin/bash
-# One Arbor NatureBench cell on Snellius (H200 r2 protocol): Arbor in a network-less bwrap sandbox whose
+# One Arbor NatureBench cell under the matched protocol: Arbor in a network-less bwrap sandbox whose
 # only exits are a unix-socket CONNECT proxy (api.deepseek.com:443) and the grader (official evaluator,
 # <=30 evaluations). env: SHORT TASK [SMOKE=1: sandbox/proxy/grader checks only, no model calls]
 set -u
@@ -55,11 +55,11 @@ PY
     bash /ws/eval.sh | head -c 600; echo'
   kill $PROXY $GRADER; exit 0
 fi
-# H200 r2 protocol: the research config (4 h budget, 20 cycles, no search) goes into the workspace.
+# Matched protocol: the research config (4 h budget, 20 cycles, no search) goes into the workspace.
 cp $K/research_config_nb.yaml $C/ws/research_config.yaml
 python3 -c "import json,time,os;json.dump({'job':os.environ.get('SLURM_JOB_ID','manual'),'task':'$TASK','started':time.time(),'host':os.uname().nodename},open('$C/started.json','w'))"
 "${SB[@]}" bash /k/arbor_entry.sh > $C/arbor.log 2>&1 & ARBOR=$!
-# H200 r2: stop the cell once its 30 official evaluations are scored.
+# Matched protocol: stop the cell once its 30 official evaluations are scored.
 while kill -0 $ARBOR 2>/dev/null; do
   n=$(ls $C/grader_results 2>/dev/null | grep -c '^[0-9]')
   done_n=$(ls $C/grader_results/*/capture.json 2>/dev/null | wc -l)

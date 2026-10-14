@@ -26,10 +26,6 @@ def main(argv: list[str] | None = None) -> int:
     analysis.add_argument("--wisdom-snapshot", type=Path)
     analysis.add_argument("--run-evidence", type=Path, action="append", default=[])
     analysis.add_argument("--output", type=Path, required=True)
-    audit = commands.add_parser("audit", help="import and summarize source-bound project audit labels")
-    audit.add_argument("--bundle", type=Path, required=True)
-    audit.add_argument("--evidence-root", type=Path, required=True)
-    audit.add_argument("--output", type=Path, required=True)
     naturebench = commands.add_parser("run-naturebench", help="run the full installed NatureBench session with explicit local inputs")
     from .naturebench_cli import add_arguments, execute
     add_arguments(naturebench)
@@ -79,11 +75,6 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps({"configuration_valid": True, "runtime_ready": None,
                               "note": "Schema validation only; runtime, data and adapter readiness are separate.",
                               "config": config.to_dict()}, ensure_ascii=False, indent=2))
-        elif args.command == "audit":
-            from .project_audit import export_project_audit
-            summary = export_project_audit(args.bundle, evidence_root=args.evidence_root, output=args.output)
-            print(json.dumps({"summary_sha256": summary["summary_sha256"], "projects": len(summary["projects"]),
-                              "output": str(args.output)}, ensure_ascii=False))
     except learning_cli.ValidationPending as exc:
         print(json.dumps({"status": "pending", "reason": str(exc)}))
         return 3

@@ -74,9 +74,6 @@ def manifest_for(config):
     if config.benchmark == "openproblems":
         from .openproblems_run import manifest as openproblems_manifest
         return openproblems_manifest(config)
-    if config.benchmark == "terminalbench":
-        from .terminalbench_run import manifest as terminalbench_manifest
-        return terminalbench_manifest(config)
     require(config.benchmark == "naturebench", "NatureBench adapter cannot handle another benchmark")
     path = config.benchmark_config
     require(path is not None, "NatureBench requires benchmark_config")
@@ -259,9 +256,6 @@ class EvolvcoderAdapter:
         elif config.benchmark == "openproblems":
             from .openproblems_run import OpenProblemsAdapter
             expected_task = OpenProblemsAdapter().task(config.task, config)
-        elif config.benchmark == "terminalbench":
-            from .terminalbench_run import TerminalBenchAdapter
-            expected_task = TerminalBenchAdapter().task(config.task, config)
         else:
             expected_task = NatureBenchAdapter().task(config.task, config)
         require(task == expected_task, "TaskSpec differs from official manifest")
@@ -296,8 +290,6 @@ class EvolvcoderAdapter:
         if config.benchmark == "mlebench":
             refs += [source_ref(assets['custody'])]
             refs += read_json(assets['custody'])['refs']
-        if config.benchmark == "terminalbench":
-            refs += [source_ref(assets["tasks_root"] / config.task / "custody.json")]
         refs += [source_ref(p) for p in (config.learning.policy, config.learning.wisdom_snapshot, config.winner_registry) if p]
         refs += [source_ref(p) for p in sorted(session.PACKAGE_ROOT.rglob("*.py"))]
         if search_identity is not None:

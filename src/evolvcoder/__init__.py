@@ -55,20 +55,7 @@ from .coder_models import (
     ScientificActionContract as ScientificActionContract,
     ValidationCommand as ValidationCommand,
 )
-from .research_smc import (
-    MetricDirection as MetricDirection,
-    MutationKernel as MutationKernel,
-    MutationRequest as MutationRequest,
-    MutationResult as MutationResult,
-    ProgramBudget as ProgramBudget,
-    ProgramEvidence as ProgramEvidence,
-    ProgramParticle as ProgramParticle,
-    SMC as SMC,
-    ResearchContract as ResearchContract,
-    SMCConfig as SMCConfig,
-)
 from .coder_openrouter import OpenRouterCoderModel as OpenRouterCoderModel
-from .smc_visualization import write_smc_graph_view as write_smc_graph_view
 from .dynamic_visualization import (
     write_dynamic_research_view as write_dynamic_research_view,
 )
@@ -97,10 +84,6 @@ __all__ = [
     "CoderVersion", "ContractBoundedCoder", "MutationInspiration",
     "ProgramMutationContext", "OpenRouterCoderModel",
     "ScientificActionContract", "ValidationCommand",
-    "MetricDirection", "MutationKernel", "MutationRequest", "MutationResult",
-    "ProgramBudget", "ProgramEvidence", "ProgramParticle",
-    "SMC", "ResearchContract", "SMCConfig",
-    "write_smc_graph_view",
     "write_dynamic_research_view",
     "CampaignAccounting", "CampaignStep", "ProgramNode", "ProposedAction",
     "VSearchCoordinator", "ActionExecution", "artifact_workspace_sha256",

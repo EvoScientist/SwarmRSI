@@ -878,7 +878,7 @@ def test_c3_validation_respects_total_wall_deadline(tmp_path):
     assert outcome.validation[0]["timed_out"]
     # The command sleeps 5 s; the 0.2 s wall deadline must cut it well before that.
     # Interpreter spawn on a loaded shared node has taken over a second (the
-    # revision G qualification on Snellius took 62 minutes for the whole suite),
+    # revision G qualification on the cluster took 62 minutes for the whole suite),
     # so the bound only has to separate "deadline fired" from "sleep completed".
     assert time.monotonic() - started < 4.0
 
