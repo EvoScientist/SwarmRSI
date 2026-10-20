@@ -4,9 +4,9 @@ Fetch exact upstream revisions with `scripts/fetch_baseline.py`; install each up
 
 | Baseline | Adapter | Benchmark |
 |---|---|---|
-| AIDE | `scripts/run_aide_naturebench_cell.py`, `src/swarmrsi/baselines/` | NatureBench |
-| Arbor | `baselines/arbor/` | NatureBench |
-| MLEvolve | `baselines/mlevolve/` | MLE-Bench |
+| AIDE | `scripts/run_aide_naturebench_cell.py`, `src/swarmrsi/baselines/` | NatureBench, OpenProblems |
+| Arbor | `baselines/arbor/` | MLE-Bench Lite, NatureBench |
+| MLEvolve | `baselines/mlevolve/` | MLE-Bench Lite |
 | TusoAI | `baselines/tusoai/` | OpenProblems six tasks |
 
 Biomni and general coding-agent scores cited as external references in the manuscript are not new implementations in this code release.
