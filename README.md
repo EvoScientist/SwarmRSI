@@ -31,10 +31,11 @@ With the same DeepSeek-V4-Pro backbone, SwarmRSI also exceeds Arbor by 7.8 pp an
 
 ## 🎬 Demo
 
-<p align="center">
-  <a href="assets/demo.mp4"><img src="assets/demo_poster.png" alt="Watch the SwarmRSI demo (1:30)" width="80%"></a>
-</p>
-<p align="center"><a href="assets/demo.mp4">▶️ Watch the 90-second overview</a></p>
+
+
+https://github.com/user-attachments/assets/cc89beaf-a4e8-4dbf-b54e-226419f47691
+
+
 
 ## 💡 Why SwarmRSI
 
