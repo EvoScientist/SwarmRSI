@@ -7,7 +7,7 @@
 <h3 align="center">A scientific agent swarm that improves its own research by evolving what its agents inherit</h3>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Paper-Under_Review-B31B1B?style=for-the-badge" alt="Paper under review">
+  <a href="https://arxiv.org/abs/2610.20431"><img src="https://img.shields.io/badge/arXiv-2610.20431-B31B1B?style=for-the-badge" alt="arXiv:2610.20431"></a>
   <img src="https://img.shields.io/badge/Python-3.11_|_3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11 | 3.12">
   <img src="https://img.shields.io/badge/Benchmarks-OpenProblems_·_NatureBench_·_MLE--Bench_Lite-0E9B9B?style=for-the-badge" alt="Benchmarks">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="License: Apache 2.0"></a>
@@ -19,13 +19,13 @@
   failures, into a <b>shared research graph</b> that later agents inherit.</i>
 </p>
 
-### 🏆 State-of-the-art results on all three benchmarks
+### 🏆 Results across three benchmarks
 
-| Benchmark | Metric | Strongest baseline | **SwarmRSI** (Claude Opus 5) |
+| Benchmark | Metric | Strongest baseline shown | **SwarmRSI** (DeepSeek-V4-Pro) |
 | --- | --- | :---: | :---: |
-| OpenProblems (6 single-cell tasks) | average score ↑ | 67.1 (TusoAI) | **80.1** |
-| NatureBench (90 scientific coding tasks) | Match-SOTA % ↑ | 57.8 (Claude Code, Opus 5) | **64.4** |
-| MLE-Bench Lite (22 competitions) | gold medal % ↑ | 77.3 (Arbor, GPT-5.5) | **81.8** |
+| OpenProblems (6 single-cell tasks) | average score ↑ | 67.1 (TusoAI, DeepSeek-V4-Pro) | **74.2** |
+| NatureBench (90 scientific coding tasks) | Match-SOTA % ↑ | 36.7 (Arbor, DeepSeek-V4-Pro) | **44.4** |
+| MLE-Bench Lite (22 competitions) | gold medal % ↑ | 77.3 (Arbor, GPT-5.5) | **45.5** |
 
 With the same DeepSeek-V4-Pro backbone, SwarmRSI also exceeds Arbor by 7.8 pp and AIDE by 16.7 pp in NatureBench Match-SOTA. → [See full results](#-results)
 
@@ -95,7 +95,6 @@ Each step of the loop:
 | TusoAI | DeepSeek-V4-Pro | 67.1 |
 | **SwarmRSI** | DeepSeek-V4-Pro | 74.2 |
 | **SwarmRSI** | Gemini 3.1 Pro Preview | 76.2 |
-| **SwarmRSI** | Claude Opus 5 | **80.1** |
 
 **NatureBench** (all 90 tasks, %)
 
@@ -103,11 +102,8 @@ Each step of the loop:
 | --- | --- | :---: | :---: |
 | AIDE | DeepSeek-V4-Pro | 10.0 | 27.8 |
 | Arbor | DeepSeek-V4-Pro | 12.2 | 36.7 |
-| Claude Code | Claude Opus 5 | 23.3 | 57.8 |
-| AIBuildAI 2.5 | Claude Opus 5 | 23.3 | 53.3 |
 | **SwarmRSI** | DeepSeek-V4-Pro | 15.6 | 44.4 |
 | **SwarmRSI** | Gemini 3.1 Pro Preview | 14.4 | 44.4 |
-| **SwarmRSI** | Claude Opus 5 | **28.9** | **64.4** |
 
 **MLE-Bench Lite** (22 competitions, %)
 
@@ -119,9 +115,8 @@ Each step of the loop:
 | Famou-Agent 2.0 | Gemini 3 Pro Preview | 93.9 | 50.0 | 80.3 |
 | **SwarmRSI** | DeepSeek-V4-Pro | 90.9 | 45.5 | 81.8 |
 | **SwarmRSI** | Gemini 3.1 Pro Preview | 86.4 | 40.9 | 81.8 |
-| **SwarmRSI** | Claude Opus 5 | **95.5** | **81.8** | **86.4** |
 
-SwarmRSI and rerun baselines report means over three seeds. See the paper for the full
+SwarmRSI and rerun baselines report means over three seeds. See the [arXiv paper](https://arxiv.org/abs/2610.20431) for the full
 tables, ablations and trajectory analyses.
 
 ## ⚡ Getting Started
@@ -322,10 +317,14 @@ tests/             Regression tests
 
 ```bibtex
 @misc{swarmrsi2026,
-  title  = {SwarmRSI: Recursive Self-Improvement through Evolving Scientific Agent Swarms},
-  author = {Anonymous Authors},
-  year   = {2026},
-  note   = {Under review}
+  title         = {SwarmRSI: Recursive Self-Improvement through Evolving Scientific Agent Swarm},
+  author        = {Qianru Meng and Xi Zhang and Konstantinos Papakostas and Congfeng Cao and Wenxiang Hu and Tianyi Lu and Xiao Zhang and Lun Zhou and Zaiqiao Meng and Zhaochun Ren and Xiaohui Yan and Yougang Lyu},
+  year          = {2026},
+  eprint        = {2610.20431},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  doi           = {10.48550/arXiv.2610.20431},
+  url           = {https://arxiv.org/abs/2610.20431}
 }
 ```
 
